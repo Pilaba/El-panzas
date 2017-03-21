@@ -1,0 +1,11 @@
+#login-form .input-group, #login-form .form-group {
+    margin-top: 30px;
+}
+
+#login-form .btn-default {
+    background-color: #EEE;
+}
+
+.brand {
+    color: #CCC;
+}
