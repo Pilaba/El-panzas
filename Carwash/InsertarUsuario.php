@@ -4,8 +4,12 @@ $user =$_POST['usuario'];
 $email =$_POST['email'];
 $pass =$_POST['pass'];
 
-mysql_query("INSERT INTO usuariossistem VALUES ('','$user', '$email','$pass',10)");
+$result=mysql_query("INSERT INTO usuariossistem VALUES ('','$user', '$email','$pass',10)");
 
-
+if($result==TRUE){
+  echo ("Registro correcto");
+}else{
+ echo ("Registro fallido"); 
+}
 
 ?>
