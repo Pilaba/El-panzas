@@ -59,3 +59,6 @@ CREATE TABLE UsuariosSistem(
 	id_Rol INTEGER unsigned NOT NULL,
 	PRIMARY KEY (id_user),
 	FOREIGN KEY (id_Rol) REFERENCES RolesSistema(id_rolS));
+	
+	
+	--guarden esto--
