@@ -1,3 +1,5 @@
+CREATE DATABASE carwashBD;
+
 CREATE TABLE Cliente (
 	id_cliente INTEGER unsigned NOT NULL AUTO_INCREMENT,
 	Name VARCHAR(30) NOT NULL,
