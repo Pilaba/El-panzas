@@ -87,6 +87,7 @@ CREATE TABLE Servicio(
 	preciobase INTEGER Unsigned NOT NULL,
 	Descripcion TEXT NOT NULL,
 	estado TINYINT(1) NOT NULL,
+	DirImage VARCHAR (50) NOT NULL,
 	PRIMARY KEY (id_servicio)
 );
 
