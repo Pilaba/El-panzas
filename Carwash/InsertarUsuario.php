@@ -4,7 +4,9 @@ $user =$_POST['usuario'];
 $email =$_POST['email'];
 $pass =$_POST['pass'];
 
-$result=mysql_query("INSERT INTO usuariossistem VALUES ('','$user', '$email','$pass',1)");
+
+$result=$Mysqli->query("INSERT INTO usuario 
+                               VALUES (NULL,2,'$user','$email','$pass',NULL)");
 
 if($result==TRUE){
   echo ("Registro correcto");
