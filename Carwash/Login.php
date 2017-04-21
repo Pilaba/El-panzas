@@ -15,7 +15,7 @@
                 <form id="login-form" method="post" action="ValidacionUsuario.php" role="form">
                     <legend>Inicio de sesión</legend>
                     <?php if (isset($_GET['err'])) { ?>
-                        <div class="alert alert-danger text-center"><?php echo "Login failed! Invalid email-id or password!"; ?></div>
+                        <div class="alert alert-danger text-center"> <?php echo "Login failed! Invalid email-id or password!"; ?></div>
                     <?php } ?>
 
                     <div class="input-group">

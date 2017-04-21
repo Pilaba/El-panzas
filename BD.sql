@@ -24,18 +24,32 @@ CREATE TABLE Vehiculo (
 	FOREIGN KEY (id_Tipo) REFERENCES TiposVehiculos(id_Tipo)
 );
 
-CREATE TABLE Cliente (
-	id_cliente INTEGER unsigned NOT NULL AUTO_INCREMENT,
-	Nombre VARCHAR(30) NOT NULL,
-	Telefono NUMERIC(10,2),
-	PRIMARY KEY (id_cliente)
+CREATE TABLE RolesSistema(
+  id_rolS INTEGER unsigned NOT NULL AUTO_INCREMENT,
+  nombreRol VARCHAR(20) NOT NULL,
+  PRIMARY KEY (id_rolS)
+);
+
+INSERT INTO rolessistema VALUES ('','Administrador'),
+  ('','Cliente');
+
+
+CREATE TABLE Usuario (
+	id_usuario INTEGER unsigned NOT NULL AUTO_INCREMENT,
+  id_rolS INTEGER unsigned NOT NULL,
+	nombre VARCHAR(30) NOT NULL,
+  correo VARCHAR(30) NOT NULL,
+  contrasena VARCHAR(30) NOT NULL,
+	Telefono INTEGER,
+	PRIMARY KEY (id_usuario),
+  FOREIGN KEY(id_rolS)  REFERENCES RolesSistema(id_rolS)
 );
 
 CREATE TABLE Detalle_VehiClien(
-  id_cliente INTEGER unsigned NOT NULL,
+  id_usuario INTEGER unsigned NOT NULL,
   matricula char(7) NOT NULL,
-  PRIMARY KEY (id_cliente,matricula),
-  FOREIGN KEY (id_cliente) REFERENCES Cliente(id_cliente),
+  PRIMARY KEY (id_usuario,matricula),
+  FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario),
   FOREIGN KEY (matricula) REFERENCES Vehiculo(matricula)
 );
 
@@ -67,6 +81,7 @@ INSERT INTO TURNOS VALUES ('m','Matutino'),
 CREATE TABLE Empleado(
 	id_empleado INTEGER unsigned NOT NULL AUTO_INCREMENT,
 	nombreE VARCHAR(30) NOT NULL,
+  Correo VARCHAR(30) NOT NULL,
 	Genero CHAR(1) NOT NULL,
 	Telefono INTEGER NOT NULL,
 	Turno CHAR(1) NOT NULL,
@@ -108,9 +123,6 @@ CREATE TABLE Detalle_ServicioyPaquesp(
   FOREIGN KEY (id_Servicio)REFERENCES Servicio (id_servicio)
 );
 
-
-
-
 CREATE TABLE MetodosPago(
   id_metodoPago INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   nombre VARCHAR (30),
@@ -118,15 +130,15 @@ CREATE TABLE MetodosPago(
 );
 
 CREATE TABLE Detalle_ServCli(
-	id_client INTEGER unsigned NOT NULL,
+	id_usuario INTEGER unsigned NOT NULL,
 	id_service INTEGER unsigned  NOT NULL,
 	Metodopago INTEGER UNSIGNED NOT NULL,
 	Date DATE NOT NULL,
 	Subtotal NUMERIC(10,2) NOT NULL,
 	Descuento NUMERIC(10,2) NOT NULL,
 	Total NUMERIC(10,2) NOT NULL,
-	PRIMARY KEY (id_client, id_service),
-	FOREIGN KEY (id_client) REFERENCES Cliente (id_cliente),
+	PRIMARY KEY (id_usuario, id_service),
+	FOREIGN KEY (id_usuario) REFERENCES Usuario (id_usuario),
 	FOREIGN KEY (id_service) REFERENCES Servicio (id_servicio),
 	FOREIGN KEY (Metodopago) REFERENCES MetodosPago (id_metodoPago)
 );
@@ -139,23 +151,7 @@ CREATE TABLE Detalle_ServEmpleado(
 	FOREIGN KEY (id_empleado) REFERENCES Empleado (id_empleado)
 );
 
-CREATE TABLE RolesSistema(
-	id_rolS INTEGER unsigned NOT NULL AUTO_INCREMENT,
-	nombreRol VARCHAR(20) NOT NULL,
-	PRIMARY KEY (id_rolS)
-);
-	
-INSERT INTO rolessistema VALUES ('','Administrador'),
-                                ('','Cliente');
 
-CREATE TABLE UsuariosSistem(
-	id_user INTEGER unsigned NOT NULL AUTO_INCREMENT,
-	nombre VARCHAR(30) NOT NULL UNIQUE,
-	email VARCHAR(30) NOT NULL UNIQUE,
-	contrasena VARCHAR(30) NOT NULL,
-	id_Rol INTEGER unsigned NOT NULL,
-	PRIMARY KEY (id_user),
-	FOREIGN KEY (id_Rol) REFERENCES RolesSistema(id_rolS)
-);
+
 
 COMMIT;

@@ -1,15 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: DELL
- * Date: 17/03/2017
- * Time: 01:38 AM
- */
-$dbHost = 'localhost';
-$dbUser = 'root';
-$dbPass = '';
-$dbName = 'carwashBD';
 
-$dbConn = mysql_connect($dbHost, $dbUser, $dbPass);
-mysql_set_charset('utf8');
-mysql_select_db($dbName,$dbConn);
+STATIC $dbHost = 'localhost';
+STATIC $dbUser = 'root';
+STATIC $dbPass = '';
+STATIC $dbName = 'carwashBD';
+
+/* Se utilizara el modo orientado a objetos por sobre el procedural  http://php.net/manual/es/book.mysqli.php */
+
+$Mysqli = new mysqli($dbHost, $dbUser, $dbPass,$dbName);
+$Mysqli->set_charset("utf8");
+
+if ($Mysqli->connect_error) die($Mysqli->connect_error);/* comprobacion si existe error */
+
