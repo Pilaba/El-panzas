@@ -37,7 +37,6 @@
                         <div class="col-sm-6" style="padding: 0;">Nuevo Usuario? <a href="Registro.php">Registrarse</a></div>
                         <div class="col-sm-6 text-right brand" style="padding: 0;">ElPanzas.com</div>
                     </div>
-
                 </form>
             </div>
         </div>

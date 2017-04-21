@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<!-- MENU SUPERIOR-->
+<!-------------------------------------------- MENU SUPERIOR--------------------------------------------------->
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -23,20 +23,23 @@
             <a class="navbar-brand" href="#">Logo</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Inicio</a></li>
-                <li><a href="#">Acerca</a></li>
-                <li><a href="#">Servicios</a></li>
-                <li><a href="#">Contacto</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="Login.php" target="_blank"><span class="glyphicon glyphicon-log-in"></span> Inicio de sesión</a></li>
-            </ul>
+            <div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Inicio</a></li>
+                    <li><a href="#">Acerca</a></li>
+                    <li><a href="#">Servicios</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </div>
+            <?php /* Se utilza para verificar si el usuario esta logueado y desplegar el menu correspondiente
+                (Menu de opciones de perfil o menu de inicio de sesion)*/
+                require_once ("AutenticarSesion.php");
+            ?>
         </div>
     </div>
 </nav>
 
-<!-- Carrusel -->
+<!--------------------------------------------------------- Carrusel --------------------------------------------------------------->
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
@@ -74,7 +77,7 @@
     </a>
 </div>
 
-<!-- Imagenes inferiores -->
+<!-------------------------------------------------------- Imagenes inferiores ------------------------------------------------>
 <div class="container text-center">
     <h3>What We Do</h3><br>
     <div class="row">
@@ -104,3 +107,18 @@
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
