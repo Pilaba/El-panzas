@@ -8,10 +8,13 @@ $pass =$_POST['pass'];
 $result=$Mysqli->query("INSERT INTO usuario 
                                VALUES (NULL,2,'$user','$email','$pass',NULL)");
 
+$Mysqli->close();
 if($result==TRUE){
-  echo ("Registro correcto");
+    echo ("Registro Correcto");
 }else{
- echo ("Registro fallido"); 
+    echo ("Registro fallido");
 }
 
 ?>
+
+

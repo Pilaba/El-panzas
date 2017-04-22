@@ -33,9 +33,12 @@
                     </div>
 
                     <div class="form-group">
-                        <hr/>
-                        <div class="col-sm-6" style="padding: 0;">Nuevo Usuario? <a href="Registro.php">Registrarse</a></div>
-                        <div class="col-sm-6 text-right brand" style="padding: 0;">ElPanzas.com</div>
+                        <div class="col-sm-6" style="padding: 0;">¿Nuevo Usuario? <a href="Registro.php">Registrarse</a></div>
+                        <div class="col-sm-6" style="padding: 0;">¿Olvidaste tu contraseña? <a href="#">!Pulsa aqui!</a> </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-6  brand" style="padding: 0;">ElPanzas.com</div>
                     </div>
                 </form>
             </div>

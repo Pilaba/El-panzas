@@ -27,7 +27,6 @@ if($rows=$result->num_rows){
 }
 
     /*Se cierran las conecciones abiertas */
-$result->close();
 $Mysqli->close();
 
 
