@@ -101,16 +101,23 @@
 </div><br>
 
 <!-- Pie de pagina -->
-<footer class="container-fluid text-center">
-    <div>Visitanos!!</div>
-    <iframe
-            src="http://maps.google.com.mx/maps?q=Instituto+Tecnológico+de+Colima&amp;output=embed"
-            width="450"
+<div class="container">
+    <h3 align="center">Visita Nuestra sucursal</h3>
+    <div class="row">
+        <iframe class="col-lg-12" src="http://maps.google.com.mx/maps?q=Autolavado+el+Pansas&amp;output=embed"
             height="350"
             frameborder="1"
             scrolling="no">
-    </iframe>
-</footer>
+        </iframe>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        contacto: pilaba@live.com
+    </div>
+
+</div>
 
 </body>
 </html>
