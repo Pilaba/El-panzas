@@ -102,7 +102,14 @@
 
 <!-- Pie de pagina -->
 <footer class="container-fluid text-center">
-    <p>Footer Text</p>
+    <div>Visitanos!!</div>
+    <iframe
+            src="http://maps.google.com.mx/maps?q=Instituto+Tecnológico+de+Colima&amp;output=embed"
+            width="450"
+            height="350"
+            frameborder="1"
+            scrolling="no">
+    </iframe>
 </footer>
 
 </body>
