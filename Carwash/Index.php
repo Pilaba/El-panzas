@@ -113,10 +113,9 @@
 </div>
 
 <div class="container">
-    <div class="row">
+    <div class="row" align="right">
         contacto: pilaba@live.com
     </div>
-
 </div>
 
 </body>
