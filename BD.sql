@@ -44,6 +44,8 @@ CREATE TABLE Usuario (
 	PRIMARY KEY (id_usuario),
   FOREIGN KEY(id_rolS)  REFERENCES RolesSistema(id_rolS)
 );
+INSERT INTO `usuario` (`id_usuario`, `id_rolS`, `nombre`, `correo`, `contrasena`, `Telefono`) 
+	VALUES (NULL, '1', 'admin', 'pilaba@live.com', 'admin', '312154');
 
 CREATE TABLE Detalle_VehiClien(
   id_usuario INTEGER unsigned NOT NULL,
