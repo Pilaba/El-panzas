@@ -6,6 +6,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" >
     <link rel="stylesheet" href="CSS/bootstrap.min.css" type="text/css"/>
     <link rel="stylesheet" href="CSS/CssIndex.css">
+    <link rel="stylesheet" href="">
 </head>
 
 <body>
@@ -37,7 +38,7 @@
 
                     <div class="form-group">
                         <hr/>
-                        <div class="col-sm-6" style="padding: 0;">Ya tiene cuenta? <a href="login.php">Inicio de sesión</a></div>
+                        <div class="col-sm-6" style="padding: 0;">Ya tiene cuenta? <a href="Login.php">Inicio de sesión</a></div>
                         <div class="col-sm-6 text-right brand" style="padding: 0;">ElPanzas.com</div>
                     </div>
                 </form>

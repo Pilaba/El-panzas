@@ -10,12 +10,12 @@ if(isset ($_SESSION["Nombre"])){
                                 <b class="caret"></b>   
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Mi Cuenta</a></li>
+                                <li><a href="#"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Mi Cuenta</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#">Preferencias</a></li>
-                                <li><a href="#">Historial</a></li>
+                                <li><a href="#"><i class="glyphicon glyphicon-wrench">&nbsp;</i>Preferencias</a></li>
+                                <li><a href="#"><i class="glyphicon glyphicon-th-list">&nbsp;</i>Historial</a></li>
                                 <li class="divider"></li>
-                                <li><a href="EliminarSession.php">Salir</a></li>
+                                <li><a href="EliminarSession.php"><i class="glyphicon glyphicon-off">&nbsp;</i> Salir</a></li>
                             </ul>
                         </li>
                     </ul>
