@@ -37,8 +37,8 @@ INSERT INTO rolessistema VALUES ('','Administrador'),
 CREATE TABLE Usuario (
 	id_usuario INTEGER unsigned NOT NULL AUTO_INCREMENT,
   id_rolS INTEGER unsigned NOT NULL,
-	nombre VARCHAR(30) NOT NULL,
-  correo VARCHAR(30) NOT NULL,
+	nombre VARCHAR(30) NOT NULL UNIQUE,
+  correo VARCHAR(30) NOT NULL UNIQUE,
   contrasena VARCHAR(30) NOT NULL,
 	Telefono INTEGER,
 	PRIMARY KEY (id_usuario),
@@ -101,10 +101,9 @@ CREATE TABLE Empleado(
 
 CREATE TABLE Servicio(
 	id_servicio INTEGER unsigned  NOT NULL AUTO_INCREMENT,
+	Nombre VARCHAR(30) NOT NULL,
 	preciobase INTEGER Unsigned NOT NULL,
-	Descripcion TEXT NOT NULL,
 	estado TINYINT(1) NOT NULL,
-	DirImage VARCHAR (50) NOT NULL,
 	PRIMARY KEY (id_servicio)
 );
 
