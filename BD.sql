@@ -40,7 +40,7 @@ CREATE TABLE Usuario (
 	nombre VARCHAR(30) NOT NULL UNIQUE,
   correo VARCHAR(30) NOT NULL UNIQUE,
   contrasena VARCHAR(30) NOT NULL,
-	Telefono INTEGER,
+	Telefono INTEGER unsigned,
 	PRIMARY KEY (id_usuario),
   FOREIGN KEY(id_rolS)  REFERENCES RolesSistema(id_rolS)
 );
@@ -89,7 +89,7 @@ CREATE TABLE Empleado(
 	Turno CHAR(1) NOT NULL,
 	direccion VARCHAR(50) NOT NULL,
 	salario DECIMAL(10) NOT NULL,
-	estado TINYINT NOT NULL,
+	estado TINYINT (1) NOT NULL,
 	FechaIngreso DATE NOT NULL,
 	id_rol INTEGER unsigned  NOT NULL,
 	PRIMARY KEY (id_empleado),
@@ -117,7 +117,7 @@ CREATE TABLE PaquetesEspeciales(
 );
 
 CREATE TABLE Detalle_ServicioyPaquesp(
-  id_paquete INTEGER UNSIGNED NOT NULL,
+  id_paquete INTEGER unsigned NOT NULL,
   id_Servicio INTEGER unsigned NOT NULL,
   PRIMARY KEY (id_paquete,id_Servicio),
   FOREIGN KEY (id_paquete) REFERENCES PaquetesEspeciales (id_paquete),
@@ -135,9 +135,9 @@ CREATE TABLE Detalle_ServCli(
 	id_service INTEGER unsigned  NOT NULL,
 	Metodopago INTEGER UNSIGNED NOT NULL,
 	Date DATE NOT NULL,
-	Subtotal NUMERIC(10,2) NOT NULL,
-	Descuento NUMERIC(10,2) NOT NULL,
-	Total NUMERIC(10,2) NOT NULL,
+	Subtotal INTEGER unsigned NOT NULL,
+	Descuento INTEGER unsigned NOT NULL,
+	Total INTEGER unsigned NOT NULL,
 	PRIMARY KEY (id_usuario, id_service),
 	FOREIGN KEY (id_usuario) REFERENCES Usuario (id_usuario),
 	FOREIGN KEY (id_service) REFERENCES Servicio (id_servicio),
