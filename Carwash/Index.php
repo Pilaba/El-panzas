@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <title>Autolavado "El Panzas"</title>
     <meta charset="utf-8">
@@ -33,7 +33,8 @@
             </div>
             <?php /* Se utilza para verificar si el usuario esta logueado y desplegar el menu correspondiente
                 (Menu de opciones de perfil o menu de inicio de sesion)*/
-                require_once ("AutenticarSesion.php");
+                require_once ("FuncionesPHP.php");
+                MenuUsuario();
             ?>
         </div>
     </div>

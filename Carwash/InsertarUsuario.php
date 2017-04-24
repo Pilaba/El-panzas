@@ -1,5 +1,12 @@
 <?php
-require_once ('ConexionBD.php');
+
+session_start();
+if(isset($_SESSION["Nombre"])){
+    header("location: index.php");
+}
+
+require_once ("FuncionesPHP.php");
+$Mysqli=ConectarseaBD();
 $user =$_POST['usuario'];
 $email =$_POST['email'];
 $pass =$_POST['pass'];
@@ -10,9 +17,25 @@ $result=$Mysqli->query("INSERT INTO usuario
 
 $Mysqli->close();
 if($result==TRUE){
-    echo ("Registro Correcto");
+    echo <<<_texto
+        <form name="formExito" action="Registro.php" method="POST"> 
+            <input type="hidden" name="exito" value="TRUE">
+        </form>
+        
+        <script> 
+            document.forms['formExito'].submit();
+        </script>
+_texto;
 }else{
-    echo ("Registro fallido");
+    echo <<<_texto
+        <form name="formFallo" action="Registro.php" method="POST"> 
+            <input type="hidden" name="fallo" value="TRUE">
+        </form>
+        
+        <script> 
+            document.forms['formFallo'].submit();
+        </script>
+_texto;
 }
 
 ?>

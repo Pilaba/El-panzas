@@ -2,14 +2,15 @@
 /**
  * Created by PhpStorm.
  * User: pilaba
- * Date: 21/04/2017
- * Time: 15:27
+ * Date: 22/04/2017
+ * Time: 22:50
  */
-function DestroySession(){
+
+function eliminarSession(){
     $_SESSION = array();
     setcookie(session_name(), '', time() - 2592000, '/');
     session_destroy();
     header("Location: Index.php");
 }
 
-DestroySession();
+eliminarSession();

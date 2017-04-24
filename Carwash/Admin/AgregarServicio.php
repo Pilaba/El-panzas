@@ -2,20 +2,22 @@
     <div id="wrapper">
         <?php
         require_once ("Menu.php");
-        require_once  ("../ConexionBD.php")
+        require_once  ("../FuncionesPHP.php");
+        ConectarseaBD();
         ?>
+
         <div id="page-wrapper">
             <div class="container-fluid">
 
-                <form method="post" enctype="multipart/form-data" action="AgregarServicio.php">
+                <form class="navbar-form" method="post" action="AgregarServicio.php">
                     <table>
                         <tr>
-                            <td>Nombre del servicio  </td>
+                            <td>Nombre  </td>
                             <td><input type="text" name="name" id="name"></td>
                         </tr>
                         <tr>
                             <td>precio base </td>
-                            <td><input type="text" name="price" id="price"> </td>
+                            <td><input type="number" name="price" id="price"> </td>
                         </tr>
                         <tr>
                             <td>Imagen</td>
@@ -26,6 +28,10 @@
                         </tr>
                     </table>
                 </form>
+
+
+
+
                 <?php
                     if (!isset($_FILES["archivo"]) || $_FILES["archivo"]["error"] > 0){
                         echo "Ha ocurrido un error.";
