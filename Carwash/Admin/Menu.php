@@ -98,7 +98,7 @@
                     <a href="javascript:;" data-toggle="collapse" data-target="#demo2"><i class="fa fa-user"></i> Empleados <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo2" class="collapse">
                             <li>
-                                <a href="#">Ver empleados</a>
+                                <a href="VerEmpleados.php">Ver empleados</a>
                             </li>
                             <li>
                                 <a href="../AgregarEmpleado.php">Agregar empleados</a>
