@@ -90,7 +90,7 @@
                     <a href="javascript:;" data-toggle="collapse" data-target="#demo4"><i class="fa fa-users fa-edit"></i> Clientes <i class="fa fa-fw fa-caret-down"></i></a>
                             <ul id="demo4" class="collapse">
                                 <li>
-                                    <a href="#">Ver Clientes</a>
+                                    <a href="VerClientes.php">Ver Clientes</a>
                                 </li>
                             </ul>
                     </li>
