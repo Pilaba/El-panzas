@@ -68,10 +68,7 @@
                                 <a href="AgregarServicio.php">Agregar servicios</a>
                             </li>
                             <li>
-                                <a href="#">Modificar servicios</a>
-                            </li>
-                            <li>
-                                <a href="#">Eliminar servicios</a>
+                                <a href="ModificarServicio.php">Modificar servicios</a>
                             </li>
                         </ul>
                     </li>

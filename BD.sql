@@ -101,7 +101,7 @@ CREATE TABLE Empleado(
 
 CREATE TABLE Servicio(
 	id_servicio INTEGER unsigned  NOT NULL AUTO_INCREMENT,
-	Nombre VARCHAR(30) NOT NULL,
+	Nombre VARCHAR(30) UNIQUE NOT NULL,
 	preciobase INTEGER Unsigned NOT NULL,
 	estado TINYINT(1) NOT NULL,
 	PRIMARY KEY (id_servicio)
