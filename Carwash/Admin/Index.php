@@ -116,23 +116,8 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-8">
-                    <h1>Here maybe we can put some graphics  </h1>
-                    <div class="col-xs-10">
-                        <a href="#" class="thumbnail">
-                            <img src=graficaMuestra.png>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <h1>In this site we can add content </h1>
-                    <p class="col-xs-12">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex
-                        ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                        pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit
-                        anim id est laborum.
-                    </p>
+                <div class="col-lg-3 col-md-6">
+                    hola ta gueno
                 </div>
             </div>
 

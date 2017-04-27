@@ -4,43 +4,43 @@ DROP DATABASE IF EXISTS carwashBD;
 CREATE DATABASE carwashBD DEFAULT CHARACTER SET utf8  DEFAULT COLLATE utf8_general_ci;
 
 CREATE TABLE TiposVehiculos(
-	id_Tipo INTEGER unsigned NOT NULL AUTO_INCREMENT,
+	id_Tipo TINYINT unsigned NOT NULL AUTO_INCREMENT,
 	nombre VARCHAR (30) NOT NULL,
 	PRIMARY KEY (id_Tipo)
 );
 
 INSERT INTO TiposVehiculos VALUES ('','Taxi'),
-                              ('','Compacto'),
-                              ('','Camioneta'),
-                              ('','Motocicleta'),
-                              ('','Furgoneta'),
-                              ('','Trailer'),
-                              ('','Otro');
+                              		('','Compacto'),
+                              		('','Camioneta'),
+                              		('','Motocicleta'),
+                              		('','Furgoneta'),
+                              		('','Trailer'),
+                              		('','Otro');
 CREATE TABLE Vehiculo (
-	matricula char(7) NOT NULL,
-	id_Tipo INTEGER unsigned NOT NULL,
-	Marca VARCHAR (20) NOT NULL,                                    #NOTA: ESTO PUEDE SER NULL
+	matricula VARCHAR(8) NOT NULL,
+	id_Tipo TINYINT unsigned NOT NULL,
+	Marca VARCHAR (20),
 	PRIMARY KEY (matricula),
 	FOREIGN KEY (id_Tipo) REFERENCES TiposVehiculos(id_Tipo)
 );
 
 CREATE TABLE RolesSistema(
-  id_rolS INTEGER unsigned NOT NULL AUTO_INCREMENT,
+  id_rolS SMALLINT unsigned NOT NULL AUTO_INCREMENT,
   nombreRol VARCHAR(20) NOT NULL,
   PRIMARY KEY (id_rolS)
 );
 
 INSERT INTO rolessistema VALUES ('','Administrador'),
-  ('','Cliente');
+																('','Cliente');
 
 
 CREATE TABLE Usuario (
 	id_usuario INTEGER unsigned NOT NULL AUTO_INCREMENT,
-  id_rolS INTEGER unsigned NOT NULL,
+  id_rolS SMALLINT unsigned NOT NULL,
 	nombre VARCHAR(30) NOT NULL UNIQUE,
   correo VARCHAR(30) NOT NULL UNIQUE,
   contrasena VARCHAR(30) NOT NULL,
-	Telefono INTEGER unsigned,
+	Telefono VARCHAR(10),
 	PRIMARY KEY (id_usuario),
   FOREIGN KEY(id_rolS)  REFERENCES RolesSistema(id_rolS)
 );
@@ -53,9 +53,9 @@ INSERT INTO usuario VALUES
 
 
 
-CREATE TABLE Detalle_VehiClien(
+CREATE TABLE Detalle_VehiUsuario(
   id_usuario INTEGER unsigned NOT NULL,
-  matricula char(7) NOT NULL,
+  matricula VARCHAR(8) NOT NULL,
   PRIMARY KEY (id_usuario,matricula),
   FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario),
   FOREIGN KEY (matricula) REFERENCES Vehiculo(matricula)
@@ -72,7 +72,7 @@ INSERT INTO GENERO VALUES ('h','Hombre'),
 
 
 CREATE TABLE RolesE(
-	Id_rol INTEGER unsigned  NOT NULL AUTO_INCREMENT,
+	Id_rol SMALLINT unsigned NOT NULL AUTO_INCREMENT,
 	Nombre VARCHAR(20) NOT NULL,
 	PRIMARY KEY (Id_rol)
 );
@@ -84,20 +84,21 @@ CREATE TABLE TURNOS(
 );
 
 INSERT INTO TURNOS VALUES ('m','Matutino'),
-                          ('v','Vespertino');
+                          ('v','Vespertino'),
+													('d','diurno');
 
 CREATE TABLE Empleado(
-	id_empleado INTEGER unsigned NOT NULL AUTO_INCREMENT,
+	id_empleado SMALLINT unsigned NOT NULL AUTO_INCREMENT,
 	nombreE VARCHAR(30) NOT NULL,
-  Correo VARCHAR(30) NOT NULL,
+  Correo VARCHAR(30) NOT NULL UNIQUE,
 	Genero CHAR(1) NOT NULL,
-	Telefono INTEGER NOT NULL,
+	Telefono VARCHAR(10) NOT NULL,
 	Turno CHAR(1) NOT NULL,
 	direccion VARCHAR(50) NOT NULL,
-	salario DECIMAL(10) NOT NULL,
+	salario FLOAT NOT NULL,
 	estado TINYINT (1) NOT NULL,
 	FechaIngreso DATE NOT NULL,
-	id_rol INTEGER unsigned  NOT NULL,
+	id_rol SMALLINT unsigned  NOT NULL,
 	PRIMARY KEY (id_empleado),
 	FOREIGN KEY (id_rol) REFERENCES RolesE (Id_rol),
 	FOREIGN KEY (Turno) REFERENCES TURNOS(Id_turno),
@@ -106,23 +107,23 @@ CREATE TABLE Empleado(
 
 
 CREATE TABLE Servicio(
-	id_servicio INTEGER unsigned  NOT NULL AUTO_INCREMENT,
+	id_servicio INTEGER UNSIGNED  NOT NULL AUTO_INCREMENT,
 	Nombre VARCHAR(30) UNIQUE NOT NULL,
-	preciobase INTEGER Unsigned NOT NULL,
+	preciobase FLOAT UNSIGNED NOT NULL,
 	estado TINYINT(1) NOT NULL,
 	PRIMARY KEY (id_servicio)
 );
 
 CREATE TABLE PaquetesEspeciales(
   id_paquete INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  status TINYINT(1) DEFAULT NULL,                                     #BOOLEAN
-  subtotal INTEGER NOT NULL,
-  descuento INTEGER NOT NULL,
-  total INTEGER NOT NULL,
+  status TINYINT(1) NOT NULL,                                     #BOOLEAN
+  subtotal FLOAT NOT NULL,
+  descuento FLOAT NOT NULL,
+  total FLOAT NOT NULL,
   PRIMARY KEY (id_paquete)
 );
 
-CREATE TABLE Detalle_ServicioyPaquesp(
+CREATE TABLE Detalle_ServicioPaquete(
   id_paquete INTEGER unsigned NOT NULL,
   id_Servicio INTEGER unsigned NOT NULL,
   PRIMARY KEY (id_paquete,id_Servicio),
@@ -131,19 +132,19 @@ CREATE TABLE Detalle_ServicioyPaquesp(
 );
 
 CREATE TABLE MetodosPago(
-  id_metodoPago INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  nombre VARCHAR (30),
+  id_metodoPago TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  nombre VARCHAR (30) NOT NULL,
   PRIMARY KEY (id_metodoPago)
 );
 
-CREATE TABLE Detalle_ServCli(
-	id_usuario INTEGER unsigned NOT NULL,
-	id_service INTEGER unsigned  NOT NULL,
-	Metodopago INTEGER UNSIGNED NOT NULL,
+CREATE TABLE Detalle_ServUsuario(
+	id_usuario INTEGER UNSIGNED NOT NULL,
+	id_service INTEGER UNSIGNED  NOT NULL,
+	Metodopago TINYINT UNSIGNED NOT NULL,
 	Date DATE NOT NULL,
-	Subtotal INTEGER unsigned NOT NULL,
-	Descuento INTEGER unsigned NOT NULL,
-	Total INTEGER unsigned NOT NULL,
+	Subtotal INTEGER UNSIGNED NOT NULL,
+	Descuento INTEGER UNSIGNED NOT NULL,
+	Total INTEGER UNSIGNED NOT NULL,
 	PRIMARY KEY (id_usuario, id_service),
 	FOREIGN KEY (id_usuario) REFERENCES Usuario (id_usuario),
 	FOREIGN KEY (id_service) REFERENCES Servicio (id_servicio),
@@ -152,7 +153,7 @@ CREATE TABLE Detalle_ServCli(
 
 CREATE TABLE Detalle_ServEmpleado(
   id_service INTEGER unsigned  NOT NULL,
-  id_empleado INTEGER unsigned NOT NULL,
+  id_empleado SMALLINT unsigned NOT NULL,
   PRIMARY KEY (id_empleado, id_service),
   FOREIGN KEY (id_service) REFERENCES Servicio (id_servicio),
 	FOREIGN KEY (id_empleado) REFERENCES Empleado (id_empleado)

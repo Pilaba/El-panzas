@@ -41,7 +41,7 @@ if(isset($_SESSION["Nombre"])){
                     </div>
 
                     <div class="form-group">
-                        <input type="submit" name="submit" value="Iniciar Sesión" class="btn btn-primary btn-block" />
+                        <input type="submit" name="submit" value="Iniciar Sesión" class="btn btn-primary btn-block"/>
                     </div>
 
                     <div class="form-group">

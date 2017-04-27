@@ -22,12 +22,15 @@
             </button>
             <a class="navbar-brand" href="#">Logo</a>
         </div>
+
         <div class="collapse navbar-collapse" id="myNavbar">
             <div>
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#">Inicio</a></li>
-                    <li><a data-toggle="modal" data-target="#myModal"> ayuda</a> </li>
-                    <!-- Modal -->
+
+                    <li><a href="#" data-toggle="modal" data-target="#myModal"> ayuda</a> </li>
+                    <!-- Modal para ayuda -->
+
                     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -45,9 +48,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
 
 
                     <li><a href="#">Servicios</a></li>
