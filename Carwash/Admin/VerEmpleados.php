@@ -9,12 +9,16 @@
 
     <div id="page-wrapper">
         <div class="panel panel-info">
+        <div class="panel panel-red">
             <div class="panel-heading">
-                <div class="panel-title"> Ver Empleados</div>
+            <i class="fa fa-user fa-3x"></i>
+                <div class="panel-title"> Empleados</div>
+            </div>
             </div>
             <div class="panel-body">
-                <table class="table table-striped">
-                    <thead>
+                <table class="table table-striped"><!--Creamos la tabla-->
+               
+                    <thead><!--Creamos la fila de la tabla-->
                         <tr>
                             <th>Nombre</th>
                             <th>Correo</th>
@@ -22,13 +26,14 @@
                             <th>Telefono</th>
                             <th>Turno</th>
                             <th>Direccion</th>
-                            <th>Salio</th>
+                            <th>Salario</th>
                             <th>Estado</th>
                             <th>Fecha Ingreso</th>
                             <th>Roles</th>
                         </tr>
                     </thead>
                     <thbody>
+                    <!--Hacemos conexion con la base de datos-->
                         <?php
                         $Link=ConectarseaBD();
                         $Resultado=$Link->query("SELECT * FROM empleado");
@@ -50,6 +55,7 @@
                             $estado=$array["estado"];
                             $fechaIn=$array["FechaIngreso"];
                             $rol=$array["id_rol"];
+                            $idEmp = $array["id_empleado"];
 
                             echo <<<eti
                                 <tr class="alert-success">
@@ -63,12 +69,18 @@
                                     <td>  $estado</td> 
                                     <td>  $fechaIn</td>
                                     <td> $rol</td>
+                                    <form action="EliminarEmpleado.php" method="POST">
+                                    <input name="Id" type="hidden" value="$idEmp">
+                                    <td><button style="background-color:transparent;border:none" type="submit"><a class="glyphicon glyphicon-trash"></a></button></td>
+                                    </form>
+                                    
                                 </tr>  
 eti;
+
                         }
                         ?>
-                    </thbody>
-                </table>
+                    </thbody> 
+                </table>   
             </div>
         </div>
         <!-- /.container-fluid -->
@@ -76,6 +88,7 @@ eti;
     <!-- /#page-wrapper -->
 
 </div>
+
 <!-- /#wrapper -->
 
 <!-- jQuery -->

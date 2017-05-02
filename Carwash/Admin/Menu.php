@@ -101,10 +101,10 @@
                                 <a href="VerEmpleados.php">Ver empleados</a>
                             </li>
                             <li>
-                                <a href="../AgregarEmpleado.php">Agregar empleados</a>
+                                <a href="IngresarEmpleado.php">Agregar empleados</a>
                             </li>
                             <li>
-                                <a href="#">Dar de baja empleados</a>
+                                <a href="EliminarEmpleado.php">Dar de baja empleados</a>
                             </li>
                         </ul>
                     </li>
