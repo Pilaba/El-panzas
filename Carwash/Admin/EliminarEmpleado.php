@@ -13,8 +13,8 @@
             /*SE HACE UNA CONDICION*/
             if ($Resultado==TRUE ) {
                 /*SE UTILIZA LA FUNCION header PARA QUE NO NO SE IMPRIMA OTRA INFORMACION DE LA PAGINA*/
-                echo "<script> echo ('Exito')</script> ";
+                header("location: VerEmpleados.php");
                 }else{
-                    echo "<script> echo ('Fallo la eliminacion')</script> ";
+                    echo "error";
                 }
         ?>
