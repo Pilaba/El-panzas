@@ -101,7 +101,7 @@ $( function() { //Cuando este listo el DOM
     $("#botonPaquete").click(function () {
         //adding  elements to a form
         if($("#nombrecliente").val()==""){
-            alert("Oops! Ingresa el nombre del cliente")
+            alert("Oops! Falto ingresar el nombre del cliente")
             return false;
         }
 
@@ -111,6 +111,7 @@ $( function() { //Cuando este listo el DOM
             contenedor.append("<input type='hidden' value="+$vararray[$i]+" name=elemento"+$i+">")
         }
 
+        alert("Cliente: "+$("#nombrecliente").val()+"\nServicios: "+$vararray)
         contenedor.submit()
 
         return false; //Probando
