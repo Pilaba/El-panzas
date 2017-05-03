@@ -1,0 +1,8 @@
+git remote add origin https://github.com/Pilaba/prueba.git
+git push -u origin master
+
+git pull [options] [<repository> [<refspec>…?]]
+git pull - actualiza tu repositorio local tomando como referencia el repositorio remoto
+
+git push - actualiza el repositorio remoto tomando como referencia el repositorio local
+  
