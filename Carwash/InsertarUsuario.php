@@ -7,9 +7,9 @@ if(isset($_SESSION["Nombre"])){
 
 require_once ("FuncionesPHP.php");
 $Mysqli=ConectarseaBD();
-$user =$_POST['usuario'];
-$email =$_POST['email'];
-$pass =$_POST['pass'];
+$user  = $Mysqli->real_escape_string($_POST['usuario']);
+$email = $Mysqli->real_escape_string($_POST['email']);
+$pass  = $Mysqli->real_escape_string($_POST['pass']);
 
 
 $result=$Mysqli->query("INSERT INTO usuario 

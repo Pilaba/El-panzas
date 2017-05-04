@@ -1,9 +1,9 @@
 <?php
 require_once ("FuncionesPHP.php");
 $Mysqli=ConectarseaBD();
-$user =$_POST['User'];
-$pass =$_POST['pass'];
-$global=FALSE;
+
+$user =$Mysqli->real_escape_string($_POST['User']);
+$pass =$Mysqli->real_escape_string($_POST['pass']);
 
 $result= $Mysqli->query("select * 
                                 FROM usuario us JOIN rolessistema rs ON us.id_rolS=rs.id_rolS 

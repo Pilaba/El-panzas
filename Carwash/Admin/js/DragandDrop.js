@@ -100,10 +100,16 @@ $( function() { //Cuando este listo el DOM
     //PARA SUBIR LOS ELEMENTOS
     $("#botonPaquete").click(function () {
         //adding  elements to a form
+        if($("#paquete").length==0){
+            alert("No hay servicios en el paquete")
+            return false;
+        }
+
         if($("#nombrecliente").val()==""){
             alert("Oops! Falto ingresar el nombre del cliente")
             return false;
         }
+
 
         var contenedor=$("#formChingon")
 

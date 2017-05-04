@@ -11,8 +11,8 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
 ?>
 <div id="wrapper">
     <?php
-    require_once ("Menu.php");
-    require_once ("../FuncionesPHP.php");
+        require_once ("Menu.php");
+        require_once ("../FuncionesPHP.php");
     ?>
     <div id="page-wrapper">
         <div class="container-fluid">
