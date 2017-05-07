@@ -9,6 +9,10 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
     header("location: ../Index.php");
 }
 ?>
+
+<style>
+    input {display: block; padding: 0; margin: 0; border: 0; width: 100%}
+</style>
 <div id="wrapper">
     <?php
         require_once ("Menu.php");
@@ -19,27 +23,48 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
             <!-- Page Heading -->
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"> Vista Principal <small></small> </h1>
+                    <h2 class="page-header"> Vista Principal </h2>
                 </div>
             </div>
             <!-- /.row -->
 
-            <?php
-                if(isset($_POST["elemento0"])){
-                    echo "<div id='dismisThis' class='alert alert-success alert-dismissible text-center ' role='alert'>
-                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'> 
-                                    <span aria-hidden='true'>&times;</span></button>
-                                </button>
-                                 <strong>Exito en la mision</strong>
-                          </div>";
-                }
-
-            ?>
+            <!-- Alerta de proposito general -->
+            <div id='dismisThis' class='alert alert-info text-center' role='alert' style="display: none">
+                <strong>...</strong>
+            </div>
 
             </div>
             <div class="row">
+                <!-- AQUI SE DESPLEGARA INFORMACION DEL PEDIDO-->
+                <div class="col-md-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            DETALLE:
+                        </div>
+                        <div id="DetallePaquete" class="panel-body" style="min-height: 300px">
+                            <table id="tablitaDetalles" class="table">
+                                <thead>Orden #
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre</th>
+                                        <th>Precio</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- COLGAR AQUI LOS DETALLES UTILIZANDO JQUERY ;)
+                                    <tr class="alert-success">
+                                        <td>1</td>
+                                        <td>Encerado</td>
+                                        <td>30</td>
+                                    </tr> -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- AQUI VA EL PANEL PARA ALMACENAR LOS SERVICIOS -->
-                <div class="col-md-8">
+                <div class="col-md-5">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             PAQUETE
@@ -49,15 +74,11 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
                         </div>
                         <div class="panel-footer">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-5">
                                     <input type="text"  id="nombrecliente" class="form-control" placeholder="Nombre Cliente" required="required">
                                 </div>
-                                <div class="col-md-9">
+                                <div class="col-md-7">
                                     <input type="button" id="botonPaquete" value="ENVIAR" class="btn btn-info btn-group-justified">
-                                    <!-- shadowform HS  ;)-->
-                                    <form id="formChingon" action="Index.php" method="POST">
-
-                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -81,12 +102,15 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
                                         $resultado->data_seek($i);
                                         $array=$resultado->fetch_array(MYSQLI_ASSOC);
                                         $nombre=$array["Nombre"];
+                                        $id=$array["id_servicio"];
                                         $precio=$array["preciobase"];
                                         echo <<<_end
                                                 <li class="list-group-item">
                                                     <img src="" alt="$nombre - $precio" width="96" height="72">
                                                     <a href="#" class="glyphicon glyphicon-plus">Agregar</a>
-                                                    <input id="none" value="$nombre" type="hidden">
+                                                    <input id="nombre" value="$nombre" type="hidden">
+                                                    <input id="id" value="$id" type="hidden">
+                                                    <input id="precio" value="$precio" type="hidden">
                                                 </li>
 _end;
                                     }
@@ -207,12 +231,12 @@ _end;
 <!--Drag and drop script-->
 <script src="js/DragandDrop.js"></script>
 
-<!-- Elimina el comentario machin y siente el poder ;) -->
+<!-- Elimina el comentario machin y siente el poder ;)
 <style>
     .ui-state-highlight {background: darkseagreen}
     .custom-state-active {background: lightblue}
 </style>
-
+-->
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>

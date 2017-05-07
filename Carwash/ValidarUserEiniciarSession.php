@@ -21,6 +21,7 @@ if($rows=$result->num_rows){
         $_SESSION['Nombre'] = $array["nombre"];
         $_SESSION['rol'] = $array["id_rolS"];
     }
+
     header("location: Index.php");
 }else{
     echo "<form name='FormError'action='Login.php' method='post'>

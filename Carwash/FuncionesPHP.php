@@ -16,6 +16,16 @@ function ConectarseaBD(){
 }
 
 
+function realizarSelect($coneccion, $query){
+    $result=$coneccion->query($query);
+    for($i=0; $i<$result->num_rows; $i++){
+        $result->data_seek($i);
+        $array= $result->fetch_array(MYSQLI_ASSOC);
+        return $array;
+    }
+}
+
+
 /* Funcion para desplegar el menu de usuario adecuado para cada tipo 1=admin 2=cliente */
 function MenuUsuario(){
     session_start();
@@ -60,10 +70,6 @@ _end;
                     </ul>
 _end;
     }
-
-
-
-
 
 
 }

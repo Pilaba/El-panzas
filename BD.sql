@@ -38,7 +38,7 @@ CREATE TABLE Usuario (
 	id_usuario INTEGER unsigned NOT NULL AUTO_INCREMENT,
   id_rolS SMALLINT unsigned NOT NULL,
 	nombre VARCHAR(30) NOT NULL UNIQUE,
-  correo VARCHAR(30) NOT NULL UNIQUE,
+  correo VARCHAR(30) UNIQUE,
   contrasena VARCHAR(30) NOT NULL,
 	Telefono VARCHAR(10),
 	PRIMARY KEY (id_usuario),

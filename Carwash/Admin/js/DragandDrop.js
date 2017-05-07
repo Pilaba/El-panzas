@@ -50,7 +50,11 @@ $( function() { //Cuando este listo el DOM
             $item.find( "a.glyphicon-plus" ).remove(); /*Eliminas el icono para poder remplazarlo con el nuevo  */
 
             //para agregar item a la canasta o paquete
-            $vararray.push($item.find("input#none").attr("value"))
+            $vararray.push($item.find("input#nombre").attr("value"))  /*Nombre del servicio */
+            $vararray.push($item.find("input#precio").attr("value"))  /*Precio base del servicio */
+            $vararray.push($item.find("input#id").attr("value"))
+
+            sortable($vararray) //LLamada a la funcion para que actualice el detalle de los servicios
 
             $item.append( recycle_icon ).appendTo( $list ).fadeIn(function() { //agreaga el nuevo icono al item, este item se agrega a la lista y se añade un efecto
                 $item
@@ -58,15 +62,56 @@ $( function() { //Cuando este listo el DOM
                     .find( "img" )
                     .animate();
             });
+
         });
     }
+
+    function sortable(ArrayServicios){ //SOY UN CAPO :D SIRVE PARA ORDENAR EL DETALLE DE LOS SERVICIOS
+        var descuento=$("#discount").val() //Guarda el descuento que se ingreso
+
+        $("#tablitaDetalles > tbody > tr").remove()//Elimina todos los datos anteriores para generar nuevamente el detalle
+
+        var contador = 1,Indice=0,suma=0; //Contador para llevar la cuenta {array, Indice para ArrayServicios, suma para saber la suma de los servicios}
+        //Se agregan los detalles del servicio al panel de detalles
+        for(contador; contador<=ArrayServicios.length/3; contador++,Indice+=3){
+            $("#tablitaDetalles > tbody").append("<tr> <td>"+ contador +" </td> <td>"+ArrayServicios[Indice] +"</td> <td>"+ArrayServicios[Indice+1] +"</td></tr>");
+            suma+= parseInt(ArrayServicios[Indice+1])
+        }
+
+        /*Subtotal del paquete y hace la insercion en la tabla*/
+        $("#tablitaDetalles > tbody").append("<tr id='subtotal' > " +
+                                                "<td></td> <td>Subtotal</td> <td id='sub'>"+ suma +"</td>" +
+                                             "</tr>");
+        /*Descuento del paquete y hace la insercion en la tabla*/
+        $("#tablitaDetalles > tbody").append("<tr id='descuento' > " +
+                                                "<td></td> <td> Descuento </td> " +
+                                                "<td><input type='number' id='discount' value="+ descuento +"></td>" +
+                                             "</tr>");
+        /*Total y hace la insercion en la tabla*/
+        $("#tablitaDetalles > tbody").append("<tr id='total' class='alert-success'> <td></td> <td> Total </td> <td id='sum'>"+ suma +" </td></tr>");
+
+        //Actualizamos el total en caso de agregar nuevos servicios
+        if(isNaN(parseInt( $("#discount").val() ))){
+            $("tr#total > td")[2].innerHTML=suma
+        }else{
+            $("tr#total > td")[2].innerHTML=suma-parseInt($("#discount").val())
+        }
+
+        //Se actualiza el total en caso de cambiar el descuento
+        $("#discount").change(function(){
+            $("tr#total > td")[2].innerHTML=(parseInt($("tr#subtotal > td")[2].innerHTML))-this.value
+        });
+    }
+
 
     // Image recycle function
     var trash_icon = "<a href='#' class='glyphicon glyphicon-plus'>Agregar</a>"; //se agregara este icono cuando este dentro de servicios
     function recycleImage( $item ) {
         //para eliminar item de la canasta o paquete
-        removeElemnet=$item.find("input#none").attr("value")
-        $vararray.splice($vararray.indexOf(removeElemnet),1)
+        removeElemnet=$item.find("input#nombre").attr("value")
+        $vararray.splice($vararray.indexOf(removeElemnet),3)
+
+        sortable($vararray) //LLamada a la funcion para que actualice el detalle de los servicios
 
         $item.fadeOut(function() { // item elemento que se regresara a servicios  */
             $item.find( "a.glyphicon-minus" )
@@ -98,35 +143,52 @@ $( function() { //Cuando este listo el DOM
 
 
     //PARA SUBIR LOS ELEMENTOS
-    $("#botonPaquete").click(function () {
+    $("#botonPaquete").click(function (evento) {
+        evento.preventDefault()
         //adding  elements to a form
-        if($("#paquete").length==0){
+
+        //Comprobar que halla servicios en el paquete
+        //O tambien $("#paquete").children("li").length==0
+        if($("li","#paquete").length==0){
             alert("No hay servicios en el paquete")
             return false;
         }
 
+        //Comprobar que se coloco el nombre del cliente
         if($("#nombrecliente").val()==""){
-            alert("Oops! Falto ingresar el nombre del cliente")
+            alert("Oops! Falta el nombre del clientee")
             return false;
         }
 
+        var cliente=$("#nombrecliente").val()
+        var descuentu= (isNaN(parseInt($("#discount").val()))) ? 0 : parseInt($("#discount").val());
 
-        var contenedor=$("#formChingon")
+        //Mandando los datos al servidor php para que lso inserte a la BD
+        $.ajax({
+            url  : "RegistrarPaquete.php",
+            cache: false,
+            type : "POST",
+            data : {servicios : $vararray,
+                    cliente: cliente,
+                    desc: descuentu},
 
-        for ($i=0; $i<$vararray.length; $i++){
-            contenedor.append("<input type='hidden' value="+$vararray[$i]+" name=elemento"+$i+">")
-        }
+            success: function(dataResponse) {
+                alert(dataResponse)
+            },
 
-        alert("Cliente: "+$("#nombrecliente").val()+"\nServicios: "+$vararray)
-        contenedor.submit()
+            error : function(dataResponse) {
+                alert(dataResponse);
+            }
+        })
 
-        return false; //Probando
+
     })
 
     //SE VE HERMOSO :,), para quitar la alerta
-    $("#dismisThis").fadeTo(2000, 500).slideUp(500, function(){
+    /*$("#dismisThis").fadeTo(2000, 500).slideUp(500, function(){
         $("#dismisThis").slideUp(500);
-    });
+    });*/
+
 
 } );
 
