@@ -25,7 +25,7 @@
             /*HACEMOS CONEXION CON LA BASE DE DATOS*/
             $Link = ConectarseaBD();
             /*INSERTAMOS LOS DATOS DE LA TABLA EMPLEADOS A LA BASE DE DATOS*/
-            $Resultado = $Link->query("INSERT INTO empleado VALUES ('','$Nombre','$Correo','$Genero','$Telefono','$Turno','$Direccion','$Salario','1','$FechaIngreso','$IdRol')");
+            $Resultado = $Link->query("INSERT INTO empleado VALUES ('','$Nombre','$Correo','$Genero','$Telefono','$Turno','$Direccion','$Salario',1,'$FechaIngreso','$IdRol')");
             /*SERRAMOS LA VARIABLE LINK*/
             $Link->close();
             /*SE HACE UNA CONDICION */

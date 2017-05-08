@@ -66,44 +66,6 @@ $( function() { //Cuando este listo el DOM
         });
     }
 
-    function sortable(ArrayServicios){ //SOY UN CAPO :D SIRVE PARA ORDENAR EL DETALLE DE LOS SERVICIOS
-        var descuento=$("#discount").val() //Guarda el descuento que se ingreso
-
-        $("#tablitaDetalles > tbody > tr").remove()//Elimina todos los datos anteriores para generar nuevamente el detalle
-
-        var contador = 1,Indice=0,suma=0; //Contador para llevar la cuenta {array, Indice para ArrayServicios, suma para saber la suma de los servicios}
-        //Se agregan los detalles del servicio al panel de detalles
-        for(contador; contador<=ArrayServicios.length/3; contador++,Indice+=3){
-            $("#tablitaDetalles > tbody").append("<tr> <td>"+ contador +" </td> <td>"+ArrayServicios[Indice] +"</td> <td>"+ArrayServicios[Indice+1] +"</td></tr>");
-            suma+= parseInt(ArrayServicios[Indice+1])
-        }
-
-        /*Subtotal del paquete y hace la insercion en la tabla*/
-        $("#tablitaDetalles > tbody").append("<tr id='subtotal' > " +
-                                                "<td></td> <td>Subtotal</td> <td id='sub'>"+ suma +"</td>" +
-                                             "</tr>");
-        /*Descuento del paquete y hace la insercion en la tabla*/
-        $("#tablitaDetalles > tbody").append("<tr id='descuento' > " +
-                                                "<td></td> <td> Descuento </td> " +
-                                                "<td><input type='number' id='discount' value="+ descuento +"></td>" +
-                                             "</tr>");
-        /*Total y hace la insercion en la tabla*/
-        $("#tablitaDetalles > tbody").append("<tr id='total' class='alert-success'> <td></td> <td> Total </td> <td id='sum'>"+ suma +" </td></tr>");
-
-        //Actualizamos el total en caso de agregar nuevos servicios
-        if(isNaN(parseInt( $("#discount").val() ))){
-            $("tr#total > td")[2].innerHTML=suma
-        }else{
-            $("tr#total > td")[2].innerHTML=suma-parseInt($("#discount").val())
-        }
-
-        //Se actualiza el total en caso de cambiar el descuento
-        $("#discount").change(function(){
-            $("tr#total > td")[2].innerHTML=(parseInt($("tr#subtotal > td")[2].innerHTML))-this.value
-        });
-    }
-
-
     // Image recycle function
     var trash_icon = "<a href='#' class='glyphicon glyphicon-plus'>Agregar</a>"; //se agregara este icono cuando este dentro de servicios
     function recycleImage( $item ) {
@@ -141,36 +103,81 @@ $( function() { //Cuando este listo el DOM
         return false;
     });
 
+    function sortable(ArrayServicios){ //SOY UN CAPO :D SIRVE PARA ORDENAR EL DETALLE DE LOS SERVICIOS
+        var descuento=$("#discount").val() //Guarda el descuento que se ingreso
+
+        $("#tablitaDetalles > tbody > tr").remove()//Elimina todos los datos anteriores para generar nuevamente el detalle
+
+        var contador = 1,Indice=0,suma=0; //Contador para llevar la cuenta {array, Indice para ArrayServicios, suma para saber la suma de los servicios}
+        //Se agregan los detalles del servicio al panel de detalles
+        for(contador; contador<=ArrayServicios.length/3; contador++,Indice+=3){
+            $("#tablitaDetalles > tbody").append("<tr> <td>"+ contador +" </td> <td>"+ArrayServicios[Indice] +"</td> <td>"+ArrayServicios[Indice+1] +"</td></tr>");
+            suma+= parseInt(ArrayServicios[Indice+1])
+        }
+
+        /*Subtotal del paquete y hace la insercion en la tabla*/
+        $("#tablitaDetalles > tbody").append("<tr id='subtotal' > " +
+            "<td></td> <td>Subtotal</td> <td id='sub'>"+ suma +"</td>" +
+            "</tr>");
+        /*Descuento del paquete y hace la insercion en la tabla*/
+        $("#tablitaDetalles > tbody").append("<tr id='descuento' > " +
+            "<td></td> <td> Descuento </td> " +
+            "<td><input type='number' id='discount' value="+ descuento +"></td>" +
+            "</tr>");
+        /*Total y hace la insercion en la tabla*/
+        $("#tablitaDetalles > tbody").append("<tr id='total' class='alert-success'> <td></td> <td> Total </td> <td id='sum'>"+ suma +" </td></tr>");
+
+        //Actualizamos el total en caso de agregar nuevos servicios
+        if(isNaN(parseInt( $("#discount").val() ))){
+            $("tr#total > td")[2].innerHTML=suma
+        }else{
+            $("tr#total > td")[2].innerHTML=suma-parseInt($("#discount").val())
+        }
+
+        //Se actualiza el total en caso de cambiar el descuento
+        $("#discount").change(function(){
+            $("tr#total > td")[2].innerHTML=(parseInt($("tr#subtotal > td")[2].innerHTML))-this.value
+        });
+    }
 
     //PARA SUBIR LOS ELEMENTOS
     $("#botonPaquete").click(function (evento) {
         evento.preventDefault()
-        //adding  elements to a form
 
         //Comprobar que halla servicios en el paquete
         //O tambien $("#paquete").children("li").length==0
         if($("li","#paquete").length==0){
-            alert("No hay servicios en el paquete")
+            alert("Oops! No hay servicios seleccionados")
             return false;
         }
 
-        //Comprobar que se coloco el nombre del cliente
-        if($("#nombrecliente").val()==""){
-            alert("Oops! Falta el nombre del clientee")
+        //Comprobar que se coloco la matricula
+        if($("#matricula").val()==""){
+            alert("Oops! Falta la matricula")
             return false;
         }
 
-        var cliente=$("#nombrecliente").val()
+        //Comprobar que se coloco el tipo de vehiculo
+        if($("#tipoVehiculo").val()==0){
+            alert("Oops! Selecciona Tipo de Vehiculo")
+            return false;
+        }
+
+        var matricula=$("#matricula").val()
         var descuentu= (isNaN(parseInt($("#discount").val()))) ? 0 : parseInt($("#discount").val());
+        var subtotal= parseInt($("tr#subtotal > td")[2].innerHTML);
+        var Idvehiculo=$("#tipoVehiculo").val();
 
-        //Mandando los datos al servidor php para que lso inserte a la BD
+        //Mandando los datos al servidor php para que los inserte a la BD
         $.ajax({
             url  : "RegistrarPaquete.php",
             cache: false,
             type : "POST",
             data : {servicios : $vararray,
-                    cliente: cliente,
-                    desc: descuentu},
+                    matric: matricula,
+                    desc: descuentu,
+                    sub: subtotal,
+                    idvehiculo: Idvehiculo},
 
             success: function(dataResponse) {
                 alert(dataResponse)
@@ -180,9 +187,18 @@ $( function() { //Cuando este listo el DOM
                 alert(dataResponse);
             }
         })
-
-
     })
+
+    $("#matricula").change(function(){
+        $("div.panel-heading > strong")[0].innerHTML=$("#matricula").val()
+    });
+
+    $("#tipoVehiculo").change(function(){
+        //alert(this[this.value].innerHTML) //SOY UN PERRO DEL AGUA :D
+        $("div.panel-heading > strong")[1].innerHTML=this[this.value].innerHTML //OMG :o soy un mendigo :D
+    });
+
+
 
     //SE VE HERMOSO :,), para quitar la alerta
     /*$("#dismisThis").fadeTo(2000, 500).slideUp(500, function(){

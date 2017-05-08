@@ -1,9 +1,8 @@
 <body>
 <div id="wrapper">
     <?php
-    require_once ("Menu.php");
-    require_once  ("../FuncionesPHP.php");
-
+        require_once ("Menu.php");
+        require_once  ("../FuncionesPHP.php");
     ?>
 
 
@@ -36,7 +35,7 @@
                     <!--Hacemos conexion con la base de datos-->
                         <?php
                         $Link=ConectarseaBD();
-                        $Resultado=$Link->query("SELECT * FROM empleado");
+                        $Resultado=$Link->query("SELECT * FROM empleado WHERE emp_estado=1");
                         $Link->close();
 
                         $filas=$Resultado->num_rows;
@@ -45,17 +44,17 @@
                             $Resultado->data_seek($i);
                             $array=$Resultado->fetch_array(MYSQLI_ASSOC);
 
-                            $Nombre=$array["nombreE"];
-                            $correo=$array["Correo"];
-                            $genero=$array["Genero"];
-                            $telefono=$array["Telefono"];
-                            $turno=$array["Turno"];
-                            $Direccion=$array["direccion"];
-                            $salario=$array["salario"];
-                            $estado=$array["estado"];
-                            $fechaIn=$array["FechaIngreso"];
-                            $rol=$array["id_rol"];
-                            $idEmp = $array["id_empleado"];
+                            $idEmp = $array["emp_idEmpleado"];
+                            $Nombre=$array["emp_nombre"];
+                            $correo=$array["emp_correo"];
+                            $genero=$array["emp_genero"];
+                            $telefono=$array["emp_telefono"];
+                            $turno=$array["emp_turno"];
+                            $Direccion=$array["emp_direccion"];
+                            $salario=$array["emp_salario"];
+                            $estado=$array["emp_estado"];
+                            $fechaIn=$array["emp_fechaIngreso"];
+                            $rol=$array["emp_idRol"];
 
                             echo <<<eti
                                 <tr class="alert-success">

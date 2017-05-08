@@ -103,13 +103,19 @@
                             <li>
                                 <a href="IngresarEmpleado.php">Agregar empleados</a>
                             </li>
-                            <li>
-                                <a href="EliminarEmpleado.php">Dar de baja empleados</a>
-                            </li>
                         </ul>
                     </li>
                     <li>
                         <a href="../Index.php"><i class="fa fa-user fa-desktop"></i> Vista de la página</a>
+                    </li>
+                    
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demoo"><i class="glyphicon glyphicon-usd"></i> Caja <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demoo" class="collapse">
+                            <li>
+                                <a href="VerCaja.php">Ver caja</a>
+                            </li>
+                        </ul>
                     </li>
                     
                     <li>

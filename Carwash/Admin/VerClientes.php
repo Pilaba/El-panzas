@@ -26,15 +26,15 @@
                             <thbody>
                                 <?php
                                     $Link=ConectarseaBD();
-                                    $Resultado= $Link->query("SELECT * FROM usuario WHERE id_rolS=2");
+                                    $Resultado= $Link->query("SELECT * FROM usuario WHERE usu_idRol=2");
                                     $Link->close();
 
                                     for($i=0; $i<$Resultado->num_rows; $i++){
                                         $Resultado->data_seek($i);
                                         $array=$Resultado->fetch_array(MYSQLI_ASSOC);
-                                        $Nombre=$array["nombre"];
-                                        $email=$array["correo"];
-                                        $Tel=$array["Telefono"];
+                                        $Nombre=$array["usu_nombre"];
+                                        $email=$array["usu_correo"];
+                                        $Tel=$array["usu_telefono"];
                                         echo <<<_Etiqueta
                                             <tr class="alert-success">
                                                 <td>$Nombre</td>

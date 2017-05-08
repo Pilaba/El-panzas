@@ -13,6 +13,7 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
 <style>
     input {display: block; padding: 0; margin: 0; border: 0; width: 100%}
 </style>
+
 <div id="wrapper">
     <?php
         require_once ("Menu.php");
@@ -39,7 +40,7 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
                 <div class="col-md-3">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            DETALLE:
+                            DETALLE: "<strong id="matr">.</strong> - <strong id="tip">.</strong>"
                         </div>
                         <div id="DetallePaquete" class="panel-body" style="min-height: 300px">
                             <table id="tablitaDetalles" class="table">
@@ -74,10 +75,29 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
                         </div>
                         <div class="panel-footer">
                             <div class="row">
-                                <div class="col-md-5">
-                                    <input type="text"  id="nombrecliente" class="form-control" placeholder="Nombre Cliente" required="required">
+                                <div class="col-md-12">
+                                    <input type="text"  id="matricula" class="form-control" placeholder="Matricula Vehicular" required="required">
                                 </div>
-                                <div class="col-md-7">
+                                <div class="col-md-6">
+                                    <select class="form-control" id="tipoVehiculo">
+                                        <option selected value="0">Tipo Vehiculo</option>
+                                        <?php
+                                            $link=ConectarseaBD();
+                                            $result=$link->query("SELECT * FROM tipovehiculo");
+
+                                            for($i=0; $i<$result->num_rows; $i++){
+                                                $result->data_seek($i);
+                                                $array=$result->fetch_array(MYSQLI_ASSOC);
+                                                $idTipo=$array["tv_idTipo"];
+                                                $nombre=$array["tv_nombre"];
+                                                echo "<option value='$idTipo'>$nombre</option>";
+                                            }
+                                            $link->close();
+                                            $result->close()
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
                                     <input type="button" id="botonPaquete" value="ENVIAR" class="btn btn-info btn-group-justified">
                                 </div>
                             </div>
@@ -95,15 +115,15 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
                             <ul id="gallery" class="list-group" >
                                 <?php
                                 $Mysqli=ConectarseaBD();
-                                $resultado=$Mysqli->query("SELECT * FROM servicio WHERE estado=1");
+                                $resultado=$Mysqli->query("SELECT * FROM servicio WHERE serv_estado=1");
 
                                 if($rows=$resultado->num_rows){
                                     for ($i=0; $i<$rows; $i++){
                                         $resultado->data_seek($i);
                                         $array=$resultado->fetch_array(MYSQLI_ASSOC);
-                                        $nombre=$array["Nombre"];
-                                        $id=$array["id_servicio"];
-                                        $precio=$array["preciobase"];
+                                        $nombre=$array["serv_nombre"];
+                                        $id=$array["serv_idServicio"];
+                                        $precio=$array["serv_precioBase"];
                                         echo <<<_end
                                                 <li class="list-group-item">
                                                     <img src="" alt="$nombre - $precio" width="96" height="72">

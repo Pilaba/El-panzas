@@ -1,9 +1,8 @@
 <body>
 <div id="wrapper">
     <?php
-    require_once ("Menu.php");
-    require_once  ("../FuncionesPHP.php");
-
+        require_once ("Menu.php");
+        require_once  ("../FuncionesPHP.php");
     ?>
 
     <div id="page-wrapper">
@@ -23,8 +22,8 @@
                                 $Result->data_seek($i);
                                 $row = $Result->fetch_array(MYSQLI_ASSOC);
 
-                                $NomServicio = $row["Nombre"];
-                                $Price = $row["preciobase"];
+                                $NomServicio = $row["serv_nombre"];
+                                $Price = $row["serv_precioBase"];
                                 echo <<<_Init
                                     <a class="list-group-item " data-value="$i"> 
                                         <div class="row">
