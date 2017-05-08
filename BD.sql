@@ -21,7 +21,7 @@ INSERT INTO TipoVehiculo VALUES ('','Taxi'),
 CREATE TABLE Vehiculo (
 	  vehi_matricula VARCHAR(8) NOT NULL,
 	  vehi_id_Tipo TINYINT UNSIGNED NOT NULL,
-	  PRIMARY KEY (vehi_matricula),
+	  PRIMARY KEY (vehi_matricula,vehi_id_Tipo),
 	  FOREIGN KEY (vehi_id_Tipo) REFERENCES TipoVehiculo(tv_idTipo)
 );
 

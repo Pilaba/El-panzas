@@ -44,7 +44,11 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
                         </div>
                         <div id="DetallePaquete" class="panel-body" style="min-height: 300px">
                             <table id="tablitaDetalles" class="table">
-                                <thead>Orden #
+                                <thead>Orden <?php $resuta=ConectarseaBD()->query("SELECT COUNT(*) FROM vehiculo_paquete");
+                                                   $resuta->data_seek(0);
+                                                   $resuta=$resuta->fetch_array(MYSQLI_NUM);
+                                                   echo ($resuta[0]+1);
+                                             ?>
                                     <tr>
                                         <th>#</th>
                                         <th>Nombre</th>
