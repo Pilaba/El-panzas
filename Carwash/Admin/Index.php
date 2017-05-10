@@ -128,6 +128,7 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
                                         $nombre=$array["serv_nombre"];
                                         $id=$array["serv_idServicio"];
                                         $precio=$array["serv_precioBase"];
+
                                         echo <<<_end
                                                 <li class="list-group-item">
                                                     <img src="" alt="$nombre - $precio" width="96" height="72">

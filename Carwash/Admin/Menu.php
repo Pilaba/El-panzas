@@ -106,10 +106,6 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="../Index.php"><i class="fa fa-user fa-desktop"></i> Vista de la página</a>
-                    </li>
-                    
-                    <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demoo"><i class="glyphicon glyphicon-usd"></i> Caja <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demoo" class="collapse">
                             <li>
@@ -117,12 +113,12 @@
                             </li>
                         </ul>
                     </li>
-                    
                     <li>
-                    <a href="javascript:;" data-toggle="collapse" data-target="#demo,#demo2,#demo3,#demo4"><i class="fa fa-fw fa-arrows-v"></i> Dropdown All <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo,demo2,demo3,demo4" class="collapse">
-                        </ul>
+                        <a href="../Index.php"><i class="fa fa-user fa-desktop"></i> Vista de la página</a>
                     </li>
+                    
+                    
+                   
                 </ul>
             </div>
     </nav>

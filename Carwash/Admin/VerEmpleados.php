@@ -31,7 +31,7 @@
                             <th>Roles</th>
                         </tr>
                     </thead>
-                    <thbody>
+                    <tbody>
                     <!--Hacemos conexion con la base de datos-->
                         <?php
                         $Link=ConectarseaBD();
@@ -78,7 +78,7 @@ eti;
 
                         }
                         ?>
-                    </thbody> 
+                    </tbody>
                 </table>   
             </div>
         </div>

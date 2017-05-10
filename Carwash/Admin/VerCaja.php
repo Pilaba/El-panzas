@@ -1,9 +1,8 @@
 <body>
 <div id="wrapper">
     <?php
-    require_once ("Menu.php");
-    require_once  ("../FuncionesPHP.php");
-
+        require_once ("Menu.php");
+        require_once  ("../FuncionesPHP.php");
     ?>
 
 
@@ -49,7 +48,7 @@
 
                                         echo <<<_Etiqueta
                                                 <tr class="alert-success">
-                                                    <td>$id</td>
+                                                    <td><a href="#" data-toggle="modal" data-target="#myModal"> $id</a> </td>
                                                     <td>$fecha</td>
                                                     <td>$subtotal</td>
                                                     <td>$descuento</td>
@@ -63,10 +62,43 @@ _Etiqueta;
                                             <td>$sumaD</td>
                                             <td>$sumaT</td>
                                           </tr>";
-
-
                                 ?>
                             </thbody>
+
+                            <!-- modal -->
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Servicio en el paquete</h4>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            Vehiculo:
+                                            <br>
+                                            MATRICULA XX-XX-XX
+                                            TIPO Minivan
+                                            Usuario balde
+
+                                            <br>
+                                            SERVICIO :
+                                            <br>
+                                            Detallado 24
+                                            Pulido 25
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
                         </table>
                     </div>
                 </div>

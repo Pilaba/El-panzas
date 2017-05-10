@@ -121,6 +121,7 @@ CREATE TABLE Servicio(
 		serv_nombre VARCHAR(30) UNIQUE NOT NULL,
 		serv_precioBase FLOAT UNSIGNED NOT NULL,
 		serv_estado TINYINT(1) NOT NULL,
+		serv_imagen LONGBLOB,
 	  PRIMARY KEY (serv_idServicio)
 );
 
