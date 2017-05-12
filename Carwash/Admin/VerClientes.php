@@ -3,9 +3,7 @@
     <?php
     require_once ("Menu.php");
     require_once  ("../FuncionesPHP.php");
-
     ?>
-
 
     <div id="page-wrapper">
         <div class="panel panel-info">
@@ -17,22 +15,23 @@
                     <div class="col-md-6">
                         <table class="table table-striped">
                             <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Correo</th>
-                                <th>Telefono</th>
-                            </tr>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Correo</th>
+                                    <th>Telefono</th>
+                                </tr>
                             </thead>
-                            <thbody>
+                            <tbody>
                                 <?php
-                                    $Link=ConectarseaBD();
-                                    $Resultado= $Link->query("SELECT * FROM usuario WHERE usu_idRol=2");
-                                    $Link->close();
+                                    $Link=ConectarseaBD(); //Conexion a la BD
+                                    $Resultado= $Link->query("SELECT * FROM usuario WHERE usu_idRol=2"); //Se realiza la consulta para obtener los usuarios clientes en el sistema
+                                    $Link->close(); //Se cierra la conexion a la BD
 
-                                    for($i=0; $i<$Resultado->num_rows; $i++){
-                                        $Resultado->data_seek($i);
-                                        $array=$Resultado->fetch_array(MYSQLI_ASSOC);
-                                        $Nombre=$array["usu_nombre"];
+
+                                    for($i=0; $i<$Resultado->num_rows; $i++){ //$Resultado->num_rows numero de filas obtenidas por la consulta
+                                        $Resultado->data_seek($i); //Puntero
+                                        $array=$Resultado->fetch_array(MYSQLI_ASSOC); //se obtiene un array associativo para cada fila
+                                        $Nombre=$array["usu_nombre"]; //Se obtienen los datos del array
                                         $email=$array["usu_correo"];
                                         $Tel=$array["usu_telefono"];
                                         echo <<<_Etiqueta
@@ -44,7 +43,7 @@
 _Etiqueta;
                                     }
                                 ?>
-                            </thbody>
+                            </tbody>
                         </table>
                     </div>
                 </div>

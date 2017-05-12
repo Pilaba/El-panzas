@@ -9,6 +9,8 @@
         $PBase = $_POST["PBase"];
 
         $size=$_FILES['archivo']['size'];
+        $tipo = $_FILES['archivo']['type'];
+
         echo $size;
         if( ! ($size > 0 && $size <= 950000) ){
             echo <<<_Fallo
@@ -29,7 +31,7 @@ _Fallo;
             $data = $Link->real_escape_string($data);//se escapan los caracteres especiales
             fclose($fp);//Cerramos el archivo
             ob_clean();
-            $Resultado = $Link->query("INSERT INTO servicio VALUES (NULL,'$Nombre','$PBase',1,'$data')");
+            $Resultado = $Link->query("INSERT INTO servicio VALUES (NULL,'$Nombre','$PBase',1,'$data','$tipo')");
             $Link->close();
             if ($Resultado == TRUE) {
                 echo <<<_Exito
@@ -55,11 +57,6 @@ _Fallo;
         }
     }
     ?>
-
-
-
-
-
 
     <div id="page-wrapper">
         <div class="panel panel-info">
@@ -102,7 +99,7 @@ _Fallo;
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-3 control-label">Precio</label>
+                                <label class="col-md-3 control-label">Imagen</label>
                                 <div class="col-md-9">
                                     <input class="form-control oculto" type="file" name="archivo" id="archivo" style="color: transparent" required>
                                 </div>

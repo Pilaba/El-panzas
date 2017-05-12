@@ -131,7 +131,7 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
 
                                         echo <<<_end
                                                 <li class="list-group-item">
-                                                    <img src="" alt="$nombre - $precio" width="96" height="72">
+                                                    <img src="GetImage.php?id=$id" alt="$nombre - $precio" width="96" height="72">
                                                     <a href="#" class="glyphicon glyphicon-plus">Agregar</a>
                                                     <input id="nombre" value="$nombre" type="hidden">
                                                     <input id="id" value="$id" type="hidden">
