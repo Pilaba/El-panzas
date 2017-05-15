@@ -19,7 +19,7 @@
                                 <tr>
                                     <th>Id Paquete</th>
                                     <th>Fecha</th>
-                                    <th>Subtotal</th>
+                                    <th>Importe</th>
                                     <th>Descuento</th>
                                     <th>Total</th>
                                 </tr>

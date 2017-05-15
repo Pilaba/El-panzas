@@ -103,7 +103,7 @@
 
 <!-------------------------------------------------------- Imagenes inferiores ------------------------------------------------>
 <div class="container text-center">
-    <h3>What We Do</h3><br>
+    <h3>Nuestros Servicios</h3><br>
     <div class="row">
         <div class="col-sm-4">
             <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">

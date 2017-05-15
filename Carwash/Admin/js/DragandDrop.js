@@ -36,62 +36,61 @@ $( function() { //Cuando este listo el DOM
         }
     });
 
-    var recycle_icon = "<a href='#' class='glyphicon glyphicon-minus'>Eliminar</a>"; //se agregara este icono cuando este dentro del paquete
+    var recycle_icon = "<a href='Active Javascript!!!' class='glyphicon glyphicon-minus'>Eliminar</a>"; //se agregara este icono cuando este dentro del paquete
     function deleteImage( $item ) {
         $item.fadeOut(function() { /*$item = elemento que se eliminara -> ui.draggable*/
             /* con el operador ternario se verifica que exista una <ul> en "#paquete-container" y que contenga elementos,
              *  en caso de que no existe tal <ul> la variable toma una referencia a un <ul> vacio en "#paquete-container"
              *  en caso de que ya exista tal lista y tenga elementos simplemente se añade un nuevo item a la lista <ul> que tenga la clase "list-group"
              * */
-            var $list = $( "ul", $paquete ).length ?
-                $( "ul", $paquete ) :
-                $( "<ul class='list-group' id='paquete'/>" ).appendTo( $paquete );
+            //SOY UN MENDIGO GENIO :D - Se verifica si en el array de servicios esta el servicio, si no existe se procede a agreagarlo
+            if( !($vararray.indexOf($item.find("input#id").attr("value")) >=0) ){
+                var $list = $( "ul", $paquete ).length ?
+                    $( "ul", $paquete ) :
+                    $( "<ul class='list-group' id='paquete'/>" ).appendTo( $paquete );
 
-            $item.find( "a.glyphicon-plus" ).remove(); /*Eliminas el icono para poder remplazarlo con el nuevo  */
+                //para agregar item a la canasta o paquete
+                $vararray.push($item.find("input#nombre").attr("value"))  /*Nombre del servicio */
+                $vararray.push($item.find("input#precio").attr("value"))  /*Precio base del servicio */
+                $vararray.push($item.find("input#id").attr("value"))
 
-            //para agregar item a la canasta o paquete
-            $vararray.push($item.find("input#nombre").attr("value"))  /*Nombre del servicio */
-            $vararray.push($item.find("input#precio").attr("value"))  /*Precio base del servicio */
-            $vararray.push($item.find("input#id").attr("value"))
 
-            sortable($vararray) //LLamada a la funcion para que actualice el detalle de los servicios
+                $item.find( "a.glyphicon-plus" ).remove(); /*Eliminas el icono para poder remplazarlo con el nuevo  */
 
-            $item.append( recycle_icon ).appendTo( $list ).fadeIn(function() { //agreaga el nuevo icono al item, este item se agrega a la lista y se añade un efecto
-                $item
-                    .animate()
-                    .find( "img" )
-                    .animate();
-            });
+                sortable($vararray) //LLamada a la funcion para que actualice el detalle de los servicios
 
+                $item.append( recycle_icon ).appendTo( $list ).fadeIn()  //agreaga el nuevo icono al item, este item se agrega a la lista y se a�ade un efecto
+            }
         });
     }
 
     // Image recycle function
-    var trash_icon = "<a href='#' class='glyphicon glyphicon-plus'>Agregar</a>"; //se agregara este icono cuando este dentro de servicios
+    var trash_icon = "<a href='Active Javascript!!!' class='glyphicon glyphicon-plus'>Agregar</a>"; //se agregara este icono cuando este dentro de servicios
     function recycleImage( $item ) {
         //para eliminar item de la canasta o paquete
-        removeElemnet=$item.find("input#nombre").attr("value")
-        $vararray.splice($vararray.indexOf(removeElemnet),3)
+        //Se verifica si en el array de servicios existe tal servicio, en caso de que si, se procede a eliminarlo
+        if( ( $vararray.indexOf($item.find("input#nombre").attr("value") ) >=0) ){
+            //para eliminar item de la canasta o paquete
+            removeElemnet=$item.find("input#nombre").attr("value")
+            $vararray.splice($vararray.indexOf(removeElemnet),3)
 
-        sortable($vararray) //LLamada a la funcion para que actualice el detalle de los servicios
+            sortable($vararray) //LLamada a la funcion para que actualice el detalle de los servicios
 
-        $item.fadeOut(function() { // item elemento que se regresara a servicios  */
-            $item.find( "a.glyphicon-minus" )
-                .remove()      //Busca el icono en el item y lo elimina
-                .end()
-                .css( "width", "") //No modifica el css
-                .append( trash_icon ) //agrega el nuevo icono
-                .find( "img" )
-                .css( "height", "" )
-                .end()
-                .appendTo( $gallery ) ////este item se agrega a la lista y se añade un efecto
-                .fadeIn();
-        });
+            $item.fadeOut(function() { // item elemento que se regresara a servicios  */
+                $item.find( "a.glyphicon-minus" )
+                    .remove()      //Busca el icono en el item y lo elimina
+                    .end()
+                    .append( trash_icon ) //agrega el nuevo icono
+                    .appendTo( $gallery ) ////este item se agrega a la lista y se a�ade un efecto
+                    .fadeIn();
+            });
+        }
     }
 
     // comportamiento de los iconos junto a la imagen
     //Para si das click en el "+" o "-" quite a agregue apropiadamente
     $("ul#gallery > li").on( "click", function( event ) { //escucha un click en los elementos <li> del <ul> que tenga como id "gallery"
+        event.preventDefault()
         var $item = $( this ),     //item que se le dio click
             $target = $( event.target ); //a que icono del item se le dio click
 
@@ -104,46 +103,53 @@ $( function() { //Cuando este listo el DOM
     });
 
     function sortable(ArrayServicios){ //SOY UN CAPO :D SIRVE PARA ORDENAR EL DETALLE DE LOS SERVICIOS
-        var descuento=$("#discount").val() //Guarda el descuento que se ingreso
 
-        $("#tablitaDetalles > tbody > tr").remove()//Elimina todos los datos anteriores para generar nuevamente el detalle
+        var Valordescuento=$("#discount").val()  //Guarda el descuento que se ingreso
+
+        $descuento=$("#discount")
+        $TablaDetalles=$("#tablitaDetalles > tbody")
+
+        $("tr",$TablaDetalles).remove()//Elimina todos los datos anteriores para generar nuevamente el detalle
 
         var contador = 1,Indice=0,suma=0; //Contador para llevar la cuenta {array, Indice para ArrayServicios, suma para saber la suma de los servicios}
         //Se agregan los detalles del servicio al panel de detalles
         for(contador; contador<=ArrayServicios.length/3; contador++,Indice+=3){
-            $("#tablitaDetalles > tbody").append("<tr> <td>"+ contador +" </td> <td>"+ArrayServicios[Indice] +"</td> <td>"+ArrayServicios[Indice+1] +"</td></tr>");
+            $TablaDetalles.append("<tr> <td>"+ contador +" </td> <td>"+ArrayServicios[Indice] +"</td> <td>"+ArrayServicios[Indice+1] +"</td></tr>");
             suma+= parseInt(ArrayServicios[Indice+1])
         }
 
         /*Subtotal del paquete y hace la insercion en la tabla*/
-        $("#tablitaDetalles > tbody").append("<tr id='subtotal' > " +
+        $TablaDetalles.append("<tr id='subtotal' > " +
             "<td></td> <td>Subtotal</td> <td id='sub'>"+ suma +"</td>" +
             "</tr>");
+
         /*Descuento del paquete y hace la insercion en la tabla*/
-        $("#tablitaDetalles > tbody").append("<tr id='descuento' > " +
+        $TablaDetalles.append("<tr id='descuento' > " +
             "<td></td> <td> Descuento </td> " +
-            "<td><input type='number' id='discount' value="+ descuento +"></td>" +
+            "<td><input type='number' min='0'  id='discount' value="+ 0 +"></td>" +
             "</tr>");
+        $("#discount").val(Valordescuento)
+
         /*Total y hace la insercion en la tabla*/
-        $("#tablitaDetalles > tbody").append("<tr id='total' class='alert-success'> <td></td> <td> Total </td> <td id='sum'>"+ suma +" </td></tr>");
+        $TablaDetalles.append("<tr id='total' class='alert-success'> <td></td> <td> Total </td> <td id='sum' >"+ suma +" </td></tr>");
 
         //Actualizamos el total en caso de agregar nuevos servicios
-        if(isNaN(parseInt( $("#discount").val() ))){
+        if(isNaN(parseInt( $descuento.val() ))){
             $("tr#total > td")[2].innerHTML=suma
         }else{
-            $("tr#total > td")[2].innerHTML=suma-parseInt($("#discount").val())
+            $("tr#total > td")[2].innerHTML=suma-parseInt($descuento.val())
         }
 
         //Se actualiza el total en caso de cambiar el descuento
         $("#discount").change(function(){
-            $("tr#total > td")[2].innerHTML=(parseInt($("tr#subtotal > td")[2].innerHTML))-this.value
+            $("td#sum").text( (parseInt($("td#sub").text() - this.value)) )
         });
+
     }
 
     //PARA SUBIR LOS ELEMENTOS
-    $("#botonPaquete").click(function (evento) {
-        evento.preventDefault()
-
+    $("#botonPaquete").click(function (ev) {
+        ev.preventDefault()
         //Comprobar que halla servicios en el paquete
         //O tambien $("#paquete").children("li").length==0
         if($("li","#paquete").length==0){
@@ -163,9 +169,14 @@ $( function() { //Cuando este listo el DOM
             return false;
         }
 
+        if(parseInt($("#sum").text()) < 0){
+            alert("El descuento es demasiado alto, el total es negativo")
+            return false;
+        }
+
         var matricula=$("#matricula").val()
         var descuentu= (isNaN(parseInt($("#discount").val()))) ? 0 : parseInt($("#discount").val());
-        var subtotal= parseInt($("tr#subtotal > td")[2].innerHTML);
+        var subtotal= parseInt( $("td#sub").text() ) ;
         var Idvehiculo=$("#tipoVehiculo").val();
 
         //Mandando los datos al servidor php para que los inserte a la BD
@@ -174,63 +185,50 @@ $( function() { //Cuando este listo el DOM
             cache: false,
             type : "POST",
             data : {servicios : $vararray,
-                    matric: matricula,
-                    desc: descuentu,
-                    sub: subtotal,
-                    idvehiculo: Idvehiculo},
+                matric: matricula,
+                desc: descuentu,
+                sub: subtotal,
+                idvehiculo: Idvehiculo},
 
             success: function(dataResponse) {
-                alert(dataResponse)
-            },
+                $Mensajito=$("#MensajeGeneral");
+                $Mensajito.attr("class","alert alert-success text-center")
+                $Mensajito.find("strong").text(
+                    "No. Orden: "+$("em#NumOrden").text()+" " +
+                    "Matricula: "+$("#matricula").val()+" " +
+                    "Total: "+$("#sum").text()
+                );
 
+                $Mensajito.show();
+                $Mensajito.fadeTo(4000, 1000).slideUp(1000, function(){
+                    $Mensajito.slideUp(1000);
+                });
+
+                $("#matricula").val("")
+                $("#tipoVehiculo").val(0)
+                $("#discount").val(0)
+                $("#sum").val(0)
+                $("#matr").text("")
+                $("#tip").text("")
+
+                $("ul#paquete > li > a").click();
+                $vararray=new Array();
+                $("em#NumOrden").text(dataResponse);
+            },
             error : function(dataResponse) {
-                alert(dataResponse);
+                alert("Error")
             }
         })
-    })
+    });
 
     $("#matricula").change(function(){
-        $("div.panel-heading > strong")[0].innerHTML=$("#matricula").val()
+        $("#matr").text($("#matricula").val())
     });
 
     $("#tipoVehiculo").change(function(){
         //alert(this[this.value].innerHTML) //SOY UN PERRO DEL AGUA :D
-        $("div.panel-heading > strong")[1].innerHTML=this[this.value].innerHTML //OMG :o soy un mendigo :D
+        $("#tip").text(this[this.value].innerHTML) //OMG :o soy un mendigo :D - WADAFAK XD
     });
 
 
-
-    //SE VE HERMOSO :,), para quitar la alerta
-    /*$("#dismisThis").fadeTo(2000, 500).slideUp(500, function(){
-        $("#dismisThis").slideUp(500);
-    });*/
-
-
 } );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

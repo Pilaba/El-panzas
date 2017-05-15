@@ -1,7 +1,7 @@
 <?php
 require_once ("../FuncionesPHP.php");
 
-if(isset($_POST["servicios"]) && isset($_POST["matric"]) && isset($_POST["desc"]) && isset($_POST["sub"]) && isset($_POST["idvehiculo"])){
+if(isset($_POST["servicios"])){
     $link=ConectarseaBD();
     $matricula=$link->real_escape_string($_POST['matric']);
     $arrayServicios=$_POST["servicios"];  // {Nombre, precio, ID}
@@ -34,15 +34,21 @@ if(isset($_POST["servicios"]) && isset($_POST["matric"]) && isset($_POST["desc"]
         //Se actualiza el detalle vehiculo_paquete
         $total=$subtotal-$discount;
         $resultado=$link->query("INSERT INTO vehiculo_paquete VALUES ('$matricula','$idPaquete',1,NULL,'$subtotal','$discount','$total')");
-        echo "Exito";
+
+
+        //Retornara el numero de orden siguiente
+        $resuta=ConectarseaBD()->query("SELECT COUNT(*) FROM vehiculo_paquete");
+        $resuta->data_seek(0);
+        $resuta=$resuta->fetch_array(MYSQLI_NUM);
+
+        echo ($resuta[0]+1);
     }else{
         echo "Error";
     }
 
     $link->close();
-     //echo implode(", ", $_POST["array"]); separar por comas
 }else{
-    echo "No se recibieron datos";
+    //echo "No se recibieron datos";
 }
 
 ?>

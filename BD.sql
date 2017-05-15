@@ -122,6 +122,7 @@ CREATE TABLE Servicio(
 		serv_precioBase FLOAT UNSIGNED NOT NULL,
 		serv_estado TINYINT(1) NOT NULL,
 		serv_imagen LONGBLOB,
+		serv_mime varchar(40) NOT NULL,
 	  PRIMARY KEY (serv_idServicio)
 );
 
