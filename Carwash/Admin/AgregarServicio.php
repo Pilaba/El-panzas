@@ -11,7 +11,6 @@
         $size=$_FILES['archivo']['size'];
         $tipo = $_FILES['archivo']['type'];
 
-        echo $size;
         if( ! ($size > 0 && $size <= 950000) ){
             echo <<<_Fallo
                     <form name="formFallo" action="AgregarServicio.php" method="POST"> 
@@ -87,14 +86,14 @@ _Fallo;
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Nombre</label>
                                 <div class="col-md-9">
-                                    <input class="form-control" type="text" name="Nom" required>
+                                    <input class="form-control" maxlength="30" type="text" name="Nom" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Precio</label>
                                 <div class="col-md-9">
-                                    <input class="form-control" type="number" name="PBase" required>
+                                    <input class="form-control" min="1" type="number" name="PBase" required>
                                 </div>
                             </div>
 
@@ -108,7 +107,7 @@ _Fallo;
                             <div class="form-group">
                                 <label class="col-md-3 control-label"></label>
                                 <div class="col-md-9">
-                                    <input class="btn btn-info" type="submit">
+                                    <input class="btn btn-info" type="submit" value="ACEPTAR">
                                 </div>
                             </div>
                         </form>

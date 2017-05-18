@@ -14,10 +14,22 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <table class="table table-striped">
+                        <h1 class="label label-info">Mostrar por:</h1>
+                        <select  class="form-control" name="" id="">
+                            <option selected value="0"> Ultimos 10</option>
+                            <option value="1"> Este dia </option>
+                            <option value="1"> Esta semana </option>
+                            <option value="1"> Este mes </option>
+                            <option value="1"> Fecha especifica </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <table id="TCaja"class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Id Paquete</th>
+                                    <th>No. paquete</th>
                                     <th>Fecha</th>
                                     <th>Importe</th>
                                     <th>Descuento</th>
@@ -27,7 +39,7 @@
                             <thbody>
                                 <?php
                                     $Link=ConectarseaBD();
-                                    $Resultado= $Link->query("SELECT * FROM vehiculo_paquete");
+                                    $Resultado= $Link->query("SELECT * FROM vehiculo_paquete ORDER BY VP_idPaquete DESC LIMIT 10 ");
                                     $Link->close();
 
                                     $sumaS=0;
@@ -48,7 +60,7 @@
 
                                         echo <<<_Etiqueta
                                                 <tr class="alert-success">
-                                                    <td><a href="#" data-toggle="modal" data-target="#myModal"> $id</a> </td>
+                                                    <td><button class="alert-info" value="$id"> $id</button> </td>
                                                     <td>$fecha</td>
                                                     <td>$subtotal</td>
                                                     <td>$descuento</td>
@@ -65,39 +77,34 @@ _Etiqueta;
                                 ?>
                             </thbody>
 
-                            <!-- modal -->
+                            <!-- modal de proposito general-->
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
-                                        <div class="modal-header">
+                                        <div class="modal-header alert-success">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title" id="myModalLabel">Servicio en el paquete</h4>
+                                            <h4 class="modal-title" id="myModalLabel">Paquete No <strong id="NumPaquete">X</strong></h4>
                                         </div>
                                         <div class="modal-body">
-
-                                            Vehiculo:
-                                            <br>
-                                            MATRICULA XX-XX-XX
-                                            TIPO Minivan
-                                            Usuario balde
-
-                                            <br>
-                                            SERVICIO :
-                                            <br>
-                                            Detallado 24
-                                            Pulido 25
-
+                                            <h5>Servicios Solicitados </h5>
+                                            <ul id="ColeccionServicios">
+                                                <!-- Colgar los servicios aqui -->
+                                            </ul>
+                                            <h5>Automovil</h5>
+                                            <ul>
+                                                <!-- Colgar las caracteristicas del automovial aqui -->
+                                            </ul>
+                                            <h5> Cliente </h5>
+                                            <ul>
+                                                <!-- Colgar las caracteristicas del cliente aqui -->
+                                            </ul>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
-
 
                         </table>
                     </div>
@@ -113,6 +120,9 @@ _Etiqueta;
 
 <!-- jQuery -->
 <script src="js/jquery.js"></script>
+
+<!-- Script especial -->
+<script src="js/VerCaja.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>

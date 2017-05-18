@@ -10,27 +10,86 @@
             <div class="panel-heading">
                 <h2 class="panel-title"> Modificar Servicio </h2>
             </div>
+
+
             <div class="panel-body">
+                <!-- Alerta de proposito general -->
+                <div id='MensajeGeneral' class='alert alert-success text-center' role='alert' style="display: none">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong id="contenidoMensaje">...</strong>
+                </div>
+
                 <div class="col-md-3">
                     <div class="list-group">
                         <?php
-                            if(isset($_POST["nombre"])){    //Modificar servicio antes de que los cargue de nuevo
-                                $con=ConectarseaBD();
-                                $nom=$con->real_escape_string($_POST["nombre"]);
-                                $precio=$con->real_escape_string($_POST["precio"]);
-                                $estado=$con->real_escape_string($_POST["equisDe"]);
-                                $idserv=$con->real_escape_string($_POST["idserv"]);
+                            if(isset($_POST["nombre"])) {    //Modificar servicio antes de que los cargue de nuevo
+                                $con = ConectarseaBD();
+                                $nom = $con->real_escape_string($_POST["nombre"]);
+                                $precio = $con->real_escape_string($_POST["precio"]);
+                                $estado = $con->real_escape_string($_POST["estado"]);
+                                $idserv = $con->real_escape_string($_POST["idserv"]);
 
-                                $result=$con->query("UPDATE servicio SET serv_nombre='$nom', serv_precioBase='$precio', serv_estado='$estado' WHERE serv_idServicio='$idserv'; ");
+                                switch ($_FILES["archivito"]["error"]){
+                                    case 0:
+                                        $size = $_FILES['archivito']['size'];
+                                        if(! ($size > 0 && $size <= 948000)){ //Una ultima comprobacion a la imagen
+                                            echo "<script> //Imagen muy grande
+                                                    document.getElementById('MensajeGeneral').className = 'alert alert-danger text-center';
+                                                    document.getElementById('MensajeGeneral').style.display = 'block';
+                                                    document.getElementById('contenidoMensaje').innerHTML='¡Error, La imagen no cumple los requisitos minimos!'
+                                                 </script>";
+                                            break;
+                                        }
 
-                                if($result){
-                                    echo "Exito";
-                                }else{
-                                    echo "Fallo";
+                                        $tipo = $_FILES['archivito']['type'];
+                                        $temName = $_FILES['archivito']['tmp_name']; //Obtenemos el directorio temporal en donde se ha almacenado el archivo;
+                                        $fp = fopen($temName, "rb");//abrimos el archivo con permiso de lectura
+                                        $data = fread($fp, filesize($temName));//leemos el contenido del archivo
+                                        //Una vez leido el archivo se obtiene un string con caracteres especiales.
+                                        $data = $con->real_escape_string($data);//se escapan los caracteres especiales
+                                        fclose($fp);//Cerramos el archivo
+                                        $result = $con->query("UPDATE servicio SET serv_nombre='$nom', serv_precioBase='$precio', serv_estado='$estado',serv_imagen='$data',serv_mime='$tipo' WHERE serv_idServicio='$idserv'");
+                                        if ($result) {
+                                            echo "<script> //Exito modificando, sin imagen
+                                                    document.getElementById('MensajeGeneral').style.display = 'block';
+                                                    document.getElementById('contenidoMensaje').innerHTML='¡Se han guardado las modificaciones!'
+                                                  </script>";
+                                        } else {
+                                            echo "<script> //fallo Insercion
+                                                    document.getElementById('MensajeGeneral').className = 'alert alert-danger text-center';
+                                                    document.getElementById('MensajeGeneral').style.display = 'block';
+                                                    document.getElementById('contenidoMensaje').innerHTML='¡Error no se pudo insertar!'
+                                            </script>";
+                                        }
+                                        break;
+                                    case 1:
+                                        echo "<script> //Imagen muy grande
+                                                    document.getElementById('MensajeGeneral').className = 'alert alert-danger text-center';
+                                                    document.getElementById('MensajeGeneral').style.display = 'block';
+                                                    document.getElementById('contenidoMensaje').innerHTML='¡Error, Imagen demasiado pesada. Intente con otra!'
+                                            </script>";
+                                        break;
+                                    default:
+                                        $result = $con->query("UPDATE servicio SET serv_nombre='$nom', serv_precioBase='$precio', serv_estado='$estado' WHERE serv_idServicio='$idserv' ");
+                                        if ($result) {
+                                            echo "<script> //Exito modificando, sin imagen
+                                                    document.getElementById('MensajeGeneral').style.display = 'block';
+                                                    document.getElementById('contenidoMensaje').innerHTML='¡Se han guardado las modificaciones!'
+                                                  </script>";
+                                        } else {
+                                            echo "<script> //fallo Insercion
+                                                    document.getElementById('MensajeGeneral').className = 'alert alert-danger text-center';
+                                                    document.getElementById('MensajeGeneral').style.display = 'block';
+                                                    document.getElementById('contenidoMensaje').innerHTML='¡Error no se pudo insertar!'
+                                                  </script>";
+                                        }
+                                        break;
                                 }
+                                $con->close();
                             }
 
-                            $link = ConectarseaBD();
+
+                            $link = ConectarseaBD(); //CARGA LOS SERVICIOS DE LA BD
                             $Result = $link->query("SELECT * FROM servicio ");
                             $link->close();
 
@@ -56,12 +115,6 @@ _Init;
                                 }
                             echo "</table> ";
                         ?>
-
-
-
-
-
-
                         <!-- Modal general para cada servicio-->
                         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
@@ -72,8 +125,9 @@ _Init;
                                     </div>
                                     <div id="coko" class="modal-body">
                                         <div class="row">
-                                            <div class="col-sm-6">
-                                                <form id="subir" action="ModificarServicio.php" method="POST">
+                                            <div class="col-md-6">
+                                                <form enctype="multipart/form-data" id="subir" action="ModificarServicio.php" method="POST">
+
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Nombre</label>
                                                         <div class="col-md-9">
@@ -85,19 +139,27 @@ _Init;
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Precio</label>
                                                         <div class="col-md-9">
-                                                            <input class="form-control" id="precio" name="precio" type="number">
+                                                            <input class="form-control" min="1" id="precio" name="precio" type="number">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label">Imagen</label>
+                                                        <div class="col-md-9">
+                                                            <input class="form-control" type="file" name="archivito" id="archivoI" style="color: transparent">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Estado</label>
                                                         <div class="col-md-9">
-                                                            <select name="equisDe" id="equisDe" CLASS="alert-danger">
-                                                                <option value="1">Activo</option>
-                                                                <option value="0"> Inactivo</option>
+                                                            <select name="estado" id="estado">
+                                                                <option value="1" class="alert-success text-justify">Activo</option>
+                                                                <option value="0" class="alert-danger text-justify">Inactivo</option>
                                                             </select>
                                                         </div>
                                                     </div>
+
                                                 </form>
                                             </div>
                                             <div class="col-sm-6" style="height: 150px;width: 200px">

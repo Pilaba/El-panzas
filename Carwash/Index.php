@@ -4,8 +4,6 @@
     <title>Autolavado "El Panzas"</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="JS/jquery.min.js"></script>
-    <script src="JS/bootstrap.min.js"></script>
     <link rel="stylesheet" href="CSS/bootstrap.min.css">
     <link rel="stylesheet" href="CSS/CssIndex.css">
 </head>
@@ -102,37 +100,63 @@
 </div>
 
 <!-------------------------------------------------------- Imagenes inferiores ------------------------------------------------>
-<div class="container text-center">
+<div class="container text-center" ">
     <h3>Nuestros Servicios</h3><br>
-    <div class="row">
-        <div class="col-sm-4">
-            <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
-            <p>Current Project</p>
-        </div>
-        <div class="col-sm-4">
-            <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
-            <p>Project 2</p>
-        </div>
-        <div class="col-sm-4">
-            <div class="well">
-                <p>Some text..</p>
-            </div>
-            <div class="well">
-                <p>Some text..</p>
-            </div>
-        </div>
+    <div class="row" >
+
+        <?php
+        require_once ("FuncionesPHP.php");
+        $link=ConectarseaBD();
+        $result=$link->query("SELECT * FROM servicio WHERE serv_estado='1'");
+
+        for($i=0; $i<$result->num_rows; $i++){
+            $result->data_seek($i);
+            $array=$result->fetch_array(MYSQLI_ASSOC);
+            $nombre=$array["serv_nombre"];
+            $id=$array["serv_idServicio"];
+            $PB=$array["serv_precioBase"];
+
+            echo "<div class='col-md-3 well' style='height:100%'>
+                    <img class='img-rounded' src='Admin/GetImage.php?id=$id' height='150px' width='100%'> 
+                        <div class='alert-success'>
+                            <strong class='col-md-2'>$nombre </strong>
+                            <strong class='col-md-offset-7 col-md-3'> $ $PB </strong>
+                        </div>
+                    </img>
+                  </div>
+                 ";
+        }
+        ?>
     </div>
-</div><br>
+</div>
+
+<!-- REGLA CSS PARA EFECTO BLANCO Y NEGRO DE IMAGEN-->
+<style>
+    img.img-rounded {
+        filter: gray; /* IE6-9 */
+        -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+        -webkit-box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
+        -moz-box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
+        box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
+        margin-bottom:20px;
+    }
+
+    img:hover {
+        filter: none; /* IE6-9 */
+        -webkit-filter: grayscale(0); /* Google Chrome, Safari 6+ & Opera 15+ */
+    }
+</style>
+
 
 <!-- Pie de pagina -->
 <div class="container">
-    <h3 align="center">Visita Nuestra sucursal</h3>
-    <div class="row">
-            <iframe class="col-lg-12" src="http://maps.google.com.mx/maps?q=Autolavado+el+Pansas&amp;output=embed"
-                    height="350"
-                    frameborder="1"
-                    scrolling="no">
-            </iframe>
+    <h1 class="label label-info">Visita Nuestra sucursal</h1>
+    <div class="row ">
+        <iframe class="col-lg-12" src="http://maps.google.com.mx/maps?q=Autolavado+el+Pansas&amp;output=embed"
+            height="350"
+            frameborder="1"
+            scrolling="no">
+        </iframe>
     </div>
 </div>
 
@@ -144,6 +168,9 @@
     </div>
 </div>
 
+
+<script src="JS/jquery.min.js"></script>
+<script src="JS/bootstrap.min.js"></script>
 </body>
 </html>
 

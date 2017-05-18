@@ -9,9 +9,10 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
     header("location: ../Index.php");
 }
 ?>
-
 <style>
     input {display: block; padding: 0; margin: 0; border: 0; width: 100%}
+    .ui-state-highlight {background: darkseagreen}
+    .custom-state-active {background: lightblue}
 </style>
 
 <div id="wrapper">
@@ -128,9 +129,9 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
                                                 <li class="list-group-item">
                                                     <img src="GetImage.php?id=$id" alt="$nombre - $precio" width="96" height="72">
                                                     <a href="#" class="glyphicon glyphicon-plus">Agregar</a>
-                                                    <input id="nombre" value="$nombre" type="hidden">
-                                                    <input id="id" value="$id" type="hidden">
-                                                    <input id="precio" value="$precio" type="hidden">
+                                                    <input class="nombre" value="$nombre" type="hidden">
+                                                    <input class="id" value="$id" type="hidden">
+                                                    <input class="precio" value="$precio" type="hidden">
                                                 </li>
 _end;
                                     }
@@ -271,18 +272,11 @@ _end;
 </div>
 <!-- /#wrapper -->
 <!-- jQuery & jQuery UI CDN -->
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="js/jquery.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <!--Drag and drop script-->
 <script src="js/DragandDrop.js"></script>
-
-<!-- Elimina el comentario machin y siente el poder ;)
-<style>
-    .ui-state-highlight {background: darkseagreen}
-    .custom-state-active {background: lightblue}
-</style>
--->
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
