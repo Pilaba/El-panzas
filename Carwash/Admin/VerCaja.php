@@ -15,12 +15,11 @@
                 <div class="row">
                     <div class="col-md-6">
                         <h1 class="label label-info">Mostrar por:</h1>
-                        <select  class="form-control" name="" id="">
-                            <option selected value="0"> Ultimos 10</option>
+                        <select  class="form-control" id="mostrarCajapor">
+                            <option selected value="0"> Ultimos 10 paquetes</option>
                             <option value="1"> Este dia </option>
-                            <option value="1"> Esta semana </option>
-                            <option value="1"> Este mes </option>
-                            <option value="1"> Fecha especifica </option>
+                            <option value="2"> Ultimos 7 dias </option>
+                            <option value="3"> Fecha especifica </option>
                         </select>
                     </div>
                 </div>
@@ -36,7 +35,7 @@
                                     <th>Total</th>
                                 </tr>
                             </thead>
-                            <thbody>
+                            <tbody id="body">
                                 <?php
                                     $Link=ConectarseaBD();
                                     $Resultado= $Link->query("SELECT * FROM vehiculo_paquete ORDER BY VP_idPaquete DESC LIMIT 10 ");
@@ -74,8 +73,8 @@ _Etiqueta;
                                             <td>$sumaD</td>
                                             <td>$sumaT</td>
                                           </tr>";
-                                ?>
-                            </thbody>
+                                    ?>
+                            </tbody>
 
                             <!-- modal de proposito general-->
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -86,18 +85,36 @@ _Etiqueta;
                                             <h4 class="modal-title" id="myModalLabel">Paquete No <strong id="NumPaquete">X</strong></h4>
                                         </div>
                                         <div class="modal-body">
-                                            <h5>Servicios Solicitados </h5>
-                                            <ul id="ColeccionServicios">
-                                                <!-- Colgar los servicios aqui -->
-                                            </ul>
-                                            <h5>Automovil</h5>
-                                            <ul>
-                                                <!-- Colgar las caracteristicas del automovial aqui -->
-                                            </ul>
-                                            <h5> Cliente </h5>
-                                            <ul>
-                                                <!-- Colgar las caracteristicas del cliente aqui -->
-                                            </ul>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="panel panel-info">
+                                                        <div class="panel-heading">
+                                                            Servicios en el paquete
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <ul id="ColeccionServicios">
+                                                                <!-- Colgar los servicios aqui -->
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <div class="panel panel-info">
+                                                        <div class="panel-heading">
+                                                            Datos del vehiculo
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <ul id="Matricula">
+                                                                <!-- Colgar la matricula del vehiculo aqui -->
+                                                            </ul>
+                                                            <ul id="Tipovehiculo">
+                                                                <!-- Colgar el tipo del vehiculo aqui -->
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
