@@ -9,11 +9,6 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
     header("location: ../Index.php");
 }
 ?>
-<style>
-    input {display: block; padding: 0; margin: 0; border: 0; width: 100%}
-    .ui-state-highlight {background: darkseagreen}
-    .custom-state-active {background: lightblue}
-</style>
 
 <div id="wrapper">
     <?php
@@ -45,7 +40,8 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
                         </div>
                         <div id="DetallePaquete" class="panel-body" style="min-height: 300px">
                             <table id="tablitaDetalles" class="table">
-                                <thead> Orden <em id="NumOrden"> <?php $resuta=ConectarseaBD()->query("SELECT COUNT(*) FROM vehiculo_paquete");
+                                <thead> Orden <em id="NumOrden"> <?php
+                                                    $resuta=ConectarseaBD()->query("SELECT COUNT(*) FROM vehiculo_paquete");
                                                     $resuta->data_seek(0);
                                                     $resuta=$resuta->fetch_array(MYSQLI_NUM);
                                                     echo ($resuta[0]+1);
@@ -61,6 +57,17 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
                                 </tbody>
                             </table>
                         </div>
+                        <div id="footer" class="panel-footer">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    descuento
+                                </div>
+                                <div class="col-md-12">
+                                    <div id="spiner">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -70,16 +77,16 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
                         <div class="panel-heading">
                             PAQUETE
                         </div>
-                        <div id="paquete-container" class="panel-body" style="min-height: 300px">
+                        <div id="paquete-container" title="¡Ingresa servicios!" class="panel-body" style="min-height: 300px">
 
                         </div>
                         <div class="panel-footer">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input type="text" maxlength="8" id="matricula" class="form-control" placeholder="Matricula Vehicular" required="required">
+                                    <input type="text" maxlength="8" id="matricula" class="form-control" title="¡Ingresa la matricula!" placeholder="Matricula Vehicular" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <select class="form-control" id="tipoVehiculo">
+                                    <select title="¡Selecciona un tipo de vehiculo!" class="form-control" id="tipoVehiculo">
                                         <option selected value="0">Tipo Vehiculo</option>
                                         <?php
                                             $link=ConectarseaBD();
@@ -274,6 +281,13 @@ _end;
 <!-- jQuery & jQuery UI CDN -->
 <script src="js/jquery.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="css/jquery-ui.css">
+
+<style>
+    input {display: block; padding: 0; margin: 0; border: 0; width: 100%}
+    .ui-state-highlight {background: darkseagreen !important;}
+    .custom-state-active {background: lightblue !important;}
+</style>
 
 <!--Drag and drop script-->
 <script src="js/DragandDrop.js"></script>

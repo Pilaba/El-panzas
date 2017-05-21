@@ -23,6 +23,38 @@
                         </select>
                     </div>
                 </div>
+                <!-- DATE PICKER WIDGET - JQUERY UI -->
+                <div class="row" id="datepicker" style="display: none">
+                    <div class="well col-md-6">
+
+                        <div class="col-md-6 form-group">
+                            <label class="col-md-12 label label-default" for="FROM">Desde</label>
+                            <input class="col-md-10" type="text" id="FROM" required>
+                            <label class="col-md-2">
+                                <span id="FROM2" class="glyphicon glyphicon-calendar fa-lg" style="padding-top: 5px"></span>
+                            </label>
+                        </div>
+
+                        <div class="col-md-6 form-group">
+                            <label class="col-md-12 label label-default" for="TO">Hasta</label>
+                            <input class="col-md-10" type="text" id="TO" required>
+                            <label class="col-md-2">
+                                <span id="TO2" class="glyphicon glyphicon-calendar fa-lg" style="padding-top: 5px"></span>
+                            </label>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button id="AceptarDatepicker" class="btn btn-primary glyphicon glyphicon-ok col-md-12"> ACEPTAR </button>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- END DATEPICKER -->
+
+                <!-- ESTE ELEMENTO CONTENDRA EL EVENTO PARA DESPLEGAR EL MODAL DE PROPOSITO GENERAL PARA CADA PAQUETE
+                     ELIMINARLO CONLLEVARIA QUE SE OCULTE EL BOTON DE "ID PAQUETE DE LA TABLA"-->
+                <button type="button" id="AlmacenEvento" style="display: none"> </button>
+
+
                 <div class="row">
                     <div class="col-md-6">
                         <table id="TCaja"class="table table-striped">
@@ -122,7 +154,6 @@ _Etiqueta;
                                     </div>
                                 </div>
                             </div>
-
                         </table>
                     </div>
                 </div>
@@ -135,8 +166,11 @@ _Etiqueta;
 </div>
 <!-- /#wrapper -->
 
-<!-- jQuery -->
+<!-- jQuery, jquery UI, jquery theme -->
 <script src="js/jquery.js"></script>
+<script src="js/jquery-ui.js"></script>
+<link rel="stylesheet" href="css/jquery-ui.css">
+
 
 <!-- Script especial -->
 <script src="js/VerCaja.js"></script>

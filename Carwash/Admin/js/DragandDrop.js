@@ -20,7 +20,7 @@ $( function() { //Cuando este listo el DOM
             "ui-droppable-active": "custom-state-active"
         },
         drop: function( event, ui ) {//Cuando un item se dropea en galeria este llama a otra funcion, el evento no se toma en cuenta, solo el elemento draggable
-           recycleImage( ui.draggable );
+            recycleImage( ui.draggable );
         }
     });
 
@@ -90,7 +90,7 @@ $( function() { //Cuando este listo el DOM
     // comportamiento de los iconos junto a la imagen
     //Para si das click en el "+" o "-" quite a agregue apropiadamente
     $("ul#gallery > li").on( "click", function( event ) { //escucha un click en los elementos <li> del <ul> que tenga como id "gallery"
-         var $item = $( this ),     //item que se le dio click
+        var $item = $( this ),     //item que se le dio click
             $target = $( event.target ); //a que icono del item se le dio click
 
         if ($target.is( "a.glyphicon-plus" ) ) { //si el icono fue "-" el servicio se manda a paquete, pasando como referencia el propio item
@@ -102,10 +102,12 @@ $( function() { //Cuando este listo el DOM
     });
 
     function sortable(ArrayServicios){ //SOY UN CAPO :D SIRVE PARA ORDENAR EL DETALLE DE LOS SERVICIOS
+        if( ArrayServicios.length/3 < $("#paquete li").length){ //Si se elimina un servicio se reseteara el descuento a 0
+            $("#discount").val(0)
+        }
 
         var Valordescuento=$("#discount").val()  //Guarda el descuento que se ingreso
 
-        $descuento=$("#discount")
         $TablaDetalles=$("#tablitaDetalles > tbody")
 
         $("tr",$TablaDetalles).remove()//Elimina todos los datos anteriores para generar nuevamente el detalle
@@ -130,18 +132,30 @@ $( function() { //Cuando este listo el DOM
         $("#discount").val(Valordescuento)
 
         /*Total y hace la insercion en la tabla*/
-        $TablaDetalles.append("<tr id='total' class='alert-success'> <td></td> <td> Total </td> <td id='sum' >"+ suma +" </td></tr>");
+        $TablaDetalles.append("<tr title='Total' id='total' class='alert-success'> <td></td> <td> Total </td> <td id='sum' >"+ suma +" </td></tr>");
 
         //Actualizamos el total en caso de agregar nuevos servicios
-        if(isNaN(parseInt( $descuento.val() ))){
+        if(isNaN(parseInt( Valordescuento ))){
             $("tr#total > td")[2].innerHTML=suma
         }else{
-            $("tr#total > td")[2].innerHTML=suma-parseInt($descuento.val())
+            $("tr#total > td")[2].innerHTML=suma-parseInt(Valordescuento)
         }
 
         //Se actualiza el total en caso de cambiar el descuento
         $("#discount").change(function(){
-            $("td#sum").text( (parseInt($("td#sub").text() - this.value)) )
+            $("#sum").text( (parseInt($("#sub").text() - parseInt(this.value))) )
+            $( "#spiner" ).slider("option", "value", parseInt(this.value))
+        });
+
+        $( "#spiner" ).slider({
+            range: "max",
+            min: 0,
+            max: suma,
+            value: $("#discount").val(),
+            slide: function( event, ui ) {
+                $( "#discount" ).val( ui.value );
+                $("#sum").text( (parseInt($("#sub").text() - ui.value )) )
+            }
         });
 
     }
@@ -151,25 +165,26 @@ $( function() { //Cuando este listo el DOM
         ev.preventDefault()
         //Comprobar que halla servicios en el paquete
         //O tambien $("#paquete").children("li").length==0
+
         if($("li","#paquete").length==0){
-            alert("Oops! No hay servicios seleccionados")
+            $("#paquete-container").tooltip().mouseover()
             return false;
         }
 
         //Comprobar que se coloco la matricula
         if($("#matricula").val()==""){
-            alert("Oops! falta la matricula vehicular")
+            $("#matricula").tooltip().mouseover()
             return false;
         }
 
         //Comprobar que se coloco el tipo de vehiculo
         if($("#tipoVehiculo").val()==0){
-            alert("Oops! Selecciona Tipo de Vehiculo")
+            $("#tipoVehiculo").tooltip().mouseover()
             return false;
         }
 
         if(parseInt($("#sum").text()) < 0){
-            alert("El descuento es demasiado alto, el total es negativo")
+            alert("¡El total no puede ser negativo!")
             return false;
         }
 

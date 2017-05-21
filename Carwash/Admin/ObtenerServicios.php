@@ -5,10 +5,12 @@ if(isset($_POST["idpaq"])){
     $link=ConectarseaBD();
     $idPaq=$link->real_escape_string($_POST["idpaq"]);
 
+    //CONSULTA PARA OBTENER LOS SERVICIOS
     $result=$link->query("SELECT SE.serv_nombre 
                                 FROM paquete_servicio PS JOIN servicio SE ON SE.serv_idServicio=PS.PS_idServicio 
                                 WHERE PS.PS_idPaquete='$idPaq'");
 
+    //CONSULTA PARA OBTENER LOS DATOS DEL VEHICULO
     $result2=$link->query("SELECT v.vehi_matricula, tv.tv_nombre
                                  FROM (vehiculo_paquete vp JOIN vehiculo v ON vp.VP_matricula=v.vehi_matricula) JOIN  tipovehiculo tv on tv.tv_idTipo=v.vehi_id_Tipo
                                  WHERE vp.VP_idPaquete='$idPaq'");
@@ -28,7 +30,6 @@ if(isset($_POST["idpaq"])){
             $ArrayRespuesta["NomVehiculo"]=$array["tv_nombre"];
             $ArrayRespuesta["MatrVehiculo"]=$array["vehi_matricula"];
         }
-
         echo json_encode($ArrayRespuesta);
     }
     $link->close();

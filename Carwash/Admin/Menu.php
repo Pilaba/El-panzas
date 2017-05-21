@@ -59,7 +59,7 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li class="active">
-                        <a href="index.php"><i class="fa fa-fw fa-dashboard"></i> Panel </a>
+                        <a href="Index.php"><i class="fa fa-fw fa-dashboard"></i> Panel </a>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-car fa-table"></i> Servicios <i class="fa fa-fw fa-caret-down"></i></a>
@@ -109,7 +109,7 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#demoo"><i class="glyphicon glyphicon-usd"></i> Caja <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demoo" class="collapse">
                             <li>
-                                <a href="VerCaja.php">Ver caja</a>
+                                <a href="VerCaja.php">Caja</a>
                             </li>
                         </ul>
                     </li>
