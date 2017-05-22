@@ -17,8 +17,8 @@ if($rows=$result->num_rows){
         $array=$result->fetch_array(MYSQLI_ASSOC);/*tratar el resultado como un array associativo key -> value */
         $_SESSION['Nombre'] = $array["usu_nombre"];
         $_SESSION['rol'] = $array["usu_idRol"];
+        $_SESSION["id"] = $array["usu_idUsuario"];
     }
-
     header("location: Index.php");
 }else{
     echo "<form name='FormError'action='Login.php' method='post'>

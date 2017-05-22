@@ -14,26 +14,20 @@ $( function() {
         $('#idserv').val(Idservicio);
 
         var Estado=this.title.substring(this.title.length-1,this.title.length) //estado servicio
-        $("select#estado").val(Estado);
+
+        //Se guarda un estado por default en caso de que no cambie el toggle
+        $("#state").val(Estado)
+
+        //Cambia el toggle dependiendo del estado del servicio
+        $("#toggle").bootstrapToggle( (Estado==1) ? "on": "off" )
+
+        //En caso de que cambie el estado del toggle button se almacena
+        $("#toggle").change(function () {
+            $("#state").val( ($(this).prop('checked')==true) ? 1:0  )
+        });
 
         $("#imgServ").attr("src", "GetImage.php?id=" + Idservicio); //Imagen del servicio
         $("#imgServ").show();
-
-        // Cambio de color al boton de ativo e inactivo
-        if(Estado==1){
-            $("select#estado").attr("class","alert-success text-justify")
-        }else{
-            $("select#estado").attr("class","alert-danger text-justify")
-        }
-
-        $("select#estado").click(function () {
-            if(this.value==1){
-                $("select#estado").attr("class","alert-success text-justify")
-            }else{
-                $("select#estado").attr("class","alert-danger text-justify")
-            }
-        });
-        //
 
         $('#myModal').modal("show");//Despliega el modal
     });

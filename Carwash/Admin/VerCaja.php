@@ -5,7 +5,6 @@
         require_once  ("../FuncionesPHP.php");
     ?>
 
-
     <div id="page-wrapper">
         <div class="panel panel-info">
             <div class="panel-heading">
@@ -30,7 +29,7 @@
                         <div class="col-md-6 form-group">
                             <label class="col-md-12 label label-default" for="FROM">Desde</label>
                             <input class="col-md-10" type="text" id="FROM" required>
-                            <label class="col-md-2">
+                            <label class="col-md-2" for="FROM">
                                 <span id="FROM2" class="glyphicon glyphicon-calendar fa-lg" style="padding-top: 5px"></span>
                             </label>
                         </div>
@@ -38,7 +37,7 @@
                         <div class="col-md-6 form-group">
                             <label class="col-md-12 label label-default" for="TO">Hasta</label>
                             <input class="col-md-10" type="text" id="TO" required>
-                            <label class="col-md-2">
+                            <label class="col-md-2" for="TO">
                                 <span id="TO2" class="glyphicon glyphicon-calendar fa-lg" style="padding-top: 5px"></span>
                             </label>
                         </div>
@@ -130,7 +129,6 @@ _Etiqueta;
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <div class="col-sm-6">
                                                     <div class="panel panel-info">
                                                         <div class="panel-heading">

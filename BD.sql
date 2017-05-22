@@ -10,12 +10,15 @@ CREATE TABLE TipoVehiculo(
 );
 
 
-INSERT INTO TipoVehiculo VALUES ('','Taxi'),
+INSERT INTO TipoVehiculo VALUES 
                               	('','Compacto'),
                               	('','Camioneta'),
-                              	('','Motocicleta'),
+				('','Taxi'),
+				('','Motocicleta'),
+				('','Mini Van'),
+				('','Camion'),
                               	('','Furgoneta'),
-                              	('','Trailer'),
+                              	('','Tractocamion'),
                               	('','Otro');
 
 CREATE TABLE Vehiculo (

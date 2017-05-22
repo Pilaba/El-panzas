@@ -26,11 +26,11 @@
                                 $con = ConectarseaBD();
                                 $nom = $con->real_escape_string($_POST["nombre"]);
                                 $precio = $con->real_escape_string($_POST["precio"]);
-                                $estado = $con->real_escape_string($_POST["estado"]);
+                                $estado = $_POST["state"];
                                 $idserv = $con->real_escape_string($_POST["idserv"]);
 
                                 switch ($_FILES["archivito"]["error"]){
-                                    case 0:
+                                    case 0: //Se quiere cambiar de imagen
                                         $size = $_FILES['archivito']['size'];
                                         if(! ($size > 0 && $size <= 948000)){ //Una ultima comprobacion a la imagen
                                             echo "<script> //Imagen muy grande
@@ -40,7 +40,6 @@
                                                  </script>";
                                             break;
                                         }
-
                                         $tipo = $_FILES['archivito']['type'];
                                         $temName = $_FILES['archivito']['tmp_name']; //Obtenemos el directorio temporal en donde se ha almacenado el archivo;
                                         $fp = fopen($temName, "rb");//abrimos el archivo con permiso de lectura
@@ -50,37 +49,37 @@
                                         fclose($fp);//Cerramos el archivo
                                         $result = $con->query("UPDATE servicio SET serv_nombre='$nom', serv_precioBase='$precio', serv_estado='$estado',serv_imagen='$data',serv_mime='$tipo' WHERE serv_idServicio='$idserv'");
                                         if ($result) {
-                                            echo "<script> //Exito modificando, sin imagen
+                                            echo "<script> //Exito modificando con Imagen
                                                     document.getElementById('MensajeGeneral').style.display = 'block';
                                                     document.getElementById('contenidoMensaje').innerHTML='¡Se han guardado las modificaciones!'
                                                   </script>";
                                         } else {
-                                            echo "<script> //fallo Insercion
+                                            echo "<script> //fallo modificacion con imagen, ya existe un servicio con tal nombre 
                                                     document.getElementById('MensajeGeneral').className = 'alert alert-danger text-center';
                                                     document.getElementById('MensajeGeneral').style.display = 'block';
-                                                    document.getElementById('contenidoMensaje').innerHTML='¡Error no se pudo insertar!'
-                                            </script>";
+                                                    document.getElementById('contenidoMensaje').innerHTML='¡Error ya existe un servicio con ese nombre!'
+                                                  </script>";
                                         }
                                         break;
-                                    case 1:
+                                    case 1: //Error Imagen muy grande
                                         echo "<script> //Imagen muy grande
                                                     document.getElementById('MensajeGeneral').className = 'alert alert-danger text-center';
                                                     document.getElementById('MensajeGeneral').style.display = 'block';
                                                     document.getElementById('contenidoMensaje').innerHTML='¡Error, Imagen demasiado pesada. Intente con otra!'
                                             </script>";
                                         break;
-                                    default:
+                                    default: //4 No se selecciono imagen
                                         $result = $con->query("UPDATE servicio SET serv_nombre='$nom', serv_precioBase='$precio', serv_estado='$estado' WHERE serv_idServicio='$idserv' ");
                                         if ($result) {
-                                            echo "<script> //Exito modificando, sin imagen
+                                            echo "<script> //Exito modificando sin imagen
                                                     document.getElementById('MensajeGeneral').style.display = 'block';
-                                                    document.getElementById('contenidoMensaje').innerHTML='¡Se han guardado las modificaciones!'
+                                                    document.getElementById('contenidoMensaje').innerHTML='¡Se han guardado las modificaciones, sin imagen!'
                                                   </script>";
                                         } else {
-                                            echo "<script> //fallo Insercion
+                                            echo "<script> //fallo modificacion ya existe el nombre del servicio e la BD , 
                                                     document.getElementById('MensajeGeneral').className = 'alert alert-danger text-center';
                                                     document.getElementById('MensajeGeneral').style.display = 'block';
-                                                    document.getElementById('contenidoMensaje').innerHTML='¡Error no se pudo insertar!'
+                                                    document.getElementById('contenidoMensaje').innerHTML='¡Error ya existe un servicio con ese nombre!'
                                                   </script>";
                                         }
                                         break;
@@ -88,7 +87,7 @@
                                 $con->close();
                             }
 
-
+                            //DESPUES QUE SE MODIFICARON LAS IMAGENES SE CARGAN A LA TABLA
                             $link = ConectarseaBD(); //CARGA LOS SERVICIOS DE LA BD
                             $Result = $link->query("SELECT * FROM servicio ");
                             $link->close();
@@ -100,21 +99,30 @@
 
                                     $NomServicio = $row["serv_nombre"];
                                     $Price = $row["serv_precioBase"];
-                                    $ID=$row["serv_idServicio"];
-                                    $estate=$row["serv_estado"];
+                                    $ID = $row["serv_idServicio"];
+                                    $estate = $row["serv_estado"];
 
-                                    echo <<<_Init
-                                        <tr>
-                                            <td>
-                                                <button type="button" class="col-md-12 list-group-item" title="$ID$estate" name='$NomServicio' value='$Price'>$NomServicio
-                                                    <div class="badge alert-success"> \$ $Price</div>
-                                                </button>
-                                            </td>
-                                        </tr>
-_Init;
+                                    if ($estate == 0){// Color Rojo si el estado es inactivo
+                                        echo "<tr>
+                                                  <td>
+                                                     <button type='button' class='col-md-12 list-group-item alert-danger' title='$ID$estate' name='$NomServicio' value='$Price'>$NomServicio
+                                                        <div class='badge alert-success'> \$ $Price</div>
+                                                     </button>
+                                                  </td>
+                                              </tr>";
+                                    }else{ //Color verde si el estado esta activo
+                                        echo "<tr>
+                                                  <td>
+                                                     <button type='button' class='col-md-12 list-group-item alert-success' title='$ID$estate' name='$NomServicio' value='$Price'>$NomServicio
+                                                        <div class='badge alert-success'> \$ $Price</div>
+                                                     </button>
+                                                  </td>
+                                              </tr>";
+                                    }
                                 }
                             echo "</table> ";
                         ?>
+
                         <!-- Modal general para cada servicio-->
                         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
@@ -131,7 +139,7 @@ _Init;
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Nombre</label>
                                                         <div class="col-md-9">
-                                                            <input class="form-control" id="nombre" name="nombre" type="text">
+                                                            <input class="form-control" maxlength="30" id="nombre" name="nombre" type="text">
                                                             <input class="form-control" id="idserv" name="idserv" type="hidden">
                                                         </div>
                                                     </div>
@@ -139,7 +147,7 @@ _Init;
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Precio</label>
                                                         <div class="col-md-9">
-                                                            <input class="form-control" min="1" id="precio" name="precio" type="number">
+                                                            <input class="form-control" min="0" max="999" id="precio" name="precio" type="number">
                                                         </div>
                                                     </div>
 
@@ -153,10 +161,11 @@ _Init;
                                                     <div class="form-group">
                                                         <label class="col-md-3 control-label">Estado</label>
                                                         <div class="col-md-9">
-                                                            <select name="estado" id="estado">
-                                                                <option value="1" class="alert-success text-justify">Activo</option>
-                                                                <option value="0" class="alert-danger text-justify">Inactivo</option>
-                                                            </select>
+                                                            <input id="toggle" type="checkbox" data-toggle="toggle"
+                                                                   data-on="Activo" data-off="Inactivo"
+                                                                   data-onstyle="success" data-offstyle="danger"
+                                                                   data-width="100">
+                                                            <input id="state" name="state" type="hidden"> <!-- almacena el valor del toggle -->
                                                         </div>
                                                     </div>
 
@@ -188,6 +197,10 @@ _Init;
 <!-- jQuery -->
 <script src="js/jquery.js"></script>
 <script src="js/ModificarServicios.js"></script>
+
+<!-- plug-in para el toggle button -->
+<link href="css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="js/bootstrap-toggle.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
