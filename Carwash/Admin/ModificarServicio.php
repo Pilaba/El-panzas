@@ -11,7 +11,6 @@
                 <h2 class="panel-title"> Modificar Servicio </h2>
             </div>
 
-
             <div class="panel-body">
                 <!-- Alerta de proposito general -->
                 <div id='MensajeGeneral' class='alert alert-success text-center' role='alert' style="display: none">
@@ -178,7 +177,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                        <button id="submitModif" type="submit" class="btn btn-primary">Save changes</button>
+                                        <button id="submitModif" type="submit" class="btn btn-primary">Guardar Cambios</button>
                                     </div>
                                 </div>
                             </div>

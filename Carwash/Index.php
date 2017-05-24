@@ -4,6 +4,25 @@
     <title>Autolavado "El Panzas"</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Boostrap and custom CSS -->
+    <link rel="stylesheet" href="CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="CSS/CssIndex.css">
+    <!-- Imagenes en blanco y negro -->
+    <style>
+        img.img-rounded {
+            filter: gray; /* IE6-9 */
+            -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+            -webkit-box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
+            -moz-box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
+            box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
+            margin-bottom:20px;
+        }
+
+        img:hover {
+            filter: none; /* IE6-9 */
+            -webkit-filter: grayscale(0); /* Google Chrome, Safari 6+ & Opera 15+ */
+        }
+    </style>
 </head>
 <body>
 <?php
@@ -151,6 +170,7 @@ if(isset($_POST["nombre"])){
                   </div>
                  ";
         }
+        $link->close();
         ?>
     </div>
 </div>
@@ -181,29 +201,8 @@ if(isset($_POST["nombre"])){
 <script src="JS/jquery.min.js"></script>
 <script src="JS/bootstrap.min.js"></script>
 
-<!-- Boostrap and custom CSS -->
-<link rel="stylesheet" href="CSS/bootstrap.min.css">
-<link rel="stylesheet" href="CSS/CssIndex.css">
-
 <!-- Custom library for modals -->
 <script src="JS/Modales.js"> </script>
-
-<!-- Imagenes en blanco y negro -->
-<style>
-    img.img-rounded {
-        filter: gray; /* IE6-9 */
-        -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
-        -webkit-box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
-        -moz-box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
-        box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
-        margin-bottom:20px;
-    }
-
-    img:hover {
-        filter: none; /* IE6-9 */
-        -webkit-filter: grayscale(0); /* Google Chrome, Safari 6+ & Opera 15+ */
-    }
-</style>
 
 </body>
 </html>
