@@ -134,11 +134,11 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
 
                                         echo <<<_end
                                                 <li class="list-group-item">
-                                                    <img src="GetImage.php?id=$id" alt="$nombre - $precio" width="96" height="72">
-                                                    <a href="#" class="glyphicon glyphicon-plus">Agregar</a>
-                                                    <input class="nombre" value="$nombre" type="hidden">
-                                                    <input class="id" value="$id" type="hidden">
-                                                    <input class="precio" value="$precio" type="hidden">
+                                                   <img class="img-rounded" src="GetImage.php?id=$id" alt="$nombre - $precio" width="96" height="72">
+                                                   <a href="#" class="glyphicon glyphicon-plus">Agregar $nombre</a>
+                                                   <input class="nombre" value="$nombre" type="hidden">
+                                                   <input class="id" value="$id" type="hidden">
+                                                   <input class="precio" value="$precio" type="hidden">
                                                 </li>
 _end;
                                     }
@@ -281,6 +281,7 @@ _end;
 <!-- jQuery & jQuery UI CDN -->
 <script src="js/jquery.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <link rel="stylesheet" href="css/jquery-ui.css">
 
 <style>
@@ -288,6 +289,7 @@ _end;
     .ui-state-highlight {background: darkseagreen !important;}
     .custom-state-active {background: lightblue !important;}
 </style>
+
 
 <!--Drag and drop script-->
 <script src="js/DragandDrop.js"></script>

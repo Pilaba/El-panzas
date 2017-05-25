@@ -171,46 +171,29 @@ $( function() { //Cuando este listo el DOM
             return false;
         }
 
-        //Comprobar que se coloco la matricula
-        if($("#matricula").val()==""){
-            $("#matricula").tooltip().mouseover()
-            return false;
-        }
-
-        //Comprobar que se coloco el tipo de vehiculo
-        if($("#tipoVehiculo").val()==0){
-            $("#tipoVehiculo").tooltip().mouseover()
-            return false;
-        }
-
         if(parseInt($("#sum").text()) < 0){
             alert("¡El total no puede ser negativo!")
             return false;
         }
 
-        var matricula=$("#matricula").val()
+
         var descuentu= (isNaN(parseInt($("#discount").val()))) ? 0 : parseInt($("#discount").val());
         var subtotal= parseInt( $("td#sub").text() ) ;
-        var Idvehiculo=$("#tipoVehiculo").val();
 
         //Mandando los datos al servidor php para que los inserte a la BD
         $.ajax({
-            url  : "RegistrarPaquete.php",
+            url  : "AgregarPaquete.php",
             cache: false,
             type : "POST",
             data : {servicios : $vararray,
-                matric: matricula,
                 desc: descuentu,
-                sub: subtotal,
-                idvehiculo: Idvehiculo},
+                sub: subtotal},
 
             success: function(dataResponse) {
                 $Mensajito=$("#MensajeGeneral");
                 $Mensajito.attr("class","alert alert-success text-center")
                 $Mensajito.find("strong").text(
-                    "No. Orden: "+$("em#NumOrden").text()+" " +
-                    "Matricula: "+$("#matricula").val()+" " +
-                    "Total: "+$("#sum").text()
+                    dataResponse+"Total: "+$("#sum").text()
                 );
 
                 $Mensajito.show();
@@ -218,30 +201,17 @@ $( function() { //Cuando este listo el DOM
                     $Mensajito.slideUp(1000);
                 });
 
-                $("#matricula").val("")
-                $("#tipoVehiculo").val(0)
                 $("#discount").val(0)
                 $("#sum").val(0)
-                $("#matr").text("")
-                $("#tip").text("")
 
                 $("ul#paquete > li > a").click();
                 $vararray=new Array();
-                $("em#NumOrden").text(dataResponse);
             },
             error : function(dataResponse) {
                 alert("Error")
             }
         })
+
     });
 
-    $("#matricula").change(function(){
-        $("#matr").text($("#matricula").val())
-    });
-
-    $("#tipoVehiculo").change(function(){
-        $("#tip").text(this[this.value].innerHTML) //OMG :o soy un mendigo :D - WADAFAK XD
-    });
-
-
-} );
+});

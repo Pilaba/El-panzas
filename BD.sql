@@ -167,7 +167,7 @@ CREATE TABLE Vehiculo_Paquete(
 	VP_Subtotal INTEGER UNSIGNED NOT NULL,
 	VP_Descuento INTEGER UNSIGNED NOT NULL,
 	VP_total INTEGER UNSIGNED NOT NULL,
-	PRIMARY KEY (VP_matricula, VP_idPaquete),
+	PRIMARY KEY (VP_matricula, VP_idPaquete, VP_Date),
 	FOREIGN KEY (VP_matricula) REFERENCES Vehiculo (vehi_matricula),
 	FOREIGN KEY (VP_idPaquete) REFERENCES Paquete (paq_idPaquete),
 	FOREIGN KEY (VP_Metodopago) REFERENCES MetodoPago (mp_idMetodo)

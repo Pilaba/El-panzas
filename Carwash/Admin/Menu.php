@@ -79,10 +79,7 @@
                                     <a href="#">Ver Promociones</a>
                                 </li>
                                 <li>
-                                    <a href="#">Agregar promocion</a>
-                                </li>
-                                <li>
-                                    <a href="#">dar de baja promocion</a>
+                                    <a href="AgregarPromociones.php">Agregar promocion</a>
                                 </li>
                             </ul>
                     </li>

@@ -72,7 +72,7 @@
                                         if ($result) {
                                             echo "<script> //Exito modificando sin imagen
                                                     document.getElementById('MensajeGeneral').style.display = 'block';
-                                                    document.getElementById('contenidoMensaje').innerHTML='¡Se han guardado las modificaciones, sin imagen!'
+                                                    document.getElementById('contenidoMensaje').innerHTML='¡Se han guardado las modificaciones!'
                                                   </script>";
                                         } else {
                                             echo "<script> //fallo modificacion ya existe el nombre del servicio e la BD , 
