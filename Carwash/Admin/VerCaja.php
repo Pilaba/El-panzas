@@ -69,9 +69,10 @@
                             <tbody id="body">
                                 <?php
                                     $Link=ConectarseaBD();
-                                    $Resultado= $Link->query("SELECT * FROM vehiculo_paquete ORDER BY VP_idPaquete DESC LIMIT 10 ");
+                                    $Resultado= $Link->query("SELECT * 
+                                    FROM vehiculo_paquete VP JOIN paquete P on P.paq_idPaquete=VP.VP_idPaquete
+                                    ORDER BY VP_idPaquete DESC LIMIT 10 ");
                                     $Link->close();
-
                                     $sumaS=0;
                                     $sumaD=0;
                                     $sumaT=0;
@@ -79,10 +80,10 @@
                                         $Resultado->data_seek($i);
                                         $array=$Resultado->fetch_array(MYSQLI_ASSOC);
                                         $id=$array["VP_idPaquete"];
-                                        $fecha=$array["VP_Date"];
-                                        $subtotal=$array["VP_Subtotal"];
-                                        $descuento=$array["VP_Descuento"];
-                                        $Total=$array["VP_total"];
+                                        $fecha=$array["VP_Fecha"];
+                                        $subtotal=$array["paq_importe"];
+                                        $descuento=$array["paq_descuento"];
+                                        $Total=$array["paq_Total"];
 
                                         $sumaS+=$subtotal;
                                         $sumaD+=$descuento;

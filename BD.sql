@@ -130,31 +130,22 @@ CREATE TABLE Servicio_Empleado(
 	FOREIGN KEY (SE_idServicio) REFERENCES Servicio (serv_idServicio),
 	FOREIGN KEY (SE_idEmpleado) REFERENCES Empleado (emp_idEmpleado)
 );
-
-
-CREATE TABLE MetodoPago(
-	mp_idMetodo TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	mp_nombre VARCHAR (30) NOT NULL,
-	PRIMARY KEY (mp_idMetodo)
-);
-
-INSERT INTO MetodoPago VALUES (NULL,"Contado"),
-	(NULL,"Paypal");
-
 CREATE TABLE TipoPaquete(
 	tp_idTipo TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	tp_nombre VARCHAR(10) NOT NULL,
+	tp_nombre VARCHAR(50) UNIQUE NOT NULL,
 	PRIMARY KEY (tp_idTipo)
 );
 
-INSERT INTO TipoPaquete VALUES (NULL,'paquete'),
-	(NULL,'Promocion');
-
+INSERT INTO TipoPaquete VALUES (NULL,'Paquete');
 
 CREATE TABLE Paquete(
 	paq_idPaquete INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-	paq_tipo TINYINT(1) UNSIGNED NOT NULL,
 	paq_fechaCreacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	paq_importe INTEGER UNSIGNED NOT NULL,
+	paq_descuento INTEGER NOT NULL,
+	paq_Total INTEGER UNSIGNED NOT NULL,
+	paq_Estado TINYINT(1) NOT NULL,
+	paq_tipo TINYINT(1) UNSIGNED NOT NULL,
 	PRIMARY KEY (paq_idPaquete),
 	FOREIGN KEY (paq_tipo) REFERENCES TipoPaquete (tp_idTipo)
 );
@@ -162,15 +153,10 @@ CREATE TABLE Paquete(
 CREATE TABLE Vehiculo_Paquete(
 	VP_matricula VARCHAR(8) NOT NULL,
 	VP_idPaquete INTEGER UNSIGNED  NOT NULL,
-	VP_Metodopago TINYINT UNSIGNED NOT NULL,
-	VP_Date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	VP_Subtotal INTEGER UNSIGNED NOT NULL,
-	VP_Descuento INTEGER UNSIGNED NOT NULL,
-	VP_total INTEGER UNSIGNED NOT NULL,
-	PRIMARY KEY (VP_matricula, VP_idPaquete, VP_Date),
+	VP_Fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (VP_matricula, VP_idPaquete, VP_Fecha),
 	FOREIGN KEY (VP_matricula) REFERENCES Vehiculo (vehi_matricula),
-	FOREIGN KEY (VP_idPaquete) REFERENCES Paquete (paq_idPaquete),
-	FOREIGN KEY (VP_Metodopago) REFERENCES MetodoPago (mp_idMetodo)
+	FOREIGN KEY (VP_idPaquete) REFERENCES Paquete (paq_idPaquete)
 );
 
 
@@ -181,6 +167,5 @@ CREATE TABLE Paquete_Servicio(
 	FOREIGN KEY (PS_idPaquete) REFERENCES Paquete (paq_idPaquete),
 	FOREIGN KEY (PS_idServicio) REFERENCES Servicio (serv_idServicio)
 );
-
 
 COMMIT;

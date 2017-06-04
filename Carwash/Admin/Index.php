@@ -41,7 +41,7 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
                         <div id="DetallePaquete" class="panel-body" style="min-height: 300px">
                             <table id="tablitaDetalles" class="table">
                                 <thead> Orden <em id="NumOrden"> <?php
-                                                    $resuta=ConectarseaBD()->query("SELECT COUNT(*) FROM vehiculo_paquete");
+                                                    $resuta=ConectarseaBD()->query("SELECT COUNT(*) FROM paquete WHERE paq_tipo=1");
                                                     $resuta->data_seek(0);
                                                     $resuta=$resuta->fetch_array(MYSQLI_NUM);
                                                     echo ($resuta[0]+1);
@@ -123,7 +123,6 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
                                 <?php
                                 $Mysqli=ConectarseaBD();
                                 $resultado=$Mysqli->query("SELECT * FROM servicio WHERE serv_estado=1");
-
                                 if($rows=$resultado->num_rows){
                                     for ($i=0; $i<$rows; $i++){
                                         $resultado->data_seek($i);
@@ -143,6 +142,32 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
 _end;
                                     }
                                 }
+                                $resultado=$Mysqli->query("SELECT * 
+                                FROM paquete P JOIN tipopaquete TP ON P.paq_tipo=TP.tp_idTipo WHERE (P.paq_tipo!=1 AND paq_Estado=1)");
+
+                                if($rows=$resultado->num_rows){
+                                    for ($i=0; $i<$rows; $i++){
+                                        $resultado->data_seek($i);
+                                        $array=$resultado->fetch_array(MYSQLI_ASSOC);
+                                        $nombrePromo=$array["tp_nombre"];
+                                        $id=$array["paq_idPaquete"];
+                                        $Importe=$array["paq_importe"];
+                                        $Descuento=$array["paq_descuento"];
+                                        $Total=$array["paq_Total"];
+
+                                        echo <<<_END
+                                            <li class="list-group-item">
+                                                   <img class="img-rounded" src="" alt="$nombrePromo" width="96" height="72" style="background-color: cadetblue;font:15px Impact; color: black">
+                                                   <a href="#" class="glyphicon glyphicon-plus">Agregar $nombrePromo</a>
+                                                   <input class="nombre" value="$nombrePromo" type="hidden">
+                                                   <input class="id" value="$id" type="hidden">
+                                                   <input class="precio" value="$Total" type="hidden">
+                                                </li>
+_END;
+                                    }
+                                }
+
+
                                 ?>
                             </ul>
                         </div>
@@ -283,13 +308,11 @@ _end;
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <link rel="stylesheet" href="css/jquery-ui.css">
-
 <style>
     input {display: block; padding: 0; margin: 0; border: 0; width: 100%}
     .ui-state-highlight {background: darkseagreen !important;}
     .custom-state-active {background: lightblue !important;}
 </style>
-
 
 <!--Drag and drop script-->
 <script src="js/DragandDrop.js"></script>

@@ -44,7 +44,7 @@ $( function() { //Cuando este listo el DOM
              *  en caso de que ya exista tal lista y tenga elementos simplemente se añade un nuevo item a la lista <ul> que tenga la clase "list-group"
              * */
             //SOY UN MENDIGO GENIO :D - Se verifica si en el array de servicios esta el servicio, si no existe se procede a agreagarlo
-            if( !($vararray.indexOf($item.find("input.id").attr("value")) >=0) ){
+            if( !($vararray.indexOf($item.find("input.nombre").attr("value")) >=0) ){
                 var $list = $( "ul", $paquete ).length ?
                     $( "ul", $paquete ) :
                     $( "<ul class='list-group' id='paquete'/>" ).appendTo( $paquete );

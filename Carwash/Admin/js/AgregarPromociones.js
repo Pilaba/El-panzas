@@ -171,35 +171,47 @@ $( function() { //Cuando este listo el DOM
             return false;
         }
 
+        if($("#nombrePromo").val()==0){
+            $("#nombrePromo").tooltip().mouseover()
+            return false;
+        }
+
         if(parseInt($("#sum").text()) < 0){
             alert("¡El total no puede ser negativo!")
             return false;
         }
 
+        if(parseInt($("#discount").val()) < 0){
+            alert("¡El descuento no puede ser negativo!")
+            return false;
+        }
 
+        var nombrePromo= $("#nombrePromo").val();
         var descuentu= (isNaN(parseInt($("#discount").val()))) ? 0 : parseInt($("#discount").val());
         var subtotal= parseInt( $("td#sub").text() ) ;
 
         //Mandando los datos al servidor php para que los inserte a la BD
         $.ajax({
-            url  : "AgregarPaquete.php",
+            url  : "AgregarPromo.php",
             cache: false,
             type : "POST",
             data : {servicios : $vararray,
                 desc: descuentu,
-                sub: subtotal},
+                sub: subtotal,
+                nombreP: nombrePromo},
 
             success: function(dataResponse) {
                 $Mensajito=$("#MensajeGeneral");
                 $Mensajito.attr("class","alert alert-success text-center")
                 $Mensajito.find("strong").text(
-                    dataResponse+"Total: "+$("#sum").text()
+                    nombrePromo+" Precio: "+$("#sum").text()
                 );
 
                 $Mensajito.show();
                 $Mensajito.fadeTo(4000, 1000).slideUp(1000, function(){
                     $Mensajito.slideUp(1000);
                 });
+                $("#matr").text(dataResponse)
 
                 $("#discount").val(0)
                 $("#sum").val(0)

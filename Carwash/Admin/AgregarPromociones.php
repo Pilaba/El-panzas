@@ -36,7 +36,14 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
             <div class="col-md-3">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        Promocion No: "<strong id="matr"> x </strong>"
+                        Promocion No: "<strong id="matr">
+                            <?php
+                                $resuta=ConectarseaBD()->query("SELECT COUNT(*) FROM paquete WHERE paq_tipo!=1");
+                                $resuta->data_seek(0);
+                                $resuta=$resuta->fetch_array(MYSQLI_NUM);
+                                echo ($resuta[0]+1);
+                            ?>
+                        </strong>"
                     </div>
                     <div id="DetallePaquete" class="panel-body" style="min-height: 300px">
                         <table id="tablitaDetalles" class="table">
@@ -77,6 +84,9 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
                     </div>
                     <div class="panel-footer">
                         <div class="row">
+                            <div class="col-md-12">
+                                <input type="text" maxlength="30" id="nombrePromo" class="form-control" title="¡Ingresa el nombre de la promoción!" placeholder="Nombre de la promoción" required>
+                            </div>
                             <div class="col-md-12">
                                 <input type="button" id="botonPaquete" value="ENVIAR" class="btn btn-info btn-group-justified">
                             </div>

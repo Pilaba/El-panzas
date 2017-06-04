@@ -65,10 +65,10 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-car fa-table"></i> Servicios <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo" class="collapse">
                             <li>
-                                <a href="AgregarServicio.php">Agregar servicios</a>
+                                <a href="ModificarServicio.php">Modificar servicios</a>
                             </li>
                             <li>
-                                <a href="ModificarServicio.php">Modificar servicios</a>
+                                <a href="AgregarServicio.php">Agregar servicios</a>
                             </li>
                         </ul>
                     </li>
