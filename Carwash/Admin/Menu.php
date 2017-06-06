@@ -76,7 +76,7 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo3"><i class="fa fa-gift"></i> Promociones <i class="fa fa-fw fa-caret-down"></i></a>
                             <ul id="demo3" class="collapse">
                                 <li>
-                                    <a href="#">Ver Promociones</a>
+                                    <a href="VerPromociones.php">Ver Promociones</a>
                                 </li>
                                 <li>
                                     <a href="AgregarPromociones.php">Agregar promocion</a>

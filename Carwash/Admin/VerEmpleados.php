@@ -5,7 +5,6 @@
         require_once  ("../FuncionesPHP.php");
     ?>
 
-
     <!-- modal de proposito general-->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -199,7 +198,7 @@
                             $roles=implode(", ", $Array);
 
                             if($estado=="Activo"){
-                                echo "<tr class='alert-succesS'>";
+                                echo "<tr class='alert-success'>";
                             }else{
                                 echo "<tr class='alert-danger'>";
                             }

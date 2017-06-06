@@ -212,7 +212,7 @@ $( function() { //Cuando este listo el DOM
                     $Mensajito.slideUp(1000);
                 });
                 $("#matr").text(dataResponse)
-
+                $("#nombrePromo").val("")
                 $("#discount").val(0)
                 $("#sum").val(0)
 

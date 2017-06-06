@@ -74,12 +74,4 @@ $(function () {
             $("#formEditarEmpleado").submit()
         }
     })
-
-
-
-
-
-
-
-
 })

@@ -8,21 +8,6 @@
     <link rel="stylesheet" href="CSS/bootstrap.min.css">
     <link rel="stylesheet" href="CSS/CssIndex.css">
     <!-- Imagenes en blanco y negro -->
-    <style>
-        img.img-rounded {
-            filter: gray; /* IE6-9 */
-            -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
-            -webkit-box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
-            -moz-box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
-            box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
-            margin-bottom:20px;
-        }
-
-        img:hover {
-            filter: none; /* IE6-9 */
-            -webkit-filter: grayscale(0); /* Google Chrome, Safari 6+ & Opera 15+ */
-        }
-    </style>
 </head>
 <body>
 <?php
@@ -115,23 +100,52 @@ if(isset($_POST["nombre"])){
     </ol>
 
     <!-- Wrapper for slides -->
-    <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <img src="https://placehold.it/1200x400?text=IMAGE" alt="Image">
-            <div class="carousel-caption">
-                <h3>Sell $</h3>
-                <p>Money Money.</p>
-            </div>
-        </div>
 
-        <div class="item">
-            <img src="https://placehold.it/1200x400?text=Another Image Maybe" alt="Image">
-            <div class="carousel-caption">
-                <h3>More Sell $</h3>
-                <p>Lorem ipsum...</p>
-            </div>
-        </div>
+    <div class="carousel-inner" role="listbox">
+        <?php
+        require_once ("FuncionesPHP.php");
+        $link=ConectarseaBD();
+        $result=$link->query("SELECT * FROM servicio WHERE serv_estado=1");
+
+        $bandera=true;
+        for($i=0; $i<$result->num_rows; $i++){
+            $result->data_seek($i);
+            $array=$result->fetch_array(MYSQLI_ASSOC);
+            $nombre=$array["serv_nombre"];
+            $id=$array["serv_idServicio"];
+            $PB=$array["serv_precioBase"];
+
+            if($bandera){
+                echo "<div class='item active'>";
+                $bandera=false;
+            }else{
+                echo "<div class='item'>";
+            }
+
+            echo "
+                    <img class='img-rounded' src='Admin/GetImage.php?id=$id'> 
+                    <div class='carousel-caption'>
+                        <h3>$nombre</h3>
+                        <p>$PB</p>
+                    </div>
+                 </div>
+                 ";
+        }
+        $link->close();
+        ?>
     </div>
+
+    <style>
+        .item {
+            display: block;
+            width: 100%;
+            height: 450px;
+        }
+        .item img {
+            height: 150px;
+            width: 100%;
+        }
+    </style>
 
     <!-- Controles Izquierda y derecha -->
     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
@@ -144,7 +158,7 @@ if(isset($_POST["nombre"])){
     </a>
 </div>
 
-<!-------------------------------------------------------- Imagenes inferiores ------------------------------------------------>
+<!-------------------------------------------------------- Imagenes inferiores -----------------------------------------------
 <div class="container text-center">
     <h3>Nuestros Servicios</h3><br>
     <div class="row">
@@ -174,6 +188,7 @@ if(isset($_POST["nombre"])){
         ?>
     </div>
 </div>
+-->
 
 <!-- REGLA CSS PARA EFECTO BLANCO Y NEGRO DE IMAGEN-->
 

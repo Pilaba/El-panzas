@@ -3,7 +3,8 @@ $( function() { //Cuando este listo el DOM
     var $gallery = $( "#gallery" ),
         $paquete = $( "#paquete-container" );
 
-    $vararray=new Array()
+    $vararray   = new Array()
+    $ArrayPromo = new Array()
     // los items de la galeria se hacen draggables
     $( "li", $gallery ).draggable({
         cancel: "a.glyphicon", // clickear el icono no se activara el drag
@@ -43,11 +44,46 @@ $( function() { //Cuando este listo el DOM
              *  en caso de que no existe tal <ul> la variable toma una referencia a un <ul> vacio en "#paquete-container"
              *  en caso de que ya exista tal lista y tenga elementos simplemente se añade un nuevo item a la lista <ul> que tenga la clase "list-group"
              * */
+            //En donde se almacenara el nuevo item utilizando un operador ternario
+            var $list = $( "ul", $paquete ).length ?
+                $( "ul", $paquete ) :
+                $( "<ul class='list-group' id='paquete'/>" ).appendTo( $paquete );
+
             //SOY UN MENDIGO GENIO :D - Se verifica si en el array de servicios esta el servicio, si no existe se procede a agreagarlo
             if( !($vararray.indexOf($item.find("input.nombre").attr("value")) >=0) ){
-                var $list = $( "ul", $paquete ).length ?
-                    $( "ul", $paquete ) :
-                    $( "<ul class='list-group' id='paquete'/>" ).appendTo( $paquete );
+
+                //En caso de ser promo se desactivaran los servicios que contiene la promocion y se eliminar del paquete
+                if($item.find("input.promo").attr("value") == 1){
+                    var idProm=$item.find("input.id").attr("value")
+                    $.ajax({
+                        url  : "AjaxPetitions/getServicesInPromo.php",
+                        type : "POST",
+                        dataType : "json",
+                        data : {idPaquete : idProm },
+                        success: function(dataResponse) {
+                            //Si se agrega un paquete se eliminan los servicios que ya se seleccionaron
+                            $.each(dataResponse.NomServicios, function (K,V) {
+                                $.each( $("ul#paquete > li"), function () {
+                                    if(V==$(this).find("input.nombre").val()){
+                                        $(this).css({"pointer-events": "none", "filter": "gray" , "-webkit-filter" : "grayscale(1)"})
+                                        $(this).find("a").click()
+                                    }
+                                })
+                            })
+
+                            //Los servicios dentro de la promocion se desabilitan y las promociones tambien
+                            $.each(dataResponse.idServicios, function (key,value) {
+                                $.each($("#gallery li.Servicio"), function () {
+                                    if(value==$(this).find("input.id").val()){
+                                        $(this).css({"pointer-events": "none", "filter": "gray" , "-webkit-filter" : "grayscale(1)"}) //Gris y disable
+                                    }
+                                })
+                                $("#gallery li.promo").css({"pointer-events": "none", "filter": "gray" , "-webkit-filter" : "grayscale(1)"}) //Las promos se inhabilitan
+                            })
+                            $ArrayPromo.push(idProm) //Se agrega el id del promo que se selecciono
+                        }
+                    })
+                }
 
                 //para agregar item a la canasta o paquete
                 nombreServicio=$item.find("input.nombre").attr("value")
@@ -70,6 +106,14 @@ $( function() { //Cuando este listo el DOM
         //para eliminar item de la canasta o paquete
         //Se verifica si en el array de servicios existe tal servicio, en caso de que si, se procede a eliminarlo
         if( ( $vararray.indexOf($item.find("input.nombre").attr("value") ) >=0) ){
+
+            //En caso de ser promo
+            if($item.find("input.promo").attr("value") == 1){
+                $("#gallery li.Servicio").removeAttr("style")
+                $("#gallery li.promo").removeAttr("style")
+                $ArrayPromo.pop();
+            }
+
             //para eliminar item de la canasta o paquete
             removeElemnet=$item.find("input.nombre").attr("value")
             $vararray.splice($vararray.indexOf(removeElemnet),3)
@@ -199,6 +243,7 @@ $( function() { //Cuando este listo el DOM
             cache: false,
             type : "POST",
             data : {servicios : $vararray,
+                promo : $ArrayPromo,
                 matric: matricula,
                 desc: descuentu,
                 sub: subtotal,
@@ -242,6 +287,5 @@ $( function() { //Cuando este listo el DOM
     $("#tipoVehiculo").change(function(){
         $("#tip").text(this[this.value].innerHTML) //OMG :o soy un mendigo :D - WADAFAK XD
     });
-
 
 } );

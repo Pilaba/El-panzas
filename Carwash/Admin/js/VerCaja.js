@@ -64,7 +64,7 @@ $(function () {//cuando el DOM este listo
                     $newtr=$('<tr class="alert-success"></tr>') //Nueva fila
 
                     $copia.val(dataResponse.resp[puntero]) //chaining :D
-                        .text(dataResponse.resp[puntero])
+                        .html( $("<span class='glyphicon glyphicon-zoom-in'></span>") )
                         .addClass("alert-info")
 
                     $newtr.append($('<td></td>').append($copia)) //El boton se coloca dentro de un <td>

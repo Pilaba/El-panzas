@@ -132,7 +132,7 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
                                         $precio=$array["serv_precioBase"];
 
                                         echo <<<_end
-                                                <li class="list-group-item">
+                                                <li class="list-group-item Servicio">
                                                    <img class="img-rounded" src="GetImage.php?id=$id" alt="$nombre - $precio" width="96" height="72">
                                                    <a href="#" class="glyphicon glyphicon-plus">Agregar $nombre</a>
                                                    <input class="nombre" value="$nombre" type="hidden">
@@ -146,28 +146,41 @@ _end;
                                 FROM paquete P JOIN tipopaquete TP ON P.paq_tipo=TP.tp_idTipo WHERE (P.paq_tipo!=1 AND paq_Estado=1)");
 
                                 if($rows=$resultado->num_rows){
-                                    for ($i=0; $i<$rows; $i++){
+                                    for ($i=0; $i<$rows; $i++) {
                                         $resultado->data_seek($i);
-                                        $array=$resultado->fetch_array(MYSQLI_ASSOC);
-                                        $nombrePromo=$array["tp_nombre"];
-                                        $id=$array["paq_idPaquete"];
-                                        $Importe=$array["paq_importe"];
-                                        $Descuento=$array["paq_descuento"];
-                                        $Total=$array["paq_Total"];
+                                        $array = $resultado->fetch_array(MYSQLI_ASSOC);
+                                        $nombrePromo = $array["tp_nombre"];
+                                        $id = $array["paq_idPaquete"];
+                                        $Importe = $array["paq_importe"];
+                                        $Descuento = $array["paq_descuento"];
+                                        $Total = $array["paq_Total"];
+
+                                        $NomServ = $Mysqli->query("SELECT s.serv_nombre
+                                        FROM paquete_servicio ps join servicio s on ps.PS_idServicio=s.serv_idServicio
+                                        WHERE ps.PS_idPaquete='$id'");
+                                        $Servicios="";
+                                        if($rows2=$NomServ->num_rows){
+                                            for ($j=0; $j<$rows2; $j++){
+                                                $NomServ->data_seek($j);
+                                                $arr=$NomServ->fetch_array(MYSQLI_ASSOC);
+                                                $Servicios.=", ".$arr["serv_nombre"];
+                                            }
+                                        }
+                                        $Servicios=substr($Servicios, 1);
 
                                         echo <<<_END
-                                            <li class="list-group-item">
-                                                   <img class="img-rounded" src="" alt="$nombrePromo" width="96" height="72" style="background-color: cadetblue;font:15px Impact; color: black">
+                                            <li class="list-group-item promo" title="$Servicios">
+                                                   <img class="img-rounded" src="" alt="$nombrePromo &ac; $Servicios" width="96" height="72" style="background-color: cadetblue;font:13px Impact; color: black">
                                                    <a href="#" class="glyphicon glyphicon-plus">Agregar $nombrePromo</a>
                                                    <input class="nombre" value="$nombrePromo" type="hidden">
                                                    <input class="id" value="$id" type="hidden">
                                                    <input class="precio" value="$Total" type="hidden">
-                                                </li>
+                                                   <input class="promo" value="1" type="hidden">
+                                            </li>
 _END;
                                     }
                                 }
-
-
+                                $Mysqli->close();
                                 ?>
                             </ul>
                         </div>
@@ -215,7 +228,13 @@ _END;
                                     <i class="fa fa-gift fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">12</div>
+                                    <div class="huge">
+                                        <?php $resuta=ConectarseaBD()->query("SELECT COUNT(*) FROM paquete WHERE paq_tipo!=1");
+                                        $resuta->data_seek(0);
+                                        $resuta=$resuta->fetch_array(MYSQLI_NUM);
+                                        echo ($resuta[0]);
+                                        ?>
+                                    </div>
                                     <div>Promociones</div>
                                 </div>
                             </div>

@@ -7,18 +7,18 @@ if(isset($_POST["seleccion"])){
     switch ($seleccion=$Link->real_escape_string($_POST["seleccion"])){
         case 0: $result=$Link->query("SELECT * 
                                     FROM vehiculo_paquete VP JOIN paquete P on P.paq_idPaquete=VP.VP_idPaquete
-                                    ORDER BY VP_idPaquete DESC LIMIT 10");
+                                    ORDER BY VP_Fecha DESC LIMIT 10");
             break;
         case 1: $result=$Link->query("SELECT * 
                                              FROM vehiculo_paquete VP JOIN paquete P on P.paq_idPaquete=VP.VP_idPaquete
                                              WHERE (VP_Fecha BETWEEN (CURDATE()) AND (CURDATE() + INTERVAL 1 DAY) ) 
-                                             ORDER BY VP_idPaquete DESC");
+                                             ORDER BY VP_Fecha DESC");
             break;
         case 2:
             $result=$Link->query("SELECT * 
                                         FROM vehiculo_paquete VP JOIN paquete P on P.paq_idPaquete=VP.VP_idPaquete
                                         WHERE (VP_Fecha BETWEEN (CURDATE() - INTERVAL 7 DAY) AND (CURDATE() +INTERVAL 1 DAY) ) 
-                                        ORDER BY VP_idPaquete DESC");
+                                        ORDER BY VP_Fecha DESC");
             break;
         case 3:
             $from=$Link->real_escape_string($_POST["Fromm"]);
@@ -26,7 +26,7 @@ if(isset($_POST["seleccion"])){
             $result=$Link->query("SELECT * 
                                         FROM vehiculo_paquete VP JOIN paquete P on P.paq_idPaquete=VP.VP_idPaquete
                                         WHERE (VP_Fecha BETWEEN '$from' AND '$to' ) 
-                                        ORDER BY VP_idPaquete DESC");
+                                        ORDER BY VP_Fecha DESC");
             break;
         default:
             exit;

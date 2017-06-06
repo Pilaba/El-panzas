@@ -10,45 +10,79 @@ if(isset($_POST["servicios"])){
     $idVehiculo=$_POST["idvehiculo"];
     $total=$subtotal-$discount;
 
-    //Se inserta en paquete en la BD
-    $link->query("INSERT INTO paquete VALUES (NULL,NULL,$subtotal,$discount,$total,1,1)");
-    //se toma el ultimo paquete que se ha insertado
-    $Reasultado=$link->query("SELECT MAX(paq_idPaquete) from paquete");
-    if($Reasultado){
-        //Se Obtiene el id del paquete
-        $Reasultado->data_seek(0);
-        $array=$Reasultado->fetch_array(MYSQLI_NUM);
-        $idPaquete= $array[0];
-        //Se insertan los datos al detalle
-       $contador=0;
-       foreach ($arrayServicios as $servicio){
-           if($contador==2){
-               $result=$link->query("INSERT INTO paquete_servicio VALUES ('$idPaquete','$servicio')");
-               $contador=0;
-           }else{
-               $contador++;
-           }
-       }
+    //Se inserta la matricula en el vehiculo
+    $link->query("INSERT INTO vehiculo VALUES('$matricula','$idVehiculo')");
 
-       //Se inserta la matricula en el vehiculo
-        $link->query("INSERT INTO vehiculo VALUES('$matricula','$idVehiculo')");
+    if(isset($_POST["promo"])){
+        foreach ($_POST["promo"] as $idppromo){
+            //Se inserta el detalle del promo seleccionado
+            $link->query("INSERT INTO vehiculo_paquete VALUES ('$matricula','$idppromo',NULL)");
+        }
+    }
 
-        //Se actualiza el detalle vehiculo_paquete
-        $total=$subtotal-$discount;
-        $resultado=$link->query("INSERT INTO vehiculo_paquete VALUES ('$matricula','$idPaquete',NULL)");
+    $Servicios=Array();
+    $result=$link->query("SELECT serv_nombre FROM servicio WHERE serv_estado=1");
+    if($result){
+        for ($j=0; $j<$result->num_rows; $j++){
+            $result->data_seek($j);
+            $array2=$result->fetch_array(MYSQLI_ASSOC);
+            array_push($Servicios,$array2["serv_nombre"]);
+        }
+    }
+
+    if(isset($_POST["servicios"])){
+        $idPaquete="";
+        $contador=0;
+        $bandera=true;
+        foreach ($_POST["servicios"] as $serv ){
+            if($contador==0){
+                foreach ($Servicios as $ServiciosDisponibles){
+                    if($serv==$ServiciosDisponibles){
+                        if($bandera){
+                            //Se inserta en paquete en la BD
+                            $link->query("INSERT INTO paquete VALUES (NULL,NULL,$subtotal,$discount,$total,1,1)");
+                            //se toma el ultimo paquete que se ha insertado
+                            $Reasultado=$link->query("SELECT MAX(paq_idPaquete) from paquete");
+                            if($Reasultado) {
+                                //Se Obtiene el id del paquete
+                                $Reasultado->data_seek(0);
+                                $array = $Reasultado->fetch_array(MYSQLI_NUM);
+                                $idPaquete = $array[0];
+                            }
+                            $bandera=false;
+                        }
+                        //Se obtiene el ID sel servicio
+                        $reul=$link->query("SELECT serv_idServicio FROM servicio WHERE serv_nombre='$serv'");
+                        $reul->data_seek(0);
+                        $Arr=$reul->fetch_array(MYSQLI_NUM);
+                        $idServ=$Arr[0];
+
+                        //Se insertan los servicios al detalle
+                        $result=$link->query("INSERT INTO paquete_servicio VALUES ('$idPaquete','$idServ')");
+                    }
+                }
+                $contador++;
+            }else if ($contador==2){
+                $contador=0;
+            }else{
+                $contador++;
+            }
+        }
+        //SE INSERTA EL DETALLE A VEHICULO_PAQUETE
+        $link->query("INSERT INTO vehiculo_paquete VALUES ('$matricula','$idPaquete',NULL)");
 
         //Retornara el numero de orden siguiente
         $resuta=ConectarseaBD()->query("SELECT COUNT(*) FROM paquete WHERE paq_tipo=1");
         $resuta->data_seek(0);
         $resuta=$resuta->fetch_array(MYSQLI_NUM);
-
         echo ($resuta[0]+1);
-    }else{
-        echo "Error";
     }
+
     $link->close();
-}else{
-    //echo "No se recibieron datos";
 }
+
+
+
+
 
 ?>

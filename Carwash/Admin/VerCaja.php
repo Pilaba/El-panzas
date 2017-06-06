@@ -53,7 +53,6 @@
                      ELIMINARLO CONLLEVARIA QUE SE OCULTE EL BOTON DE "ID PAQUETE DE LA TABLA"-->
                 <button type="button" id="AlmacenEvento" style="display: none"> </button>
 
-
                 <div class="row">
                     <div class="col-md-6">
                         <table id="TCaja"class="table table-striped">
@@ -71,8 +70,8 @@
                                     $Link=ConectarseaBD();
                                     $Resultado= $Link->query("SELECT * 
                                     FROM vehiculo_paquete VP JOIN paquete P on P.paq_idPaquete=VP.VP_idPaquete
-                                    ORDER BY VP_idPaquete DESC LIMIT 10 ");
-                                    $Link->close();
+                                    ORDER BY VP_Fecha DESC LIMIT 10");
+
                                     $sumaS=0;
                                     $sumaD=0;
                                     $sumaT=0;
@@ -85,13 +84,35 @@
                                         $descuento=$array["paq_descuento"];
                                         $Total=$array["paq_Total"];
 
-                                        $sumaS+=$subtotal;
-                                        $sumaD+=$descuento;
-                                        $sumaT+=$Total;
+                                        /* SOLUCION PARA COMBOS + SERVICIO
+                                        //PARA LOS COMBOS SERVICIO + PROMO
+                                        $Resul= $Link->query("SELECT *
+                                        FROM vehiculo_paquete VP JOIN paquete P on P.paq_idPaquete=VP.VP_idPaquete
+                                        WHERE VP_Fecha='$fecha'
+                                        ORDER BY VP_Fecha DESC");
+
+                                        $id2=0;
+                                        if( $Resul->num_rows == 2){
+                                            $subtotal=0;
+                                            $descuento=0;
+                                            $Total=0;
+                                            for($i=0; $i<$Resul->num_rows; $i++){
+                                                $Resul->data_seek($i);
+                                                $arr=$Resul->fetch_array(MYSQLI_ASSOC);
+                                                $subtotal+=$arr["paq_importe"];
+                                                $descuento+=$arr["paq_descuento"];
+                                                $Total+=$arr["paq_Total"];
+                                                if($i==0){
+                                                    $id2=$arr["VP_idPaquete"];
+                                                }
+                                            }
+                                            $i++;
+                                        }
+                                        */
 
                                         echo <<<_Etiqueta
                                                 <tr class="alert-success">
-                                                    <td><button class="alert-info" value="$id"> $id</button> </td>
+                                                    <td><button class="alert-info" value="$id" title=""> <span class="glyphicon glyphicon-zoom-in"></span> </button> </td>
                                                     <td>$fecha</td>
                                                     <td>$subtotal</td>
                                                     <td>$descuento</td>
@@ -99,12 +120,7 @@
                                                 </tr>
 _Etiqueta;
                                     }
-                                    echo "<tr class='alert-success'> 
-                                            <td></td><td></td>
-                                            <td>$sumaS</td>
-                                            <td>$sumaD</td>
-                                            <td>$sumaT</td>
-                                          </tr>";
+                                    $Link->close();
                                     ?>
                             </tbody>
 
