@@ -1,4 +1,4 @@
-START TRANSACTION; #EMPIEZA LA TRANSACCION
+START TRANSACTION;
 
 DROP DATABASE IF EXISTS carwashBD;
 CREATE DATABASE carwashBD DEFAULT CHARACTER SET utf8  DEFAULT COLLATE utf8_general_ci;
@@ -143,7 +143,7 @@ CREATE TABLE Paquete(
 	paq_fechaCreacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	paq_importe INTEGER UNSIGNED NOT NULL,
 	paq_descuento INTEGER NOT NULL,
-	paq_Total INTEGER UNSIGNED NOT NULL,
+	paq_Total INTEGER UNSIGNED,               #TRIGGER
 	paq_Estado TINYINT(1) NOT NULL,
 	paq_tipo TINYINT(1) UNSIGNED NOT NULL,
 	PRIMARY KEY (paq_idPaquete),
@@ -168,4 +168,66 @@ CREATE TABLE Paquete_Servicio(
 	FOREIGN KEY (PS_idServicio) REFERENCES Servicio (serv_idServicio)
 );
 
+
+######################################################
+DELIMITER //
+
+DROP TRIGGER IF EXISTS TG_calculaTotalIn//
+CREATE TRIGGER TG_calculaTotalIn
+  BEFORE INSERT
+  ON paquete
+  FOR EACH ROW
+  BEGIN
+    SET NEW.paq_Total=NEW.paq_importe-NEW.paq_descuento;
+  END//
+
+
+DROP TRIGGER IF EXISTS TG_calculaTotalUp//
+CREATE TRIGGER TG_calculaTotalUp
+  BEFORE UPDATE
+  ON paquete
+  FOR EACH ROW
+  BEGIN
+    SET NEW.paq_Total=NEW.paq_importe-NEW.paq_descuento;
+  END//
+
+
+DROP PROCEDURE IF EXISTS Pr_DetallePaq_Serv//
+CREATE PROCEDURE Pr_DetallePaq_Serv(IN ID_paquete INT, IN ID_servicio INT)
+BEGIN
+  INSERT INTO paquete_servicio (PS_idPaquete,PS_idServicio) VALUES (ID_paquete,ID_servicio);
+END//
+
+DROP PROCEDURE IF EXISTS Pr_DetalleVehi_Usu//
+CREATE PROCEDURE Pr_DetalleVehi_Usu (IN id_Usuario INT,IN matricula VARCHAR(8))
+BEGIN
+	INSERT INTO vehiculo_usuario (VU_idUsuario,VU_matricula) VALUES (id_Usuario,matricula);
+END//
+
+DROP PROCEDURE IF EXISTS Pr_DetalleVehi_Usu//
+CREATE PROCEDURE Pr_DetalleVehi_Usu (IN id_Usuario INT,IN matricula VARCHAR(8))
+BEGIN
+	INSERT INTO vehiculo_usuario (VU_idUsuario,VU_matricula) VALUES (id_Usuario,matricula);
+END//
+
+DROP PROCEDURE IF EXISTS Pr_DetalleEmp_Rol//
+CREATE PROCEDURE Pr_DetalleEmp_Rol(IN ID_emp INT,IN ID_rol VARCHAR(8))
+BEGIN
+	INSERT INTO Empleado_RolEmpleado (ER_idEmpleado, ER_idRol) VALUES (ID_emp,ID_rol);
+END//
+
+DROP PROCEDURE IF EXISTS Pr_DetalleServ_Emp//
+CREATE PROCEDURE Pr_DetalleServ_Emp(IN ID_servicio INT,IN ID_empleado INT)
+BEGIN
+	INSERT INTO Servicio_Empleado (SE_idServicio, SE_idEmpleado) VALUES (ID_servicio,ID_empleado);
+END//
+
+DROP PROCEDURE IF EXISTS Pr_DetalleVehi_Paq//
+CREATE PROCEDURE Pr_DetalleVehi_Paq(IN Matricula VARCHAR(8),IN ID_paquete INT)
+BEGIN
+	INSERT INTO Vehiculo_Paquete (VP_matricula, VP_idPaquete) VALUES (Matricula,ID_paquete);
+END//
+
+DELIMITER ;
+########################################################
 COMMIT;
