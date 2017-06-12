@@ -8,18 +8,19 @@ if(isset($_POST["servicios"])){
     $discount=$link->real_escape_string($_POST["desc"]);
     $subtotal=$link->real_escape_string($_POST["sub"]);
     $idVehiculo=$_POST["idvehiculo"];
-    $total=$subtotal-$discount;
 
     //Se inserta la matricula en el vehiculo
     $link->query("INSERT INTO vehiculo VALUES('$matricula','$idVehiculo')");
 
+    //En caso de que se seleccione una promo
     if(isset($_POST["promo"])){
         foreach ($_POST["promo"] as $idppromo){
             //Se inserta el detalle del promo seleccionado
-            $link->query("INSERT INTO vehiculo_paquete VALUES ('$matricula','$idppromo',NULL)");
+            $link->query("INSERT INTO vehiculo_paquete VALUES ('$matricula','$idppromo',NULL,'$subtotal','$discount',NULL)");
         }
     }
 
+    //Se Obtienen por nombre todos los servicios de la BD
     $Servicios=Array();
     $result=$link->query("SELECT serv_nombre FROM servicio WHERE serv_estado=1");
     if($result){
@@ -30,17 +31,18 @@ if(isset($_POST["servicios"])){
         }
     }
 
+    //Si se agregaron servicios
     if(isset($_POST["servicios"])){
         $idPaquete="";
         $contador=0;
         $bandera=true;
-        foreach ($_POST["servicios"] as $serv ){
+        foreach ($_POST["servicios"] as $serv ){ //En caso de coincidir este se agrega una vez al paquete la detalle del mismo
             if($contador==0){
                 foreach ($Servicios as $ServiciosDisponibles){
                     if($serv==$ServiciosDisponibles){
                         if($bandera){
                             //Se inserta en paquete en la BD
-                            $link->query("INSERT INTO paquete VALUES (NULL,NULL,$subtotal,$discount,$total,1,1)");
+                            $link->query("INSERT INTO paquete VALUES (NULL,NULL,$subtotal,$discount,NULL,1,1)");
                             //se toma el ultimo paquete que se ha insertado
                             $Reasultado=$link->query("SELECT MAX(paq_idPaquete) from paquete");
                             if($Reasultado) {
@@ -69,7 +71,7 @@ if(isset($_POST["servicios"])){
             }
         }
         //SE INSERTA EL DETALLE A VEHICULO_PAQUETE
-        $link->query("INSERT INTO vehiculo_paquete VALUES ('$matricula','$idPaquete',NULL)");
+        $link->query("INSERT INTO vehiculo_paquete VALUES ('$matricula','$idPaquete',NULL,$subtotal,'$discount',NULL)");
 
         //Retornara el numero de orden siguiente
         $resuta=ConectarseaBD()->query("SELECT COUNT(*) FROM paquete WHERE paq_tipo=1");

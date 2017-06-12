@@ -83,7 +83,7 @@
     <div id="page-wrapper">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h2 class="panel-title"> Ver Clientes </h2>
+                <h2 class="panel-title"> Ver Promociones </h2>
             </div>
             <div class="panel-body">
                 <div class="row">

@@ -7,13 +7,16 @@ if(isset($_POST["idpaq"])){
 
     //CONSULTA PARA OBTENER LOS SERVICIOS
     $result=$link->query("SELECT SE.serv_nombre 
-                                FROM paquete_servicio PS JOIN servicio SE ON SE.serv_idServicio=PS.PS_idServicio 
-                                WHERE PS.PS_idPaquete='$idPaq'");
+     FROM (( paquete_servicio PS JOIN servicio SE ON SE.serv_idServicio=PS.PS_idServicio ) 
+	     JOIN paquete P on P.paq_idPaquete=PS.PS_idPaquete)
+         JOIN vehiculo_paquete VP on VP.VP_idPaquete=P.paq_idPaquete
+     WHERE VP.VP_Fecha='$idPaq'");
 
     //CONSULTA PARA OBTENER LOS DATOS DEL VEHICULO
-    $result2=$link->query("SELECT v.vehi_matricula, tv.tv_nombre
-                                 FROM (vehiculo_paquete vp JOIN vehiculo v ON vp.VP_matricula=v.vehi_matricula) JOIN  tipovehiculo tv on tv.tv_idTipo=v.vehi_id_Tipo
-                                 WHERE vp.VP_idPaquete='$idPaq'");
+    $result2=$link->query("SELECT v.vehi_matricula, tv.tv_nombre 
+    FROM (vehiculo_paquete vp JOIN vehiculo v ON vp.VP_matricula=v.vehi_matricula) 
+	    JOIN  tipovehiculo tv on tv.tv_idTipo=v.vehi_id_Tipo
+    WHERE vp.VP_Fecha='$idPaq'");
 
     if($result && $result2){
         $arr=Array();

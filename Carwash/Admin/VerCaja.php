@@ -68,13 +68,12 @@
                             <tbody id="body">
                                 <?php
                                     $Link=ConectarseaBD();
-                                    $Resultado= $Link->query("SELECT * 
-                                    FROM vehiculo_paquete VP JOIN paquete P on P.paq_idPaquete=VP.VP_idPaquete
-                                    ORDER BY VP_Fecha DESC LIMIT 10");
+                                    $Resultado= $Link->query("SELECT * FROM vehiculo_paquete ORDER BY VP_Fecha DESC LIMIT 10");
 
                                     $sumaS=0;
                                     $sumaD=0;
                                     $sumaT=0;
+                                    $bandera=true; $FechaAnterior=NULL; $idAnterior=NULL;
                                     for($i=0; $i<$Resultado->num_rows; $i++){
                                         $Resultado->data_seek($i);
                                         $array=$Resultado->fetch_array(MYSQLI_ASSOC);
@@ -84,35 +83,23 @@
                                         $descuento=$array["paq_descuento"];
                                         $Total=$array["paq_Total"];
 
-                                        /* SOLUCION PARA COMBOS + SERVICIO
-                                        //PARA LOS COMBOS SERVICIO + PROMO
-                                        $Resul= $Link->query("SELECT *
-                                        FROM vehiculo_paquete VP JOIN paquete P on P.paq_idPaquete=VP.VP_idPaquete
-                                        WHERE VP_Fecha='$fecha'
-                                        ORDER BY VP_Fecha DESC");
-
-                                        $id2=0;
-                                        if( $Resul->num_rows == 2){
-                                            $subtotal=0;
-                                            $descuento=0;
-                                            $Total=0;
-                                            for($i=0; $i<$Resul->num_rows; $i++){
-                                                $Resul->data_seek($i);
-                                                $arr=$Resul->fetch_array(MYSQLI_ASSOC);
-                                                $subtotal+=$arr["paq_importe"];
-                                                $descuento+=$arr["paq_descuento"];
-                                                $Total+=$arr["paq_Total"];
-                                                if($i==0){
-                                                    $id2=$arr["VP_idPaquete"];
-                                                }
+                                        //Para evitar duplicidad PAQUETE + SERVICIO
+                                        if($bandera){
+                                            $FechaAnterior=$fecha;
+                                            $idAnterior=$id;
+                                            $bandera=false;
+                                        }else{
+                                            //Comprobamos que las fechas coincidan menos los segundos
+                                            if( $fecha==$FechaAnterior OR
+                                                ( substr($fecha,0,-1) == substr($FechaAnterior,0,-1) ) ){
+                                                $bandera=true;
+                                                continue;
                                             }
-                                            $i++;
                                         }
-                                        */
 
                                         echo <<<_Etiqueta
                                                 <tr class="alert-success">
-                                                    <td><button class="alert-info" value="$id" title=""> <span class="glyphicon glyphicon-zoom-in"></span> </button> </td>
+                                                    <td><button class="alert-info" value="$fecha" name="$idAnterior" data-toggle="$id"> <span class="glyphicon glyphicon-zoom-in"></span> </button> </td>
                                                     <td>$fecha</td>
                                                     <td>$subtotal</td>
                                                     <td>$descuento</td>

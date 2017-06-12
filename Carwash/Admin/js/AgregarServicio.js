@@ -13,6 +13,7 @@ function addImage(e){
     reader.onload = fileOnload;
     reader.readAsDataURL(file);
 }
+
  function fileOnload(e) {
      var result=e.target.result;
      $('#imgSalida').attr("src",result);

@@ -8,7 +8,7 @@ $(function () {
             data : {idpaquete : this.value}, //datos a enviar
 
             success: function (dataResponse) {
-                $("#myModalLabel").text("Paquete: "+dataResponse.nombreP);
+                $("#myModalLabel").text(dataResponse.nombreP);
                 $("#Nom").val(dataResponse.nombreP)
                 $("#fecha").val(dataResponse.fechaP)
                 $("#importe").val(dataResponse.importe)

@@ -118,6 +118,7 @@ CREATE TABLE Servicio(
 	serv_nombre VARCHAR(30) UNIQUE NOT NULL,
 	serv_precioBase FLOAT UNSIGNED NOT NULL,
 	serv_estado TINYINT(1) NOT NULL,
+	#Serv_descripcion TEXT DEFAULT NULL,
 	serv_imagen LONGBLOB,
 	serv_mime varchar(40) NOT NULL,
 	PRIMARY KEY (serv_idServicio)
@@ -131,7 +132,7 @@ CREATE TABLE Servicio_Empleado(
 	FOREIGN KEY (SE_idEmpleado) REFERENCES Empleado (emp_idEmpleado)
 );
 CREATE TABLE TipoPaquete(
-	tp_idTipo TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	tp_idTipo INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
 	tp_nombre VARCHAR(50) UNIQUE NOT NULL,
 	PRIMARY KEY (tp_idTipo)
 );
@@ -145,7 +146,9 @@ CREATE TABLE Paquete(
 	paq_descuento INTEGER NOT NULL,
 	paq_Total INTEGER UNSIGNED,               #TRIGGER
 	paq_Estado TINYINT(1) NOT NULL,
-	paq_tipo TINYINT(1) UNSIGNED NOT NULL,
+	paq_tipo INTEGER UNSIGNED NOT NULL,
+	paq_Img LONGBLOB DEFAULT NULL,
+	Paq_ImgMime varchar(40) DEFAULT NULL,
 	PRIMARY KEY (paq_idPaquete),
 	FOREIGN KEY (paq_tipo) REFERENCES TipoPaquete (tp_idTipo)
 );
@@ -154,6 +157,9 @@ CREATE TABLE Vehiculo_Paquete(
 	VP_matricula VARCHAR(8) NOT NULL,
 	VP_idPaquete INTEGER UNSIGNED  NOT NULL,
 	VP_Fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	paq_importe INTEGER UNSIGNED NOT NULL,
+	paq_descuento INTEGER NOT NULL,
+	paq_Total INTEGER UNSIGNED,
 	PRIMARY KEY (VP_matricula, VP_idPaquete, VP_Fecha),
 	FOREIGN KEY (VP_matricula) REFERENCES Vehiculo (vehi_matricula),
 	FOREIGN KEY (VP_idPaquete) REFERENCES Paquete (paq_idPaquete)
@@ -191,11 +197,25 @@ CREATE TRIGGER TG_calculaTotalUp
     SET NEW.paq_Total=NEW.paq_importe-NEW.paq_descuento;
   END//
 
+DROP TRIGGER IF EXISTS TG_calculaTotal//
+CREATE TRIGGER TG_calculaTotal 
+ BEFORE INSERT 
+ ON vehiculo_paquete
+ FOR EACH ROW BEGIN
+    SET NEW.paq_Total=NEW.paq_importe-NEW.paq_descuento;
+ END//
+
 
 DROP PROCEDURE IF EXISTS Pr_DetallePaq_Serv//
-CREATE PROCEDURE Pr_DetallePaq_Serv(IN ID_paquete INT, IN ID_servicio INT)
+CREATE PROCEDURE Pr_DetallePaq_Serv(IN ID_servicio INT, IN NomPaq VARCHAR(50))
 BEGIN
-  INSERT INTO paquete_servicio (PS_idPaquete,PS_idServicio) VALUES (ID_paquete,ID_servicio);
+		DECLARE idPaquete INT;
+		SELECT P.paq_idPaquete
+		FROM tipopaquete TP JOIN paquete P ON P.paq_tipo=TP.tp_idTipo
+		WHERE TP.tp_nombre=NomPaq INTO idPaquete;
+
+		INSERT INTO paquete_servicio (PS_idPaquete,PS_idServicio)
+		VALUES (idPaquete,ID_servicio);
 END//
 
 DROP PROCEDURE IF EXISTS Pr_DetalleVehi_Usu//
@@ -227,6 +247,20 @@ CREATE PROCEDURE Pr_DetalleVehi_Paq(IN Matricula VARCHAR(8),IN ID_paquete INT)
 BEGIN
 	INSERT INTO Vehiculo_Paquete (VP_matricula, VP_idPaquete) VALUES (Matricula,ID_paquete);
 END//
+
+
+DROP PROCEDURE IF EXISTS LLenarPaquete//
+CREATE PROCEDURE LLenarPaquete(IN Importe INT,IN Descuento INT,IN NomPaq VARCHAR(50))
+	BEGIN
+		DECLARE idTipo INT;
+
+		SELECT tp_idTipo FROM tipopaquete
+		WHERE tp_nombre=NomPaq
+		INTO idTipo;
+
+		INSERT INTO paquete (paq_importe,paq_descuento,paq_Estado,paq_tipo)
+		VALUES (Importe,Descuento,1,idTipo);
+	END//
 
 DELIMITER ;
 ########################################################

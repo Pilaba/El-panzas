@@ -186,6 +186,11 @@ $( function() { //Cuando este listo el DOM
             return false;
         }
 
+        if(! $("#imgSalida").hasClass("true") ){
+            $("#archivo").tooltip().mouseover()
+            return false;
+        }
+
         var nombrePromo= $("#nombrePromo").val();
         var descuentu= (isNaN(parseInt($("#discount").val()))) ? 0 : parseInt($("#discount").val());
         var subtotal= parseInt( $("td#sub").text() ) ;
@@ -195,35 +200,61 @@ $( function() { //Cuando este listo el DOM
             url  : "AgregarPromo.php",
             cache: false,
             type : "POST",
+            dataType : "json",
             data : {servicios : $vararray,
                 desc: descuentu,
                 sub: subtotal,
                 nombreP: nombrePromo},
 
             success: function(dataResponse) {
-                $Mensajito=$("#MensajeGeneral");
-                $Mensajito.attr("class","alert alert-success text-center")
-                $Mensajito.find("strong").text(
-                    nombrePromo+" Precio: "+$("#sum").text()
-                );
-
-                $Mensajito.show();
-                $Mensajito.fadeTo(4000, 1000).slideUp(1000, function(){
-                    $Mensajito.slideUp(1000);
-                });
-                $("#matr").text(dataResponse)
-                $("#nombrePromo").val("")
-                $("#discount").val(0)
-                $("#sum").val(0)
-
-                $("ul#paquete > li > a").click();
-                $vararray=new Array();
+                if(dataResponse.Error=="Error"){
+                    alert("Ya existe una promocion con este nombre");
+                }else{
+                    $vararray=new Array(); //Se borran los servicios en la promo
+                    $("#idPromo").val(dataResponse.IDpaq) //Se pasa el id  al formulario para subir la imagen
+                    $("#NomPromo").val(nombrePromo) //Nombre de promo
+                    $("#FormUpload").submit()
+                }
             },
             error : function(dataResponse) {
-                alert("Error")
+                alert("Ya existe una promocion con este nombre");
             }
         })
-
     });
 
+    //Para agregar imagen de la promocion
+    $('#archivo').change(function(e) {
+        var clone = $(this).clone();
+            clone.attr({'id':"clone","name":"Archii"});
+            $("#clone").replaceWith(clone)
+        addImage(e);
+    });
+
+    function addImage(e){
+        var file = e.target.files[0],
+            imageType = /image.*/;
+        if (!file.type.match(imageType)){
+            return;
+        }
+
+        //Validar tamaño de imagen
+        if(! (file.size > 0 && file.size <= 950000) ) {
+            alert("Imagen demasiado grande")
+            $("#container").removeAttr("style");
+            $("#imgSalida").remove()
+            $("#archivo").val("")
+            return;
+        }
+        var reader = new FileReader();
+        reader.onload = fileOnload;
+        reader.readAsDataURL(file);
+    }
+
+    function fileOnload(e) {
+        var result=e.target.result;
+        //Se reemplaza la imagen anterior, con la nueva que se selecciono
+        $("#container").css("height","400px").html(
+            $("<img id='imgSalida' class='true'>").attr({ "src": result , "height" :"100%" , "width" :"100%"}).show()
+        )
+    }
 });

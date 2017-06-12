@@ -30,7 +30,7 @@ $(function () {//cuando el DOM este listo
             }
         });
 
-       $('#myModal').find("#myModalLabel").text("Paquete No. "+this.value) //Titulo con el numero del paquete
+       $('#myModal').find("#myModalLabel").text("Datos del paquete") //Titulo con el numero del paquete
        $('#myModal').modal("show");//Despliega el modal
     })
 
@@ -63,7 +63,7 @@ $(function () {//cuando el DOM este listo
                     $copia.css("display","block")
                     $newtr=$('<tr class="alert-success"></tr>') //Nueva fila
 
-                    $copia.val(dataResponse.resp[puntero]) //chaining :D
+                    $copia.val(dataResponse.resp[puntero+1]) //chaining :D
                         .html( $("<span class='glyphicon glyphicon-zoom-in'></span>") )
                         .addClass("alert-info")
 

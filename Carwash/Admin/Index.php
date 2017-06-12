@@ -20,16 +20,14 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
             <!-- Page Heading -->
             <div class="row">
                 <div class="col-md-12">
-                    <h3 class="page-header"> Vista Principal </h3>
+                    <h4 class="page-header"> <strong>Vista Principal</strong> </h4>
                 </div>
             </div>
             <!-- /.row -->
-
             <!-- Alerta de proposito general -->
             <div id='MensajeGeneral' class='alert alert-success text-center' role='alert' style="display: none">
                 <strong>...</strong>
             </div>
-
             </div>
             <div class="row">
                 <!-- AQUI SE DESPLEGARA INFORMACION DEL PEDIDO-->

@@ -3,17 +3,19 @@
     <title> Panel de administración </title>
 </head>
 <body>
+
 <?php
 @session_start();
 if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
     header("location: ../Index.php");
 }
+
 ?>
 
 <div id="wrapper">
     <?php
-    require_once ("Menu.php");
     require_once ("../FuncionesPHP.php");
+    require_once ("Menu.php");
     ?>
     <div id="page-wrapper">
         <div class="container-fluid">
@@ -23,13 +25,35 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
                     <h3 class="page-header"> Promociones </h3>
                 </div>
             </div>
-            <!-- /.row -->
-
             <!-- Alerta de proposito general -->
-            <div id='MensajeGeneral' class='alert alert-success text-center' role='alert' style="display: none">
-                <strong>...</strong>
-            </div>
+            <?php
+            //<!--Subir la imagen de la promocion-->
+                if(isset($_POST["idPromo"]) && $_FILES["Archii"]){
+                    $enlace  = ConectarseaBD();
+                    $IdPromo = $enlace->real_escape_string($_POST["idPromo"]);
+                    $NomPromo= $enlace->real_escape_string($_POST["NomPromo"]);
 
+                    $type   = $_FILES['Archii']['type'];
+                    $temp   = $_FILES['Archii']['tmp_name']; //Obtenemos el directorio temporal en donde se ha almacenado el archivo;
+                    $fpp    = fopen($temp, "rb");//abrimos el archivo con permiso de lectura
+                    $datos  = fread($fpp, filesize($temp));//leemos el contenido del archivo
+
+                    //Una vez leido el archivo se obtiene un string con caracteres especiales.
+                    $datos = $enlace->real_escape_string($datos);//se escapan los caracteres especiales
+
+                    $Resultado = $enlace->query("UPDATE paquete SET paq_Img='$datos', Paq_ImgMime='$type' WHERE paq_idPaquete='$IdPromo'");
+                    if($Resultado){
+                        echo "<div id='MensajeGeneral' class='alert alert-success alert-dismissible text-center' role='alert'>
+                                <strong>¡Exito!, se ha creado la promoción $NomPromo</strong>
+                             </div>";
+                    }else{
+                        echo "<div id='MensajeGeneral' class='alert alert-warning alert-dismissible text-center' role='alert'>
+                                   <strong>¡Error Imagen no soportada!, intente modificarla en \"Ver Promociones\"</strong>
+                              </div>";
+                    }
+                    $enlace->close();
+                }
+            ?>
         </div>
         <div class="row">
             <!-- AQUI SE DESPLEGARA INFORMACION DEL PEDIDO-->
@@ -85,7 +109,10 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
                     <div class="panel-footer">
                         <div class="row">
                             <div class="col-md-12">
-                                <input type="text" maxlength="30" id="nombrePromo" class="form-control" title="¡Ingresa el nombre de la promoción!" placeholder="Nombre de la promoción" required>
+                                <input type="text" maxlength="30" id="nombrePromo" class="form-control" title="Ingresa el nombre de la promoción" placeholder="Nombre de la promoción" required>
+                            </div>
+                            <div class="col-md-12">
+                                <input type="file" id="archivo" name="archivo" class="form-control" title="Ingresa una imagen" placeholder="Imagen de promo" required>
                             </div>
                             <div class="col-md-12">
                                 <input type="button" id="botonPaquete" value="ENVIAR" class="btn btn-info btn-group-justified">
@@ -132,12 +159,24 @@ _end;
                 </div>
             </div>
         </div>
+        <div id="container"> <!-- Se coloca la imagen de la promocion-->
+
+        </div>
+
+
+        <form hidden action="AgregarPromociones.php" id="FormUpload" method="post" enctype="multipart/form-data">
+            <input type="text" id="idPromo" name="idPromo" hidden>
+            <input type="text" id="NomPromo" name="NomPromo" hidden>
+            <input type="file" id="clone" name="Archii" hidden>
+        </form>
+
+
 
     </div>
     <!-- /.container-fluid -->
-
 </div>
 <!-- /#page-wrapper -->
+</div>
 
 </div>
 <!-- /#wrapper -->

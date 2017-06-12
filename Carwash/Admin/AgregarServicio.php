@@ -8,7 +8,7 @@
         $Nombre = $_POST["Nom"];
         $PBase = $_POST["PBase"];
 
-        $size=$_FILES['archivo']['size'];
+        $size = $_FILES['archivo']['size'];
         $tipo = $_FILES['archivo']['type'];
 
         if( ! ($size > 0 && $size <= 950000) ){

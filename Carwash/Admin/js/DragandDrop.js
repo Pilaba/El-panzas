@@ -201,7 +201,6 @@ $( function() { //Cuando este listo el DOM
                 $("#sum").text( (parseInt($("#sub").text() - ui.value )) )
             }
         });
-
     }
 
     //PARA SUBIR LOS ELEMENTOS

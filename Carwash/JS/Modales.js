@@ -1,22 +1,5 @@
 
 $(function () {
-    $("#help").click(function () {
-        $("#PanelBody").children().remove() //Se elimina lo que este en el body del panel
-       $("#myModal").modal("show")
-    })
-
-    $("#services").click(function () {
-        $("#PanelBody").children().remove() //Se elimina lo que este en el body del panel
-        $("#myModal").modal("show")
-    })
-
-    $("#contact").click(function () {
-        $("#myModal").modal("show")
-        $("#PanelBody").children().remove() //Se elimina lo que este en el body del panel
-
-    })
-
-
     $("#MiCuenta").click(function () { //Obtener los datos de la cuenta
         $.ajax({
             url  : "ObtenerDatosdeUsuario.php", //Direccion url que recibira la peticion ajax
@@ -42,9 +25,8 @@ $(function () {
                     }else{
                         input=$("<input class='form-control' maxlength='30' id='"+Ids[i]+"' name='"+Ids[i]+"' type='text' value='"+Datos[i]+"'>")
                     }
-                    $("#PanelBody").append(formulario.append(formGroup.append(label,Divisor.append(input)))) //CHAINING IN ACTION
+                    $("#PanelBody").children().remove().end().append(formulario.append(formGroup.append(label,Divisor.append(input)))) //CHAINING IN ACTION Level 5
                 }
-
             },
             error : function(dataResponse) { //En caso de fallar
                 alert("error")
@@ -54,11 +36,15 @@ $(function () {
     })
 
     $("#Cambios").click(function () {
-        $("#CambioDatos").submit()
+        if($("#nombre").val()=="" || $("#telefono").val()=="" || $("#correo").val()=="" ){ //Validar entradas
+            alert("Hay campos vacios")
+            return false;
+        }else if (!/^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i.test($("#correo").val())){ //Validar Email
+            alert("Email incorrecto")
+            return false;
+        }else
+            $("#CambioDatos").submit()
     })
-
-
-
 
 
 

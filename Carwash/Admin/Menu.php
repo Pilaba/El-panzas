@@ -59,7 +59,7 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li class="active">
-                        <a href="Index.php"><i class="fa fa-fw fa-dashboard"></i> Panel </a>
+                        <a href="Index.php"><i class="fa fa-fw fa-dashboard"></i> Crear Paquete </a>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-car fa-table"></i> Servicios <i class="fa fa-fw fa-caret-down"></i></a>

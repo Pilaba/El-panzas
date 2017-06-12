@@ -9,3 +9,20 @@
 .brand {
     color: #CCC;
 }
+
+.Fondonaranja {
+    background-color: #981620;
+    background-repeat: no-repeat;
+}
+header {
+    background-image:url("../Images/Sucursal.png");
+    background-position:center center;
+    background-size:cover;
+    color:#FFFFFF;
+    min-height:auto;
+}
+header, header .header-content {
+    position:relative;
+    text-align:center;
+    width:100%;
+}
