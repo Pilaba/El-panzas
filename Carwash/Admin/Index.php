@@ -168,7 +168,7 @@ _end;
 
                                         echo <<<_END
                                             <li class="list-group-item promo" title="$Servicios">
-                                                   <img class="img-rounded" src="" alt="$nombrePromo &ac; $Servicios" width="96" height="72" style="background-color: cadetblue;font:13px Impact; color: black">
+                                                   <img class="img-rounded" src="../GetPromotionImage.php?numProm=$id" alt="$nombrePromo &ac; $Servicios" width="96" height="72" style="background-color: cadetblue;font:13px Impact; color: black">
                                                    <a href="#" class="glyphicon glyphicon-plus">Agregar $nombrePromo</a>
                                                    <input class="nombre" value="$nombrePromo" type="hidden">
                                                    <input class="id" value="$id" type="hidden">

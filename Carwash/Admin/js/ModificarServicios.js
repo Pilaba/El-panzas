@@ -50,6 +50,14 @@ $( function() {
             return;
         }
 
+        //Validar tamaño de imagen
+        if(! (file.size > 0 && file.size <= 950000) ) {
+            alert("Imagen demasiado grande")
+            $("#container").removeAttr("style");
+            $("#imgSalida").remove()
+            $("#archivo").val("")
+            return;
+        }
         var reader = new FileReader();
         reader.onload = fileOnload;
         reader.readAsDataURL(file);

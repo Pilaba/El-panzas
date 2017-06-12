@@ -3,7 +3,7 @@ if(isset($_GET["numProm"])){
     require_once ("FuncionesPHP.php");
     $Link=ConectarseaBD();
     $id=$Link->real_escape_string($_GET["numProm"]);
-    $result=$Link->query("SELECT paq_Img,paq_ImgMime,paq_Estado FROM paquete WHERE (paq_idPaquete='$id' AND paq_Estado=1)");
+    $result=$Link->query("SELECT paq_Img,paq_ImgMime,paq_Estado FROM paquete WHERE paq_idPaquete='$id'");
     $img=NULL;
     $type=NULL;
     for($i=0; $i<$result->num_rows; $i++) {

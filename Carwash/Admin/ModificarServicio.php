@@ -10,7 +10,6 @@
             <div class="panel-heading">
                 <h2 class="panel-title"> Modificar Servicio </h2>
             </div>
-
             <div class="panel-body">
                 <!-- Alerta de proposito general -->
                 <div id='MensajeGeneral' class='alert alert-success text-center' role='alert' style="display: none">

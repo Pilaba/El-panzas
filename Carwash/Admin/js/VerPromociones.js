@@ -27,19 +27,60 @@ $(function () {
                 $("#toggle").change(function () {
                     $("#state").val( ($(this).prop('checked')==true) ? 1:0  )
                 });
+                $("#imgServ").attr("src", "../GetPromotionImage.php?numProm=" + dataResponse.idPromo); //Imagen del servicio
+                $("#imgServ").show();
+
             },
             error : function(dataResponse) { //En caso de fallar
                 alert("error")
             }
         });
         $("#myModal").modal("show")
+
     })
 
     $("#submitModif").click(function () {
-        if($("#Nom").val()==0 ){
+        if( $("#Nom").val()==""){
             alert("Error, hay campos vacios")
         }else{
             $("#formEditaPromo").submit()
         }
     })
+
+    $("#descuento, #importe").change(function () {
+        if($(this).val()<0){
+            $(this).val(0)
+        }
+    })
+
+    //=============================================================================//
+    /* SI SE SELECCIONA IMAGEN SE DESPLEGARLA EN EL MODAL*/
+    $('#archivito').change(function(e) {
+        addImage(e);
+    });
+
+    function addImage(e){
+        var file = e.target.files[0], imageType = /image.*/;
+        if (!file.type.match(imageType)){
+            return;
+        }
+        if(! (file.size > 0 && file.size <= 950000) ) {
+            alert("Imagen demasiado grande")
+            $("#archivo").val("")
+            return;
+        }
+
+        var reader = new FileReader();
+        reader.onload = fileOnload;
+        reader.readAsDataURL(file);
+    }
+    function fileOnload(e) {
+        var result=e.target.result;
+        $('#imgServ').attr("src",result);
+        $('#imgServ').show();
+    }
+
+
+
+
 })
