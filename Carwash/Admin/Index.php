@@ -12,8 +12,8 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
 
 <div id="wrapper">
     <?php
-        require_once ("Menu.php");
         require_once ("../FuncionesPHP.php");
+        require_once ("Menu.php");
     ?>
     <div id="page-wrapper">
         <div class="container-fluid">
@@ -35,6 +35,8 @@ if(!isset($_SESSION["Nombre"]) || $_SESSION["rol"]==2) {
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             DETALLE: "<strong id="matr">.</strong> - <strong id="tip">.</strong>"
+                            <br>
+                            <strong id="numVeces"></strong>
                         </div>
                         <div id="DetallePaquete" class="panel-body" style="min-height: 300px">
                             <table id="tablitaDetalles" class="table">
@@ -314,12 +316,36 @@ _END;
 
         </div>
         <!-- /.container-fluid -->
-
     </div>
     <!-- /#page-wrapper -->
-
 </div>
 <!-- /#wrapper -->
+<!------------------------- MODAL DE PROPOSITO GENERAL ------------------->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalTitle"></h4>
+            </div>
+            <div class="modal-body">
+                <div id="Panel" class="panel panel-info">
+                    <div class="panel-heading" id="title">
+
+                    </div>
+                    <div id="PanelBody" class="panel-body">
+                        <!-- Colgar datos aqui-->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button id="Cambios" type="submit" class="btn btn-primary">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- jQuery & jQuery UI CDN -->
 <script src="js/jquery.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

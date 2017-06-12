@@ -1,4 +1,3 @@
-
     <head>
         <title>Panel administrativo el panzas</title>
         <!-- Bootstrap Core CSS -->
@@ -35,7 +34,6 @@
                 <a class="navbar-brand" href="index.php">Panel administrativo</a>
             </div>
             
-            
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
@@ -44,10 +42,7 @@
                           <b class="caret"></b>   
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Mi Cuenta</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#"><i class="glyphicon glyphicon-wrench">&nbsp;</i>Preferencias</a></li>
-                        <li><a href="#"><i class="glyphicon glyphicon-th-list">&nbsp;</i>Historial</a></li>
+                        <li><a href="#" id="MiCuenta"><i class="glyphicon glyphicon-pencil">&nbsp</i>Mi Cuenta</a></li>
                         <li class="divider"></li>
                         <li><a href="../EliminarSession.php"><i class="glyphicon glyphicon-off">&nbsp;</i> Salir </a>
                        </li>
@@ -100,6 +95,9 @@
                             <li>
                                 <a href="IngresarEmpleado.php">Agregar empleados</a>
                             </li>
+                            <li>
+                                <a href="IngresarRol.php">Agregar roles</a>
+                            </li>
                         </ul>
                     </li>
                     <li>
@@ -120,7 +118,7 @@
             </div>
     </nav>
 _end;
-    ?>
+?>
 
 
 

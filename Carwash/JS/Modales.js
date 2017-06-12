@@ -7,12 +7,12 @@ $(function () {
             dataType : "json",
             type : "POST", //modo
             success: function (dataResponse) { //En caso de ser positiva
-                $Modal=$('#myModal');
 
                 var Datos = new Array(dataResponse.nombre, dataResponse.correo, dataResponse.tel) //Datos del usuario
                 var Ids = new Array("nombre","correo","telefono")
 
-                $("#myModalTitle").text(Datos[0])
+                $("#myModalTitle").text("Datos de usuario")
+                $("#title").text(Datos[0])
                 formulario=$("<form id='CambioDatos' action='Index.php' method='post'></form>")
                 for (var i=0; i<3; i++){
                     formGroup=$("<div class='form-group'> </div>")
@@ -32,19 +32,65 @@ $(function () {
                 alert("error")
             }
         });
+
+        //Boton de guardar cambios
+        $("#Cambios").click(function () {
+            if($("#Matr").hasClass("pisho")){ //Elimina interferencias entre modales
+                return;
+            }
+            if($("#nombre").val()=="" || $("#correo").val()=="" ){ //Validar entradas
+                alert("Hay campos vacios")
+                return false;
+            }else if (!/^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i.test($("#correo").val())){ //Validar Email
+                alert("Email incorrecto")
+                return false;
+            }else{
+                $("#CambioDatos").submit()
+            }
+        })
+        //Despliega el modal
+        $('#myModal').modal("show");
+    })
+
+    /////////////////////////DAR DE ALTA MATRICULA//////////////////////////////////////////////////////////////
+    var contador=0; //paraa evitar demasiados intentos
+
+    $("#DarAlta").click(function () {
+        $("#myModalTitle").text("Dar de alta matricula")
+        $("#title").text("Usuario")
+        $("#PanelBody").html("<label for='Matr'> Matricula</label><br><input class='pisho' type='text' id='Matr' name='Matr' maxlength='8'>");
+
+
+        //Guardar cambios
+        $("#Cambios").click(function () {
+            if($("#Matr").val()==""){
+                alert("Ingresa una matricula")
+                return false;
+            }
+            $.ajax({
+                url  : "DarAltavehiculo.php", //Direccion url que recibira la peticion ajax
+                cache: false,
+                data: {matricula : $("#Matr").val(), contador: contador},
+                type : "POST",
+                dataType : "json",
+                success: function (dataResponse) { //En caso de ser positiva
+                    if(dataResponse.exito=="true"){
+                        contador=dataResponse.contadorr
+                        alert("Exito, matricula registrada correctamente")
+                    }else{
+                        alert("Error, matricula inexistente")
+                    }
+                    contador++;
+                },
+                error : function(dataResponse) { //En caso de fallar
+                    alert("has superado el numero maximo de intentos")
+                }
+            });
+        })
         $('#myModal').modal("show");//Despliega el modal
     })
 
-    $("#Cambios").click(function () {
-        if($("#nombre").val()=="" || $("#telefono").val()=="" || $("#correo").val()=="" ){ //Validar entradas
-            alert("Hay campos vacios")
-            return false;
-        }else if (!/^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i.test($("#correo").val())){ //Validar Email
-            alert("Email incorrecto")
-            return false;
-        }else
-            $("#CambioDatos").submit()
-    })
+
 
 
 

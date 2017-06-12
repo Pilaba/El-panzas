@@ -88,12 +88,12 @@ _Fallo;
                                 <td>Correo: </td>
                                 <td><input class="form-control"  maxlength="30" type="email" name="Correo" required></td>
                             </tr>
-                            
+
                             <tr>
                                 <td>Telefono: </td>
                                 <td><input class="form-control" onKeyPress='if(this.value.length==10) return false;' min='0'  type="number" name="Telefono" required></td>
                             </tr>
-                            
+
                             <tr>
                                 <td>Direccion: </td>
                                 <td><input class="form-control" maxlength="50" type="text" name="Direccion" required></td>
@@ -137,7 +137,7 @@ _Fallo;
                                     <label><input class="form-control" type="radio" name="Turno" value="d">Diurno </label>
                                 </td>
                             </tr>
-                            
+
                             <tr>
                                 <td></td>
                                 <td><input class="btn btn-danger" id="subirForm" type="submit" value="ACEPTAR"> </input></td>

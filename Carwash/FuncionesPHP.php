@@ -39,17 +39,28 @@ _etiqueta;
                                 <b class="caret"></b>   
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a id="MiCuenta" href="#"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Mi Cuenta</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#"><i class="glyphicon glyphicon-wrench">&nbsp;</i>Preferencias</a></li>
+                            <li><a id="MiCuenta" href="#"><i class="glyphicon glyphicon-pencil">&nbsp;</i>Mi Cuenta</a></li>
+                            <li class="divider"></li>
+_end;
+        if($rol==1){
+
+        }else{
+            echo <<<_endd
+                                
+                                <li><a href="#" id="DarAlta"><i class="glyphicon glyphicon-wrench">&nbsp;</i>Dar de alta una matricula</a></li>
                                 <li><a id="Historial" href="#"><i class="glyphicon glyphicon-th-list">&nbsp;</i>Historial</a></li>
                                 <li class="divider"></li>
+_endd;
+        }
+        echo <<<_enddd
+                                
                                 <li><a href="EliminarSession.php"><i class="glyphicon glyphicon-off">&nbsp;</i> Salir </a>
                                 </li>
                             </ul>
                         </li>
                     </ul>
-_end;
+_enddd;
+
     }else{
         echo <<<_end
                     <ul class="nav navbar-nav navbar-right">

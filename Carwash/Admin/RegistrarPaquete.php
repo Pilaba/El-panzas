@@ -42,7 +42,7 @@ if(isset($_POST["servicios"])){
                     if($serv==$ServiciosDisponibles){
                         if($bandera){
                             //Se inserta en paquete en la BD
-                            $link->query("INSERT INTO paquete VALUES (NULL,NULL,$subtotal,$discount,NULL,1,1)");
+                            $link->query("INSERT INTO paquete VALUES (NULL,NULL,$subtotal,$discount,NULL,1,1,NULL,NULL)");
                             //se toma el ultimo paquete que se ha insertado
                             $Reasultado=$link->query("SELECT MAX(paq_idPaquete) from paquete");
                             if($Reasultado) {
@@ -82,9 +82,4 @@ if(isset($_POST["servicios"])){
 
     $link->close();
 }
-
-
-
-
-
 ?>

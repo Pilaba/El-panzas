@@ -26,7 +26,6 @@ if(isset($_POST["idpaq"])){
             array_push($arr,$array["serv_nombre"]);
         }
         $ArrayRespuesta["servicios"]=$arr;
-
         for ($i=0; $i<$result2->num_rows; $i++){
             $result2->data_seek($i);
             $array=$result2->fetch_array(MYSQLI_ASSOC);
